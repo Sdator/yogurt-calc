@@ -59,6 +59,15 @@ const CASES: GalleryCase[] = [
   }
 ];
 
+const getAssetUrl = (url: string) => {
+  if (url.startsWith('/')) {
+    const base = (import.meta as any).env.BASE_URL || '/';
+    const cleanBase = base.endsWith('/') ? base : `${base}/`;
+    return `${cleanBase}${url.slice(1)}`;
+  }
+  return url;
+};
+
 interface YogurtGalleryProps {
   isOpen: boolean;
   onClose: () => void;
@@ -116,7 +125,8 @@ export default function YogurtGallery({ isOpen, onClose }: YogurtGalleryProps) {
             <div className="grid grid-cols-2 gap-3">
               {CASES.map((item) => {
                 const hasLocalError = imageErrors[item.id];
-                const displaySrc = hasLocalError ? item.imgUrl : item.localPath;
+                const rawPath = hasLocalError ? item.imgUrl : item.localPath;
+                const displaySrc = getAssetUrl(rawPath);
 
                 return (
                   <div
