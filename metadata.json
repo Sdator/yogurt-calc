@@ -1,0 +1,6 @@
+{
+  "name": "奶粉复原乳酸奶配方助手",
+  "description": "专为新手父母设计的奶粉复原乳制作酸奶计算器与配方记录工具，支持蛋白质比例计算、口感预测、精美手绘公式解析及历史记录导入导出。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
