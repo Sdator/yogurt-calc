@@ -13,14 +13,14 @@ html {
 
 @keyframes borderFlash {
   0%, 100% {
-    border-color: rgba(16, 185, 129, 0.3) !important;
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
-    background-color: rgba(16, 185, 129, 0.02);
+    border-color: rgba(249, 115, 22, 0.35) !important;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+    background-color: rgba(249, 115, 22, 0.03);
   }
   50% {
-    border-color: rgba(16, 185, 129, 0.95) !important;
-    box-shadow: 0 0 0 7px rgba(16, 185, 129, 0.35);
-    background-color: rgba(16, 185, 129, 0.08);
+    border-color: rgba(239, 68, 68, 0.9) !important;
+    box-shadow: 0 0 0 8px rgba(249, 115, 22, 0.4);
+    background-color: rgba(249, 115, 22, 0.09);
   }
 }
 

@@ -55,6 +55,7 @@ export default function App() {
   const [newRecordStatus, setNewRecordStatus] = useState<'success' | 'fail' | 'pending'>('success');
   const [newRecordTags, setNewRecordTags] = useState<string[]>(['完美凝固']);
   const [newRecordRating, setNewRecordRating] = useState<number>(5);
+  const [customTagInput, setCustomTagInput] = useState<string>('');
 
   // Load records from localStorage on mount
   useEffect(() => {
@@ -205,7 +206,17 @@ export default function App() {
     
     // Clear and close saving panel
     setNewRecordNotes('');
+    setNewRecordTags(['完美凝固']);
+    setCustomTagInput('');
     setIsSavingPanelOpen(false);
+  };
+
+  const handleAddCustomSaveTag = () => {
+    const trimmed = customTagInput.trim();
+    if (trimmed && !newRecordTags.includes(trimmed)) {
+      setNewRecordTags([...newRecordTags, trimmed]);
+    }
+    setCustomTagInput('');
   };
 
   const handleDeleteRecord = (id: string) => {
@@ -310,9 +321,6 @@ export default function App() {
             <span className="text-2xl select-none animate-bounce">🧭</span>
             <div>
               <h3 className="font-display font-extrabold text-emerald-950 text-[14.5px] sm:text-[15.5px]">发酵调配核心指南</h3>
-              <p className="text-emerald-800 font-sans text-xs opacity-90 mt-0.5">
-                将鼠标指针移至下方步骤，可联动闪烁提示左侧对应的配比调试参数。
-              </p>
             </div>
           </div>
           
@@ -518,7 +526,7 @@ export default function App() {
                       max="6.0"
                       value={targetProtein || ''}
                       onChange={(e) => setTargetProtein(Math.max(3.2, parseFloat(e.target.value) || 3.2))}
-                      className="w-24 border border-gray-200 rounded-lg px-2 py-1 text-xs text-center focus:border-orange-400 focus:outline-hidden font-mono font-bold text-indigo-850"
+                      className="w-24 border border-gray-200 rounded-lg px-2 py-1 text-xs text-center focus:border-orange-400 focus:outline-hidden font-mono font-bold text-indigo-850 animate-fadeIn"
                     />
                     <span className="text-[11px] text-gray-400">g/100ml</span>
                   </div>
@@ -530,7 +538,7 @@ export default function App() {
                         key={preset.name}
                         type="button"
                         onClick={() => applyPresetFormula(preset)}
-                        className={`text-[10px] px-2.5 py-1 rounded-lg border text-left transition-all ${
+                        className={`text-[10px] px-2.5 py-1 rounded-lg border text-left transition-all cursor-pointer ${
                           Math.abs(targetProtein - preset.targetProtein) < 0.05
                             ? 'bg-green-100 border-green-400 text-green-900 font-bold font-mono'
                             : 'bg-white hover:bg-gray-50 border-gray-200 text-gray-600'
@@ -552,49 +560,49 @@ export default function App() {
           <div className="flex flex-col h-full space-y-6">
 
             {/* BIG RESULTS PANEL */}
-            <div id="calculator-results-card" className="bg-white p-6 md:p-8 rounded-3xl shadow-md border-2 border-orange-400 flex flex-col justify-center items-center text-center transition-all relative overflow-hidden flex-grow h-full">
-              <span className="text-gray-500 text-xs sm:text-sm uppercase tracking-widest mb-3 font-extrabold block">换算计算核心产出</span>
-              <p className="text-gray-500 font-medium mb-1 text-sm">本次制作配方建议加入奶粉</p>
+            <div id="calculator-results-card" className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border-2 border-orange-100 flex flex-col justify-center items-center text-center transition-all relative overflow-hidden flex-grow h-full space-y-4">
+              <span className="text-gray-500 text-xs sm:text-sm uppercase tracking-widest mb-1 font-extrabold block">换算计算核心产出</span>
+              <p className="text-gray-500 font-medium text-xs">本次制作配方建议加入奶粉</p>
               
               {isCalculationValid ? (
                 <>
-                  <div className="text-5xl sm:text-6xl font-black text-orange-500 mb-3 font-mono drop-shadow-sm select-all">
+                  <div className="text-5xl sm:text-6xl font-black text-orange-500 mb-1 font-mono drop-shadow-xs select-all">
                     {calculatedPowder.toFixed(1)} <span className="text-2xl font-bold text-gray-400 font-sans">克 (g)</span>
                   </div>
                   
-                  <div className="flex flex-wrap items-center justify-center gap-2 mb-4 max-w-lg">
-                    <span className="px-3.5 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">
+                  <div className="flex flex-wrap items-center justify-center gap-2 max-w-lg">
+                    <span className="px-3.5 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold shadow-3xs">
                       {currentTexture.rating}
                     </span>
-                    <span className="px-3 py-1 bg-yellow-105 bg-orange-50 text-orange-700 rounded-full text-xs font-semibold">
+                    <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs font-semibold shadow-3xs">
                       目标浓度: {targetProtein}g/100ml
                     </span>
                   </div>
 
-                  <p className="text-xs text-gray-500 leading-relaxed mb-4 max-w-sm">
+                  <p className="text-[11px] text-gray-500 leading-relaxed max-w-sm">
                     💡 <strong>新手操作流程</strong>：量取 <strong className="text-orange-600">{waterVol}ml 温水</strong> 注入容器，完全融解这个重量的奶粉并搅拌均匀，等温凉后撒入乳菌粉发酵即可。
                   </p>
 
-                  <p id="co2-warning-notice" className="text-xs text-amber-700 bg-amber-50/70 border border-amber-200 rounded-xl py-2 px-3.5 mb-4 max-w-sm leading-relaxed font-bold flex flex-col items-center gap-1.5 justify-center">
-                    <span className="flex items-center gap-1.5 text-amber-800 text-xs font-extrabold">⚠️ 注意事项：发酵中会产生二氧化碳</span>
-                    <span className="text-[11px] text-amber-905 font-medium leading-relaxed font-sans text-center">
+                  <div id="co2-warning-notice" className="text-[10.5px] text-amber-700 bg-amber-50/70 border border-amber-200/80 rounded-xl py-2 px-3 mb-1 max-w-sm leading-relaxed font-medium flex flex-col items-center gap-1 justify-center">
+                    <span className="flex items-center gap-1 text-amber-800 text-xs font-black">⚠️ 注意事项：发酵中会产生二氧化碳</span>
+                    <span className="text-[10px] text-amber-900 leading-normal text-center">
                       密闭发酵会导致容器内累积气压。请避免将盖子拧得过死，并在开盖时保持小心，谨防气体猛烈喷溅、顶飞瓶盖或胀裂容器。
                     </span>
-                  </p>
+                  </div>
 
                   {/* Reconstitution Ratio Indicators - Elegantly placed in results */}
-                  <div className="mb-6 p-3 bg-orange-50 rounded-2xl border border-dashed border-orange-200 text-center w-full max-w-sm">
-                    <p className="text-[11.5px] text-orange-950 font-medium font-sans">
+                  <div className="p-3 bg-orange-50/50 rounded-2xl border border-dashed border-orange-200 text-center w-full max-w-sm">
+                    <p className="text-[11px] text-orange-950 font-semibold">
                       ⚖️ <strong>复原比例指示 (奶粉：温水)</strong>
                     </p>
                     <div className="flex justify-around items-center mt-2 text-xs font-mono font-bold text-orange-850">
                       <div>
-                        <span className="text-[10px] text-gray-500 block font-sans font-normal">克比 (奶粉:水)</span>
+                        <span className="text-[9.5px] text-gray-400 block font-normal">克比 (奶粉:水)</span>
                         约 1 : {dilutionRatio}
                       </div>
                       <div className="w-[1px] h-6 bg-orange-200"></div>
                       <div>
-                        <span className="text-[10px] text-gray-500 block font-sans font-normal">调配浓度比</span>
+                        <span className="text-[9.5px] text-gray-400 block font-normal">调配浓度比</span>
                         {(calculatedPowder / waterVol).toFixed(3)}g / ml
                       </div>
                     </div>
@@ -604,13 +612,13 @@ export default function App() {
                     id="save-recipe-trigger-btn"
                     type="button"
                     onClick={() => {
-                      setIsSavingPanelOpen(!isSavingPanelOpen);
+                      setIsSavingPanelOpen(true);
                       setNewRecordNotes(`温水 ${waterVol}ml + 奶粉 ${calculatedPowder.toFixed(1)}g (蛋白质 ${proteinPowder}g/100g)，预估口感是 ${currentTexture.rating}。`);
                     }}
-                    className="w-full max-w-xs py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-lg shadow-orange-100 hover:shadow-orange-200 transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
+                    className="w-full max-w-xs py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md shadow-orange-100 hover:shadow-orange-200 transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
                   >
                     <Plus className="w-4 h-4" />
-                    <span>{isSavingPanelOpen ? '关闭记录窗口' : '💾 保存本次配方记录'}</span>
+                    <span>💾 保存本次配方记录</span>
                   </button>
                 </>
               ) : (
@@ -620,139 +628,6 @@ export default function App() {
                 </div>
               )}
             </div>
-
-            {/* EXPANDABLE SAVING PANEL */}
-            {isSavingPanelOpen && isCalculationValid && (
-              <form onSubmit={handleSaveRecipe} className="bg-white rounded-3xl border-2 border-orange-200 p-5 md:p-6 space-y-4 animate-fadeIn shadow-xs">
-                <div className="flex items-center justify-between border-b border-orange-100 pb-2">
-                  <h4 className="text-sm font-bold text-orange-950 flex items-center gap-1.5">
-                    <BookmarkCheck className="w-4 h-4 text-orange-500" />
-                    保存这次的酸奶配方与制作批次
-                  </h4>
-                  <span className="text-xs text-orange-400 font-mono">日期: {new Date().toISOString().split('T')[0]}</span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Status */}
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold text-gray-700 block">发酵结果认定:</label>
-                    <div className="grid grid-cols-3 gap-1.5">
-                      <button
-                        type="button"
-                        onClick={() => setNewRecordStatus('success')}
-                        className={`py-1 rounded-lg text-xs font-semibold ${
-                          newRecordStatus === 'success' 
-                            ? 'bg-green-500 text-white' 
-                            : 'bg-white border text-green-600 hover:bg-green-50'
-                        }`}
-                      >
-                        成功凝乳
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setNewRecordStatus('fail')}
-                        className={`py-1 rounded-lg text-xs font-semibold ${
-                          newRecordStatus === 'fail' 
-                            ? 'bg-red-500 text-white' 
-                            : 'bg-white border text-red-600 hover:bg-red-50'
-                        }`}
-                      >
-                        发酵失败/稀
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setNewRecordStatus('pending')}
-                        className={`py-1 rounded-lg text-xs font-semibold ${
-                          newRecordStatus === 'pending' 
-                            ? 'bg-amber-500 text-white' 
-                            : 'bg-white border text-amber-600 hover:bg-amber-50'
-                        }`}
-                      >
-                        发酵中/待观察
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Rating */}
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold text-gray-700 block">质地评分:</label>
-                    <div className="flex items-center gap-1 h-8">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                          key={star}
-                          type="button"
-                          onClick={() => setNewRecordRating(star)}
-                          className="p-1 focus:outline-hidden"
-                        >
-                          <span className={`text-xl ${star <= newRecordRating ? 'text-amber-400' : 'text-gray-300'}`}>★</span>
-                        </button>
-                      ))}
-                      <span className="text-xs text-gray-500 ml-1">({newRecordRating} 颗星)</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Predefined Tags preset check boxes */}
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-gray-700 block">快捷风味标签 (多选):</label>
-                  <div className="flex flex-wrap gap-1.5">
-                    {['完美凝固', '稍微偏酸', '温和不甜', '奶香极其醇厚', '表面有乳清析出', '比较稀', '宝宝极爱吃', '加了辅食泥调配'].map(tag => {
-                      const selected = newRecordTags.includes(tag);
-                      return (
-                        <button
-                          key={tag}
-                          type="button"
-                          onClick={() => {
-                            if (selected) {
-                              setNewRecordTags(newRecordTags.filter(t => t !== tag));
-                            } else {
-                              setNewRecordTags([...newRecordTags, tag]);
-                            }
-                          }}
-                          className={`text-[10px] px-2.5 py-1 rounded-md transition-all ${
-                            selected 
-                              ? 'bg-orange-500 text-white font-medium shadow-3xs' 
-                              : 'bg-white text-gray-650 hover:text-gray-800 border-orange-100 border'
-                          }`}
-                        >
-                          {tag}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Custom note textbox */}
-                <div className="space-y-1">
-                  <label htmlFor="notes-textarea" className="text-xs font-bold text-gray-700 block">备忘记事/喂养心得:</label>
-                  <textarea
-                    id="notes-textarea"
-                    placeholder="请输入给宝宝喂养、自制发酵时长或加糖配方的反馈。例如: 宝宝第一次吃酸奶，没有加糖，配了半勺牛油果泥。大口大口全吃光了！"
-                    value={newRecordNotes}
-                    onChange={(e) => setNewRecordNotes(e.target.value)}
-                    className="w-full text-xs p-2.5 border rounded-xl h-20 bg-white focus:outline-hidden focus:border-orange-400 border-orange-100"
-                  />
-                </div>
-
-                <div className="flex gap-2 justify-end self-end pt-2 border-t border-orange-100">
-                  <button
-                    type="button"
-                    onClick={() => setIsSavingPanelOpen(false)}
-                    className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-1.5 rounded-lg text-xs font-medium"
-                  >
-                    取消
-                  </button>
-                  <button
-                    type="submit"
-                    className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-1.5 rounded-lg text-xs font-bold shadow-2xs"
-                  >
-                    确认保存到日志
-                  </button>
-                </div>
-              </form>
-            )}
-
-            {/* REAL-TIME TEXTURE PREDICTION CARD OR EMPIRICAL REVIEWS CARD REMOVED AS REQUESTED */}
 
           </div> {/* End Right Column */}
 
@@ -816,6 +691,214 @@ export default function App() {
             </div>
 
           </div>
+        </div>
+      )}
+
+      {/* 4.5 Save Recipe Modal Dialog */}
+      {isSavingPanelOpen && isCalculationValid && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs select-none">
+          {/* Backdrop layer */}
+          <div className="absolute inset-0 cursor-default" onClick={() => setIsSavingPanelOpen(false)}></div>
+          
+          {/* Modal Container */}
+          <form 
+            onSubmit={handleSaveRecipe} 
+            className="relative bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-orange-100 flex flex-col max-h-[90vh] overflow-hidden select-text animate-fadeIn"
+          >
+            {/* Modal Header */}
+            <div className="p-5 bg-gradient-to-r from-orange-400 to-orange-500 text-white flex justify-between items-center shrink-0">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center text-lg select-none">💾</div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-extrabold font-display tracking-tight">保存酸奶制作配方与批次</h3>
+                  <p className="text-orange-50 text-[10.5px] font-sans opacity-95">记录最佳黄金发酵比例，留存每一次的宝宝喂养心得</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsSavingPanelOpen(false)}
+                className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center text-white focus:outline-hidden cursor-pointer"
+                title="关闭"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-5 md:p-6 overflow-y-auto space-y-4">
+              <div className="bg-orange-50/50 p-3 rounded-2xl border border-orange-100 text-xs text-orange-950 flex flex-col gap-1.5">
+                <div className="font-bold flex items-center gap-1.5 text-[12px] text-orange-900">
+                  <span>📝 本次建议比例:</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-gray-750 text-[11.5px] font-medium leading-relaxed">
+                  <div>💦 温水量: <span className="font-bold text-orange-600 font-mono">{waterVol} ml</span></div>
+                  <div>🥛 奶粉量: <span className="font-bold text-orange-600 font-mono">{calculatedPowder.toFixed(1)} g</span></div>
+                  <div>🔍 奶粉蛋白质: <span className="font-mono">{proteinPowder} g/100g</span></div>
+                  <div>📐 目标浓度: <span className="font-mono">{targetProtein} %</span></div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Status */}
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-gray-700 block">发酵结果认定:</label>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => setNewRecordStatus('success')}
+                      className={`py-1.5 rounded-lg text-xs font-semibold select-none cursor-pointer ${
+                        newRecordStatus === 'success' 
+                          ? 'bg-green-500 text-white' 
+                          : 'bg-white border text-green-600 hover:bg-green-50 border-gray-200'
+                      }`}
+                    >
+                      成功凝乳
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewRecordStatus('fail')}
+                      className={`py-1.5 rounded-lg text-xs font-semibold select-none cursor-pointer ${
+                        newRecordStatus === 'fail' 
+                          ? 'bg-red-500 text-white' 
+                          : 'bg-white border text-red-600 hover:bg-red-50 border-gray-200'
+                      }`}
+                    >
+                      发酵失败
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewRecordStatus('pending')}
+                      className={`py-1.5 rounded-lg text-xs font-semibold select-none cursor-pointer ${
+                        newRecordStatus === 'pending' 
+                          ? 'bg-amber-500 text-white' 
+                          : 'bg-white border text-amber-600 hover:bg-amber-50 border-gray-200'
+                      }`}
+                    >
+                      尚未开封
+                    </button>
+                  </div>
+                </div>
+
+                {/* Rating */}
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-gray-700 block">质地评分:</label>
+                  <div className="flex items-center gap-1 h-8 select-none">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => setNewRecordRating(star)}
+                        className="p-1 focus:outline-hidden cursor-pointer"
+                      >
+                        <span className={`text-xl ${star <= newRecordRating ? 'text-amber-400' : 'text-gray-300'}`}>★</span>
+                      </button>
+                    ))}
+                    <span className="text-[11px] text-gray-500 ml-1">({newRecordRating}星)</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Predefined Tags preset checkboxes */}
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-700 block">快捷风味标签 (多选):</label>
+                <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto pr-1 shrink-0 select-none border border-orange-100 bg-orange-50/10 p-2 rounded-xl">
+                  {Array.from(new Set([
+                    '完美凝固', 
+                    '完美拉丝', 
+                    '奶香浓郁', 
+                    '奶香极其醇厚', 
+                    '酸度适中', 
+                    '温和不甜', 
+                    '温和不酸', 
+                    '质地粘稠', 
+                    '稍微偏酸', 
+                    '比较稀', 
+                    '乳清析出', 
+                    '表面有乳清析出', 
+                    '无法固化', 
+                    '宝宝极爱吃', 
+                    '加了辅食泥调配',
+                    ...newRecordTags
+                  ])).map(tag => {
+                    const selected = newRecordTags.includes(tag);
+                    return (
+                      <button
+                        key={tag}
+                        type="button"
+                        onClick={() => {
+                          if (selected) {
+                            setNewRecordTags(newRecordTags.filter(t => t !== tag));
+                          } else {
+                            setNewRecordTags([...newRecordTags, tag]);
+                          }
+                        }}
+                        className={`text-[10px] px-2.5 py-1 rounded-md transition-all cursor-pointer ${
+                          selected 
+                            ? 'bg-orange-500 text-white font-semibold shadow-3xs' 
+                            : 'bg-white text-gray-600 hover:text-gray-800 border-orange-100 border'
+                        }`}
+                      >
+                        {tag}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Custom Tag Input */}
+                <div className="flex gap-2 items-center">
+                  <input
+                    type="text"
+                    placeholder="自定义风味或喂养体验标签..."
+                    value={customTagInput}
+                    onChange={(e) => setCustomTagInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleAddCustomSaveTag();
+                      }
+                    }}
+                    className="border border-orange-100 rounded-lg px-2.5 py-1.5 text-xs bg-white w-56 focus:border-orange-400 focus:outline-hidden"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddCustomSaveTag}
+                    className="bg-orange-100 hover:bg-orange-200 text-orange-850 px-3 py-1.5 text-xs rounded-lg font-bold transition-all cursor-pointer active:scale-95"
+                  >
+                    添加分类标签
+                  </button>
+                </div>
+              </div>
+
+              {/* Custom note textbox */}
+              <div className="space-y-1">
+                <label htmlFor="modal-notes-textarea" className="text-xs font-bold text-gray-700 block">备忘记事/喂养心得:</label>
+                <textarea
+                  id="modal-notes-textarea"
+                  placeholder="请输入给宝宝喂养、自制发酵时长或加糖配方的反馈。例如: 宝宝第一次吃酸奶，没有加糖，配了半勺牛油果泥。大口大口全吃光了！"
+                  value={newRecordNotes}
+                  onChange={(e) => setNewRecordNotes(e.target.value)}
+                  className="w-full text-xs p-2.5 border rounded-xl h-20 bg-white focus:outline-hidden focus:border-orange-400 border-orange-100"
+                />
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-4 bg-gray-50 border-t border-gray-150 flex justify-end gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => setIsSavingPanelOpen(false)}
+                className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-1.5 rounded-lg text-xs font-medium cursor-pointer"
+              >
+                取消
+              </button>
+              <button
+                type="submit"
+                className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-1.5 rounded-lg text-xs font-bold shadow-2xs cursor-pointer"
+              >
+                确认保存并收录
+              </button>
+            </div>
+          </form>
         </div>
       )}
 
