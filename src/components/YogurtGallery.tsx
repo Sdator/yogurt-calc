@@ -11,21 +11,51 @@ interface GalleryCase {
 const CASES: GalleryCase[] = [
   {
     id: 'case-1',
-    title: '凝固型老酸奶',
-    imgUrl: 'https://images.unsplash.com/photo-1571244856341-4f3dd95db36e?w=1000&auto=format&fit=crop&q=85',
-    localPath: '/img/case1.jpg'
+    title: '日常记录 1',
+    imgUrl: '/img/case-1.webp',
+    localPath: '/img/case-1.webp'
   },
   {
     id: 'case-2',
-    title: '绵柔慕斯杯款',
-    imgUrl: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=1000&auto=format&fit=crop&q=85',
-    localPath: '/img/case2.jpg'
+    title: '日常记录 2',
+    imgUrl: '/img/case-2.webp',
+    localPath: '/img/case-2.webp'
   },
   {
     id: 'case-3',
-    title: '极浓干酪酸奶',
-    imgUrl: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=1000&auto=format&fit=crop&q=85',
-    localPath: '/img/case3.jpg'
+    title: '日常记录 3',
+    imgUrl: '/img/case-3.webp',
+    localPath: '/img/case-3.webp'
+  },
+  {
+    id: 'case-4',
+    title: '日常记录 4',
+    imgUrl: '/img/case-4.webp',
+    localPath: '/img/case-4.webp'
+  },
+  {
+    id: 'case-5',
+    title: '日常记录 5',
+    imgUrl: '/img/case-5.webp',
+    localPath: '/img/case-5.webp'
+  },
+  {
+    id: 'case-6',
+    title: '日常记录 6',
+    imgUrl: '/img/case-6.webp',
+    localPath: '/img/case-6.webp'
+  },
+  {
+    id: 'case-7',
+    title: '日常记录 7',
+    imgUrl: '/img/case-7.webp',
+    localPath: '/img/case-7.webp'
+  },
+  {
+    id: 'case-8',
+    title: '日常记录 8',
+    imgUrl: '/img/case-8.webp',
+    localPath: '/img/case-8.webp'
   }
 ];
 
@@ -63,13 +93,13 @@ export default function YogurtGallery({ isOpen, onClose }: YogurtGalleryProps) {
               </span>
               <div>
                 <span className="text-xs sm:text-sm font-bold text-gray-900 flex items-center gap-1">
-                  发酵案例相册
+                  日常发酵分享
                   <span className="text-[9px] bg-orange-200/50 text-orange-850 px-1.5 py-0.5 rounded-full font-sans font-medium flex items-center gap-0.5 select-none">
-                    <Sparkles className="w-2.5 h-2.5" /> 手机快照
+                    <Sparkles className="w-2.5 h-2.5" /> 随便晒晒
                   </span>
                 </span>
                 <p className="text-[9.5px] text-gray-400 font-sans">
-                  已加载 {CASES.length} 张发酵实证案例
+                  记录了 {CASES.length} 个发酵玩耍瞬间
                 </p>
               </div>
             </div>
@@ -108,11 +138,6 @@ export default function YogurtGallery({ isOpen, onClose }: YogurtGalleryProps) {
                     
                     {/* Minimal hover overlay */}
                     <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
-                    
-                    {/* Small title tag on photo bottom */}
-                    <div className="absolute bottom-2 left-2 bg-black/50 backdrop-blur-xs text-[9px] text-stone-100 px-1.5 py-0.5 rounded font-sans font-medium">
-                      {item.title}
-                    </div>
                   </div>
                 );
               })}

@@ -43,7 +43,23 @@ export default function HistoryLogs({
   const [newTagInput, setNewTagInput] = useState<string>('');
 
   // Sample preset feedback tags for parents to choose
-  const PRESET_FEEDBACK_TAGS = ['完美拉丝', '奶香浓郁', '酸度适中', '温和不酸', '质地粘稠', '稍微偏酸', '乳清析出', '无法固化'];
+  const PRESET_FEEDBACK_TAGS = [
+    '完美凝固', 
+    '完美拉丝', 
+    '奶香浓郁', 
+    '奶香极其醇厚', 
+    '酸度适中', 
+    '温和不甜', 
+    '温和不酸', 
+    '质地粘稠', 
+    '稍微偏酸', 
+    '比较稀', 
+    '乳清析出', 
+    '表面有乳清析出', 
+    '无法固化', 
+    '宝宝极爱吃', 
+    '加了辅食泥调配'
+  ];
 
   // Filter & Search records
   const filteredRecords = records.filter(record => {
@@ -384,7 +400,7 @@ export default function HistoryLogs({
                     <div>
                       <span className="text-xs sm:text-sm text-gray-650 font-semibold block mb-1.5 font-bold">点选快捷标签反馈:</span>
                       <div className="flex flex-wrap gap-2">
-                        {PRESET_FEEDBACK_TAGS.map((tag) => {
+                        {Array.from(new Set([...PRESET_FEEDBACK_TAGS, ...editTags])).map((tag) => {
                           const isSelected = editTags.includes(tag);
                           return (
                             <button
@@ -394,7 +410,7 @@ export default function HistoryLogs({
                               className={`text-xs px-2.5 py-1 rounded-full transition-all cursor-pointer border ${
                                 isSelected
                                   ? 'bg-orange-500 text-white font-bold border-orange-500 shadow-3xs'
-                                  : 'bg-white text-gray-600 hover:text-gray-800 border-orange-100 hover:border-orange-200'
+                                  : 'bg-white text-gray-600 hover:text-gray-850 border-orange-100 hover:border-orange-250'
                               }`}
                             >
                               {tag}

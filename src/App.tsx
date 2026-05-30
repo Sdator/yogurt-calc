@@ -269,7 +269,7 @@ export default function App() {
               onClick={() => setIsGalleryOpen(true)}
               className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 border border-amber-300 text-white rounded-lg text-xs font-extrabold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
             >
-              🖼️ 实测案例相册
+              🖼️ 日常发酵分享
             </button>
             <button
               onClick={() => setIsHistorySidebarOpen(true)}
@@ -323,7 +323,7 @@ export default function App() {
               onMouseLeave={() => setHoveredStep(null)}
               className={`p-3 rounded-xl border transition-all duration-200 cursor-help ${
                 hoveredStep === 1 
-                  ? 'bg-emerald-600 border-emerald-700 text-white shadow-xs scale-[1.03]' 
+                  ? 'bg-emerald-600 border-emerald-700 text-white shadow-xs' 
                   : 'bg-white border-emerald-100 text-emerald-900 hover:border-emerald-300 hover:bg-emerald-50/40'
               }`}
             >
@@ -344,7 +344,7 @@ export default function App() {
               onMouseLeave={() => setHoveredStep(null)}
               className={`p-3 rounded-xl border transition-all duration-200 cursor-help ${
                 hoveredStep === 2 
-                  ? 'bg-emerald-600 border-emerald-700 text-white shadow-xs scale-[1.03]' 
+                  ? 'bg-emerald-600 border-emerald-700 text-white shadow-xs' 
                   : 'bg-white border-emerald-100 text-emerald-900 hover:border-emerald-300 hover:bg-emerald-50/40'
               }`}
             >
@@ -365,7 +365,7 @@ export default function App() {
               onMouseLeave={() => setHoveredStep(null)}
               className={`p-3 rounded-xl border transition-all duration-200 cursor-help ${
                 hoveredStep === 3 
-                  ? 'bg-emerald-600 border-emerald-700 text-white shadow-xs scale-[1.03]' 
+                  ? 'bg-emerald-600 border-emerald-700 text-white shadow-xs' 
                   : 'bg-white border-emerald-100 text-emerald-900 hover:border-emerald-300 hover:bg-emerald-50/40'
               }`}
             >
@@ -387,13 +387,13 @@ export default function App() {
       <div className="max-w-7xl mx-auto px-4 md:px-8 mt-6">
         
         {/* Main Workspaces Layout (Split equally between adjustment controls and outcomes) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-stretch">
           
           {/* LEFT COLUMN: Input controls and adjustments */}
-          <div className="space-y-6">
+          <div className="flex flex-col h-full space-y-6">
             
             {/* The Input Card */}
-            <div id="calculator-inputs-card" className="bg-white p-5 rounded-3xl shadow-sm border-2 border-orange-100 space-y-5">
+            <div id="calculator-inputs-card" className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border-2 border-orange-100 flex flex-col justify-between flex-grow h-full space-y-6">
               
               <div className="flex items-center justify-between border-b border-orange-50 pb-3">
                 <h3 className="text-orange-600 font-bold flex items-center gap-2 text-sm">
@@ -404,7 +404,7 @@ export default function App() {
               </div>
 
               {/* Input Row 1: Water Volume */}
-              <div className={`space-y-2 p-2 rounded-xl transition-all duration-300 ${hoveredStep === 2 ? 'animate-border-flash border border-emerald-400 bg-emerald-50/10' : ''}`}>
+              <div className={`space-y-2 p-2 rounded-xl border border-transparent transition-all duration-300 ${hoveredStep === 2 ? 'animate-border-flash' : ''}`}>
                 <div className="flex justify-between items-center text-xs">
                   <label htmlFor="water-vol-input" className="font-bold text-gray-700 flex items-center gap-1">
                     💦 计划用水量 (温开水容量)
@@ -458,7 +458,7 @@ export default function App() {
               </div>
 
               {/* Input Row 2: Protein on Tin */}
-              <div className={`space-y-2 border-t border-orange-50 pt-4 p-2 rounded-xl transition-all duration-300 ${hoveredStep === 1 ? 'animate-border-flash border border-emerald-400 bg-emerald-50/10 hover:border-transparent' : ''}`}>
+              <div className={`space-y-2 border-t border-orange-50 pt-4 p-2 rounded-xl transition-all duration-300 ${hoveredStep === 1 ? 'animate-border-flash' : ''}`}>
                 <div className="flex justify-between items-center text-xs">
                   <label htmlFor="protein-powder-input" className="font-bold text-gray-700 flex items-center gap-1">
                     🔍 您奶粉包装上的蛋白质含量
@@ -487,7 +487,7 @@ export default function App() {
               </div>
 
               {/* Input Row 3: Target Yogurt Protein Strength */}
-              <div className={`space-y-2 border-t border-orange-50 pt-4 p-2 rounded-xl transition-all duration-300 ${hoveredStep === 3 ? 'animate-border-flash border border-emerald-400 bg-emerald-50/10 hover:border-transparent' : ''}`}>
+              <div className={`space-y-2 border-t border-orange-50 pt-4 p-2 rounded-xl transition-all duration-300 ${hoveredStep === 3 ? 'animate-border-flash' : ''}`}>
                 <div className="flex justify-between items-center text-xs">
                   <label htmlFor="target-protein-range" className="font-bold text-gray-700 flex items-center gap-1">
                     📐 拟调还原乳目标蛋白浓度
@@ -549,11 +549,11 @@ export default function App() {
           </div> {/* End Left Column */}
 
           {/* RIGHT COLUMN: Output recommendation metrics and texture forecasting */}
-          <div className="space-y-6">
+          <div className="flex flex-col h-full space-y-6">
 
             {/* BIG RESULTS PANEL */}
-            <div id="calculator-results-card" className="bg-white p-6 md:p-8 rounded-3xl shadow-md border-2 border-orange-400 flex flex-col justify-center items-center text-center transition-all relative overflow-hidden">
-              <span className="text-gray-400 text-[10px] uppercase tracking-widest mb-3 font-bold block">换算计算核心产出</span>
+            <div id="calculator-results-card" className="bg-white p-6 md:p-8 rounded-3xl shadow-md border-2 border-orange-400 flex flex-col justify-center items-center text-center transition-all relative overflow-hidden flex-grow h-full">
+              <span className="text-gray-500 text-xs sm:text-sm uppercase tracking-widest mb-3 font-extrabold block">换算计算核心产出</span>
               <p className="text-gray-500 font-medium mb-1 text-sm">本次制作配方建议加入奶粉</p>
               
               {isCalculationValid ? (
@@ -573,6 +573,13 @@ export default function App() {
 
                   <p className="text-xs text-gray-500 leading-relaxed mb-4 max-w-sm">
                     💡 <strong>新手操作流程</strong>：量取 <strong className="text-orange-600">{waterVol}ml 温水</strong> 注入容器，完全融解这个重量的奶粉并搅拌均匀，等温凉后撒入乳菌粉发酵即可。
+                  </p>
+
+                  <p id="co2-warning-notice" className="text-xs text-amber-700 bg-amber-50/70 border border-amber-200 rounded-xl py-2 px-3.5 mb-4 max-w-sm leading-relaxed font-bold flex flex-col items-center gap-1.5 justify-center">
+                    <span className="flex items-center gap-1.5 text-amber-800 text-xs font-extrabold">⚠️ 注意事项：发酵中会产生二氧化碳</span>
+                    <span className="text-[11px] text-amber-905 font-medium leading-relaxed font-sans text-center">
+                      密闭发酵会导致容器内累积气压。请避免将盖子拧得过死，并在开盖时保持小心，谨防气体猛烈喷溅、顶飞瓶盖或胀裂容器。
+                    </span>
                   </p>
 
                   {/* Reconstitution Ratio Indicators - Elegantly placed in results */}
@@ -745,86 +752,7 @@ export default function App() {
               </form>
             )}
 
-            {/* REAL-TIME TEXTURE PREDICTION CARD OR EMPIRICAL REVIEWS CARD */}
-            {loadedRecord ? (
-              <div id="texture-predictor-panel" className="border-l-4 border-indigo-400 bg-indigo-50/70 rounded-xl p-4 md:p-5 transition-all shadow-3xs animate-fadeIn text-indigo-950">
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl pt-0.5 select-none">📋</span>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-1">
-                      <h4 className="font-bold text-xs md:text-sm tracking-tight flex items-center gap-1.5 text-indigo-900">
-                        已载入发酵历史实测日志
-                      </h4>
-                      <span className="text-[10px] bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full font-mono">
-                        录入时间: {loadedRecord.date}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-2 my-1.5">
-                      <span className="text-xs text-gray-500 font-medium">发酵认定：</span>
-                      {loadedRecord.isSuccess === 'success' ? (
-                        <span className="px-2 py-0.5 bg-green-100 text-green-700 border border-green-200 text-[10px] font-extrabold rounded-md">
-                          ✓ 成功凝乳
-                        </span>
-                      ) : loadedRecord.isSuccess === 'fail' ? (
-                        <span className="px-2 py-0.5 bg-red-100 text-red-700 border border-red-200 text-[10px] font-extrabold rounded-md">
-                          ✗ 发酵失败/稀
-                        </span>
-                      ) : (
-                        <span className="px-2 py-0.5 bg-amber-100 text-amber-700 border border-amber-200 text-[10px] font-extrabold rounded-md">
-                          ⧖ 发酵中/待观察
-                        </span>
-                      )}
-
-                      {loadedRecord.rating ? (
-                        <div className="flex items-center gap-0.5 ml-2">
-                          <span className="text-[11px] text-gray-500 font-medium font-sans">评分:</span>
-                          <span className="text-amber-500 text-xs font-mono">
-                            {'★'.repeat(loadedRecord.rating)}
-                            {'☆'.repeat(5 - loadedRecord.rating)}
-                          </span>
-                        </div>
-                      ) : null}
-                    </div>
-
-                    {/* Show user's actual notes */}
-                    <p className="text-xs bg-white/75 p-3 rounded-xl border border-indigo-100/60 leading-relaxed font-sans text-gray-750 my-2 shadow-4xs italic break-words">
-                      “ {loadedRecord.notes} ”
-                    </p>
-
-                    {/* Quick helper tag list if there are tags */}
-                    {loadedRecord.tags && loadedRecord.tags.length > 0 ? (
-                      <div className="flex flex-wrap gap-1 mt-1.5">
-                        {loadedRecord.tags.map(t => (
-                          <span key={t} className="text-[9.5px] bg-indigo-50 border border-indigo-200 text-indigo-700 px-1.5 py-0.5 rounded-md font-medium">
-                            #{t}
-                          </span>
-                        ))}
-                      </div>
-                    ) : null}
-
-                    {/* Reminder that any alteration of settings will show prediction */}
-                    <div className="mt-3 pt-2.5 border-t border-indigo-100/60 text-[10px] text-indigo-600/80 leading-normal flex items-center gap-1 font-medium">
-                      <span>💡 提示：微调/修改左侧参数，即可快速切回实时的自制口感预测。</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div id="texture-predictor-panel" className={`border-l-4 rounded-xl p-4 md:p-5 ${currentTexture.color} transition-all shadow-3xs`}>
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl pt-0.5 select-none">{currentTexture.emoji}</span>
-                  <div className="flex-1">
-                    <h4 className="font-bold text-xs md:text-sm tracking-tight text-gray-900">
-                      口感与发酵结果预估：<span className="underline decoration-dotted decoration-2 underline-offset-4">{currentTexture.rating}</span>
-                    </h4>
-                    <p className="text-[11px] leading-relaxed mt-1 opacity-90 text-gray-600">
-                      {currentTexture.desc}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
+            {/* REAL-TIME TEXTURE PREDICTION CARD OR EMPIRICAL REVIEWS CARD REMOVED AS REQUESTED */}
 
           </div> {/* End Right Column */}
 
@@ -1071,7 +999,7 @@ export default function App() {
                 onClick={() => setIsFormulaModalOpen(false)}
                 className="px-5 py-1.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl text-xs cursor-pointer active:scale-95 transition-all"
               >
-                关闭口
+                关闭
               </button>
             </div>
 
@@ -1144,7 +1072,7 @@ export default function App() {
             </span>
             {/* Tooltip bubble */}
             <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-stone-900 text-stone-100 text-[11px] rounded-xl py-2 px-3.5 w-64 text-center shadow-xl z-50 leading-relaxed font-sans font-normal border border-amber-700/80 animate-fadeIn">
-              不管在身在何处 我都会提醒自己 不要忘记自己活在现实中 QQ:250740270
+              不管身在何处 我都会提醒自己 不要忘记自己活在现实中 QQ:250740270
               {/* Micro-arrow */}
               <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1 border-4 border-transparent border-t-stone-900"></div>
             </div>

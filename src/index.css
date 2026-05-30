@@ -13,20 +13,18 @@ html {
 
 @keyframes borderFlash {
   0%, 100% {
-    border-color: #f97316; /* orange-500 */
-    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.25);
-    background-color: rgba(255, 247, 237, 0.4);
+    border-color: rgba(16, 185, 129, 0.3) !important;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+    background-color: rgba(16, 185, 129, 0.02);
   }
   50% {
-    border-color: #10b981; /* emerald-500 */
-    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.5);
-    background-color: rgba(236, 253, 245, 0.6);
+    border-color: rgba(16, 185, 129, 0.95) !important;
+    box-shadow: 0 0 0 7px rgba(16, 185, 129, 0.35);
+    background-color: rgba(16, 185, 129, 0.08);
   }
 }
 
 .animate-border-flash {
-  animation: borderFlash 1.2s infinite ease-in-out;
-  border: 2px solid transparent !important;
-  border-radius: 1.25rem;
-  transform: scale(1.02);
+  animation: borderFlash 2s infinite ease-in-out;
+  border-radius: 0.75rem;
 }
