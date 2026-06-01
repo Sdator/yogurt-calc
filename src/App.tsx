@@ -22,7 +22,145 @@ import ProteinGuide from './components/ProteinGuide';
 import HistoryLogs from './components/HistoryLogs';
 import YogurtGallery from './components/YogurtGallery';
 
+export const THEMES: Record<string, {
+  name: string;
+  bgClass: string;
+  headerBg: string;
+  cardBorderClass: string;
+  cardBgClass: string;
+  cardHeaderBgClass: string;
+  primaryAccent: string;
+  accentBg: string;
+  accentButtonActive: string;
+  accentButtonInactive: string;
+  accentText: string;
+  focusBorder: string;
+  focusBorderClass: string;
+  accentThumb: string;
+  resultsBorder: string;
+  resultsBg: string;
+  saveBtnBg: string;
+  saveBtnShadow: string;
+  badgeBg: string;
+  iconColor: string;
+  ringColor: string;
+  accentHr: string;
+  co2Bg: string;
+  quickBtnActive: string;
+}> = {
+  cozy: {
+    name: '温暖奶香橙',
+    bgClass: 'bg-gradient-to-b from-orange-50/55 via-amber-50/20 to-orange-50/45',
+    headerBg: 'bg-gradient-to-r from-orange-400 to-amber-500',
+    cardBorderClass: 'border-orange-200/90 shadow-sm shadow-orange-100/50',
+    cardBgClass: 'bg-white',
+    cardHeaderBgClass: 'bg-orange-50/70 border-b border-orange-100/80',
+    primaryAccent: 'text-orange-600',
+    accentBg: 'bg-orange-50/60 border border-orange-100/70',
+    accentButtonActive: 'bg-orange-500 text-white font-semibold',
+    accentButtonInactive: 'bg-white hover:bg-orange-50 border-orange-100 text-gray-600 hover:text-orange-850',
+    accentText: 'text-orange-600',
+    focusBorder: 'focus:border-orange-400 focus:ring-orange-100',
+    focusBorderClass: 'border-orange-200 focus:border-orange-500',
+    accentThumb: 'accent-orange-500',
+    resultsBorder: 'border-orange-400 shadow-xl shadow-orange-150/70',
+    resultsBg: 'bg-white',
+    saveBtnBg: 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600',
+    saveBtnShadow: 'shadow-orange-200 hover:shadow-orange-300',
+    badgeBg: 'bg-orange-100 text-orange-700 border-orange-150',
+    iconColor: 'text-orange-500',
+    ringColor: 'ring-orange-100/80',
+    accentHr: 'border-orange-50',
+    co2Bg: 'bg-amber-50/80 border-amber-200 text-amber-900',
+    quickBtnActive: 'bg-orange-100 border-orange-300 text-orange-900 font-semibold',
+  },
+  slate: {
+    name: '极简科技蓝',
+    bgClass: 'bg-gradient-to-b from-slate-50 via-indigo-50/10 to-slate-50',
+    headerBg: 'bg-gradient-to-r from-indigo-500 to-indigo-650',
+    cardBorderClass: 'border-indigo-200 shadow-sm shadow-indigo-100/35',
+    cardBgClass: 'bg-white',
+    cardHeaderBgClass: 'bg-indigo-50/60 border-b border-indigo-100/80',
+    primaryAccent: 'text-indigo-600',
+    accentBg: 'bg-indigo-50/50 border border-indigo-100/70',
+    accentButtonActive: 'bg-indigo-650 text-white font-semibold',
+    accentButtonInactive: 'bg-white hover:bg-indigo-50 border-indigo-100 text-gray-600 hover:text-indigo-850',
+    accentText: 'text-indigo-600',
+    focusBorder: 'focus:border-indigo-550 focus:ring-indigo-100',
+    focusBorderClass: 'border-indigo-200 focus:border-indigo-500',
+    accentThumb: 'accent-indigo-600',
+    resultsBorder: 'border-indigo-500 shadow-xl shadow-indigo-100/60',
+    resultsBg: 'bg-white',
+    saveBtnBg: 'bg-gradient-to-r from-indigo-600 to-indigo-750 hover:from-indigo-700 hover:to-indigo-805',
+    saveBtnShadow: 'shadow-indigo-100 hover:shadow-indigo-200',
+    badgeBg: 'bg-indigo-100 text-indigo-750 border-indigo-150',
+    iconColor: 'text-indigo-500',
+    ringColor: 'ring-indigo-150/80',
+    accentHr: 'border-indigo-50',
+    co2Bg: 'bg-indigo-50/80 border-indigo-150 text-indigo-900',
+    quickBtnActive: 'bg-indigo-100 border-indigo-300 text-indigo-900 font-semibold',
+  },
+  mint: {
+    name: '森林薄荷绿',
+    bgClass: 'bg-gradient-to-b from-emerald-50/40 via-teal-50/10 to-emerald-50/40',
+    headerBg: 'bg-emerald-600',
+    cardBorderClass: 'border-emerald-200 shadow-sm shadow-emerald-100/40',
+    cardBgClass: 'bg-white',
+    cardHeaderBgClass: 'bg-emerald-50/60 border-b border-emerald-100/80',
+    primaryAccent: 'text-emerald-700',
+    accentBg: 'bg-emerald-50 border border-emerald-100/60',
+    accentButtonActive: 'bg-emerald-600 text-white font-semibold',
+    accentButtonInactive: 'bg-white hover:bg-emerald-50 border-emerald-100 text-gray-600 hover:text-emerald-855',
+    accentText: 'text-emerald-700',
+    focusBorder: 'focus:border-emerald-500 focus:ring-emerald-100',
+    focusBorderClass: 'border-emerald-200 focus:border-emerald-500',
+    accentThumb: 'accent-emerald-600',
+    resultsBorder: 'border-emerald-500 shadow-xl shadow-emerald-100/60',
+    resultsBg: 'bg-white',
+    saveBtnBg: 'bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-700 hover:to-teal-600',
+    saveBtnShadow: 'shadow-emerald-150 hover:shadow-emerald-250',
+    badgeBg: 'bg-emerald-100 text-emerald-750 border-emerald-150',
+    iconColor: 'text-emerald-500',
+    ringColor: 'ring-emerald-100/80',
+    accentHr: 'border-emerald-50',
+    co2Bg: 'bg-emerald-50/80 border-emerald-150 text-emerald-950',
+    quickBtnActive: 'bg-emerald-100 border-emerald-300 text-emerald-950 font-semibold',
+  },
+  oats: {
+    name: '天然麦芽金',
+    bgClass: 'bg-gradient-to-b from-amber-50/45 via-yellow-50/10 to-amber-50/30',
+    headerBg: 'bg-gradient-to-r from-amber-500 to-amber-600',
+    cardBorderClass: 'border-amber-250 shadow-sm shadow-amber-100/40',
+    cardBgClass: 'bg-white',
+    cardHeaderBgClass: 'bg-amber-50/60 border-b border-amber-100/80',
+    primaryAccent: 'text-amber-800',
+    accentBg: 'bg-amber-50/60 border border-amber-105/65',
+    accentButtonActive: 'bg-amber-600 text-white font-semibold',
+    accentButtonInactive: 'bg-white hover:bg-amber-50 border-amber-100 text-gray-600 hover:text-amber-850',
+    accentText: 'text-amber-700',
+    focusBorder: 'focus:border-amber-500 focus:ring-amber-100',
+    focusBorderClass: 'border-amber-200 focus:border-amber-500',
+    accentThumb: 'accent-amber-600',
+    resultsBorder: 'border-amber-500 shadow-xl shadow-amber-100/60',
+    resultsBg: 'bg-white',
+    saveBtnBg: 'bg-gradient-to-r from-amber-500 to-amber-650 hover:from-amber-600 hover:to-amber-700',
+    saveBtnShadow: 'shadow-amber-100 hover:shadow-amber-205',
+    badgeBg: 'bg-amber-100 text-amber-750 border-amber-150',
+    iconColor: 'text-amber-600',
+    ringColor: 'ring-amber-100/80',
+    accentHr: 'border-amber-50',
+    co2Bg: 'bg-amber-50/80 border-amber-200 text-amber-950',
+    quickBtnActive: 'bg-amber-100 border-amber-300 text-amber-950 font-semibold',
+  }
+};
+
 export default function App() {
+  // Lock theme to 'mint' (森林薄荷绿) and layout to 'bento' (现代立体看板) as requested
+  const activeTheme: string = 'mint';
+  const activeLayout: string = 'bento';
+
+  const theme = THEMES[activeTheme];
+
   // --- 1. CORE PARAMETER STATES ---
   const [waterVol, setWaterVol] = useState<number>(500); // ml
   const [proteinPowder, setProteinPowder] = useState<number>(24.0); // g/100g (protein rating of milk powder)
@@ -123,8 +261,8 @@ export default function App() {
     errorMsg = '⚠️ 请输入有效的水容量（毫升）。';
   } else if (proteinPowder <= 0 || isNaN(proteinPowder)) {
     errorMsg = '⚠️ 请输入有效的奶粉蛋白质含量。';
-  } else if (targetProtein < 3.2 || targetProtein > 6.0) {
-    errorMsg = '⚠️ 为了保证酸奶发酵凝固效果，目标蛋白浓度不可低于 3.2%。';
+  } else if (targetProtein < 3.2 || targetProtein > 10.0) {
+    errorMsg = '⚠️ 为了保证酸奶发酵凝固效果，目标蛋白浓度设定必须在 3.2% 与 10.0% 之间。';
   } else {
     calculatedPowder = (waterVol * targetProtein) / (proteinPowder - targetProtein);
     isCalculationValid = true;
@@ -175,11 +313,11 @@ export default function App() {
     setTargetProtein(Math.max(3.2, formula.targetProtein));
   };
 
-  // Preset definitions
+  // Preset definitions sorted from low to high by protein weight (克数从低到高排列)
   const targetPresets = [
     { name: '🥇 黄金比例 (3.2g)', targetProtein: 3.2, desc: '最类似鲜牛奶发酵的滑嫩状态' },
-    { name: '🍨 浓厚饱满 (3.8g)', targetProtein: 3.8, desc: '老酸奶级质地，不插勺不翻车' },
-    { name: '🥛 高效固化 (3.5g)', targetProtein: 3.5, desc: '极佳凝固力，蛋白质网络支撑力强' }
+    { name: '🥛 高效固化 (3.5g)', targetProtein: 3.5, desc: '极佳凝固力，蛋白质网络支撑力强' },
+    { name: '🍨 浓厚饱满 (3.8g)', targetProtein: 3.8, desc: '老酸奶级质地，不插勺不翻车' }
   ];
 
   // --- 6. HISTORY OPERATIONS ---
@@ -258,10 +396,10 @@ export default function App() {
   };
 
   return (
-    <div id="yogurt-app-body" className="min-h-screen bg-orange-50 font-sans text-gray-800 pb-1">
+    <div id="yogurt-app-body" className={`min-h-screen ${theme.bgClass} font-sans text-gray-800 pb-12 transition-colors duration-300`}>
       
       {/* 1. Top Minimalist Header Banner - Functional tool design focusing purely on calculation options */}
-      <header className="bg-orange-400 p-4 shadow-xs rounded-b-2xl">
+      <header className={`transition-all duration-300 ${theme.headerBg} p-4 shadow-xs rounded-b-2xl`}>
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 bg-white rounded-xl flex items-center justify-center text-lg select-none shadow-xs">🥛</div>
@@ -278,33 +416,33 @@ export default function App() {
           <div className="flex items-center gap-1.5 flex-wrap">
             <button
               onClick={() => setIsGalleryOpen(true)}
-              className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 border border-amber-300 text-white rounded-lg text-xs font-extrabold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
+              className="px-3 py-1.5 bg-white/15 hover:bg-white/25 border border-white/20 text-white rounded-lg text-xs font-extrabold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
             >
               🖼️ 日常发酵分享
             </button>
             <button
               onClick={() => setIsHistorySidebarOpen(true)}
-              className="px-3 py-1.5 bg-orange-500 hover:bg-orange-600 border border-orange-350 text-white rounded-lg text-xs font-extrabold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
+              className="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white border border-white/25 rounded-lg text-xs font-extrabold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
             >
               📋 历史配方记录 ({records.length})
             </button>
             <button
               onClick={() => setIsFormulaModalOpen(true)}
-              className="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg text-xs font-bold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
+              className="px-3 py-1.5 bg-white/10 hover:bg-white/25 text-white border border-white/20 rounded-lg text-xs font-bold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
             >
               📊 科学公式解读
             </button>
             <button
               onClick={() => setIsProteinGuideModalOpen(true)}
-              className="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-lg text-xs font-bold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
+              className="px-3 py-1.5 bg-white/10 hover:bg-white/25 text-white border border-white/20 rounded-lg text-xs font-bold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
             >
               🔍 查找蛋白质含量
             </button>
             <button
               onClick={() => setIsHelpModalOpen(true)}
-              className="px-3.5 py-1.5 bg-white text-orange-600 hover:bg-orange-50 rounded-lg text-xs font-extrabold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] border border-orange-100 cursor-pointer"
+              className="px-3.5 py-1.5 bg-white/15 hover:bg-white/25 text-white border border-white/25 rounded-lg text-xs font-extrabold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
             >
-              <HelpCircle className="w-3.5 h-3.5 text-orange-500" />
+              <HelpCircle className="w-3.5 h-3.5" />
               <span>自制教程 & FAQ</span>
             </button>
           </div>
@@ -332,14 +470,15 @@ export default function App() {
               className={`p-3 rounded-xl border transition-all duration-200 cursor-help ${
                 hoveredStep === 1 
                   ? 'bg-emerald-600 border-emerald-700 text-white shadow-xs' 
-                  : 'bg-white border-emerald-100 text-emerald-900 hover:border-emerald-300 hover:bg-emerald-50/40'
+                  : 'bg-white border-emerald-100 text-emerald-950 hover:border-emerald-300 hover:bg-emerald-50/40'
               }`}
             >
               <div className="flex items-center gap-1.5 leading-none">
-                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-mono font-extrabold ${
-                  hoveredStep === 1 ? 'bg-white text-emerald-600' : 'bg-emerald-100 text-emerald-800'
+                <span className={`w-4.5 h-4.5 rounded-full flex items-center justify-center text-[10.5px] font-bold ${
+                  hoveredStep === 1 ? 'bg-white text-emerald-600' : 'bg-emerald-100 text-emerald-850 border border-emerald-200'
                 }`}>1</span>
-                <span className="text-xs font-bold">1. 查奶粉蛋白质含量</span>
+                <span className="text-xs select-none">🔍</span>
+                <span className="text-xs font-bold">查奶粉蛋白质含量</span>
               </div>
               <p className={`text-[10.5px] mt-1.5 leading-normal ${hoveredStep === 1 ? 'text-emerald-100/95' : 'text-gray-500'}`}>
                 包装上标示的蛋白质克重
@@ -353,14 +492,15 @@ export default function App() {
               className={`p-3 rounded-xl border transition-all duration-200 cursor-help ${
                 hoveredStep === 2 
                   ? 'bg-emerald-600 border-emerald-700 text-white shadow-xs' 
-                  : 'bg-white border-emerald-100 text-emerald-900 hover:border-emerald-300 hover:bg-emerald-50/40'
+                  : 'bg-white border-emerald-100 text-emerald-950 hover:border-emerald-300 hover:bg-emerald-50/40'
               }`}
             >
               <div className="flex items-center gap-1.5 leading-none">
-                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-mono font-extrabold ${
-                  hoveredStep === 2 ? 'bg-white text-emerald-600' : 'bg-emerald-100 text-emerald-800'
+                <span className={`w-4.5 h-4.5 rounded-full flex items-center justify-center text-[10.5px] font-bold ${
+                  hoveredStep === 2 ? 'bg-white text-emerald-600' : 'bg-emerald-100 text-emerald-850 border border-emerald-200'
                 }`}>2</span>
-                <span className="text-xs font-bold">2. 水容量 (温水数量)</span>
+                <span className="text-xs select-none">💦</span>
+                <span className="text-xs font-bold">水容量 (温水数量)</span>
               </div>
               <p className={`text-[10.5px] mt-1.5 leading-normal ${hoveredStep === 2 ? 'text-emerald-100/95' : 'text-gray-500'}`}>
                 拟冲调制作的总水量大小
@@ -374,14 +514,15 @@ export default function App() {
               className={`p-3 rounded-xl border transition-all duration-200 cursor-help ${
                 hoveredStep === 3 
                   ? 'bg-emerald-600 border-emerald-700 text-white shadow-xs' 
-                  : 'bg-white border-emerald-100 text-emerald-900 hover:border-emerald-300 hover:bg-emerald-50/40'
+                  : 'bg-white border-emerald-100 text-emerald-950 hover:border-emerald-300 hover:bg-emerald-50/40'
               }`}
             >
               <div className="flex items-center gap-1.5 leading-none">
-                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-mono font-extrabold ${
-                  hoveredStep === 3 ? 'bg-white text-emerald-600' : 'bg-emerald-100 text-emerald-800'
+                <span className={`w-4.5 h-4.5 rounded-full flex items-center justify-center text-[10.5px] font-bold ${
+                  hoveredStep === 3 ? 'bg-white text-emerald-600' : 'bg-emerald-100 text-emerald-850 border border-emerald-200'
                 }`}>3</span>
-                <span className="text-xs font-bold">3. 精准浓稠度设定</span>
+                <span className="text-xs select-none">📐</span>
+                <span className="text-xs font-bold">精准浓稠度设定</span>
               </div>
               <p className={`text-[10.5px] mt-1.5 leading-normal ${hoveredStep === 3 ? 'text-emerald-100/95' : 'text-gray-500'}`}>
                 必须满足最低标准限制 (≥ 3.2%)
@@ -391,157 +532,445 @@ export default function App() {
         </div>
       </div>
 
-      {/* Main Body Container: Clean, single visual grid layout without clutter */}
+      {/* Main Body Container: Responsive multi-layout support */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 mt-6">
         
-        {/* Main Workspaces Layout (Split equally between adjustment controls and outcomes) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-stretch">
-          
-          {/* LEFT COLUMN: Input controls and adjustments */}
-          <div className="flex flex-col h-full space-y-6">
+        {/* LAYOUT 1: Classic Split Screen (左右等宽精算版) */}
+        {activeLayout === 'split' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-stretch animate-fadeIn">
             
-            {/* The Input Card */}
-            <div id="calculator-inputs-card" className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border-2 border-orange-100 flex flex-col justify-between flex-grow h-full space-y-6">
+            {/* LEFT COLUMN: Input controls and adjustments */}
+            <div className="flex flex-col h-full space-y-6">
               
-              <div className="flex items-center justify-between border-b border-orange-50 pb-3">
-                <h3 className="text-orange-600 font-bold flex items-center gap-2 text-sm">
-                  <span className="w-6 h-6 bg-orange-100 text-orange-700 rounded-full flex items-center justify-center text-xs font-mono font-bold">1</span>
-                  参数微调与比例设定
-                </h3>
-                <span className="text-[11px] text-gray-400">滑动或输入即可实时换算</span>
-              </div>
-
-              {/* Input Row 1: Water Volume */}
-              <div className={`space-y-2 p-2 rounded-xl border border-transparent transition-all duration-300 ${hoveredStep === 2 ? 'animate-border-flash' : ''}`}>
-                <div className="flex justify-between items-center text-xs">
-                  <label htmlFor="water-vol-input" className="font-bold text-gray-700 flex items-center gap-1">
-                    💦 计划用水量 (温开水容量)
-                  </label>
-                  <span className="font-semibold text-gray-400">
-                    目前设定: <span className="text-orange-600 font-mono text-base font-bold">{waterVol}</span> ml
-                  </span>
-                </div>
+              {/* The Input Card */}
+              <div id="calculator-inputs-card" className={`p-6 md:p-8 rounded-3xl transition-all duration-300 border-2 ${theme.cardBorderClass} ${theme.cardBgClass} flex flex-col justify-between flex-grow h-full space-y-6`}>
                 
-                <input
-                  id="water-vol-range"
-                  type="range"
-                  min="100"
-                  max="2000"
-                  step="50"
-                  value={waterVol}
-                  onChange={(e) => setWaterVol(parseInt(e.target.value) || 100)}
-                  className="w-full h-2 bg-orange-100/60 rounded-lg appearance-none cursor-pointer accent-orange-400"
-                />
+                <div className="flex items-center justify-between border-b border-gray-100 pb-3.5">
+                  <h3 className={`font-extrabold flex items-center gap-2 text-sm ${theme.primaryAccent}`}>
+                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono font-bold ${theme.badgeBg}`}>1</span>
+                    手作核心参数与比例微调
+                  </h3>
+                  <span className="text-[11px] text-gray-400 font-medium">滑动或输入即可实时精算</span>
+                </div>
 
-                <div className="flex gap-2">
-                  <input
-                    id="water-vol-input"
-                    type="number"
-                    min="1"
-                    max="5000"
-                    value={waterVol || ''}
-                    onChange={(e) => setWaterVol(Math.max(0, parseInt(e.target.value) || 0))}
-                    className="w-32 border-b-2 border-orange-200 focus:border-orange-400 px-2 py-1 text-xs text-center focus:outline-hidden font-mono font-bold text-gray-800"
-                  />
+                {/* Input Row 1: Water Volume */}
+                <div className={`space-y-4 p-4 md:p-5 rounded-2xl border transition-all duration-300 ${
+                  hoveredStep === 2 
+                    ? 'animate-border-flash border-amber-400 bg-amber-50/15 shadow-xs' 
+                    : 'border-gray-200/70 bg-gray-50/60 hover:bg-gray-50/80 hover:border-gray-300'
+                }`}>
+                  <div className="flex justify-between items-center text-xs">
+                    <label htmlFor="water-vol-input" className="font-extrabold text-gray-700 flex items-center gap-1">
+                      💦 计划用水量 (温水数量)
+                    </label>
+                    <span className="font-semibold text-gray-500">
+                      目前设定: <span className={`font-mono text-base font-black ${theme.accentText}`}>{waterVol}</span> ml
+                    </span>
+                  </div>
                   
-                  {/* Water Quick options */}
-                  <div className="flex gap-1.5 items-center flex-wrap">
-                    {[250, 400, 500, 1000].map((v) => (
-                      <button
-                        key={v}
-                        type="button"
-                        onClick={() => setWaterVol(v)}
-                        className={`text-[10px] px-2.5 py-1 rounded-lg border transition-all ${
-                          waterVol === v 
-                            ? 'bg-orange-100 border-orange-300 text-orange-900 font-semibold font-mono'
-                            : 'bg-white hover:bg-gray-50 border-orange-100 text-gray-600 font-mono'
-                        }`}
-                      >
-                        {v}ml
-                      </button>
-                    ))}
-                    <span className="text-[10px] text-gray-400">（通常参考内胆容积）</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Input Row 2: Protein on Tin */}
-              <div className={`space-y-2 border-t border-orange-50 pt-4 p-2 rounded-xl transition-all duration-300 ${hoveredStep === 1 ? 'animate-border-flash' : ''}`}>
-                <div className="flex justify-between items-center text-xs">
-                  <label htmlFor="protein-powder-input" className="font-bold text-gray-700 flex items-center gap-1">
-                    🔍 您奶粉包装上的蛋白质含量
-                  </label>
-                  <span className="font-semibold text-gray-400">
-                    当前值: <span className="text-orange-500 font-mono text-base font-bold">{proteinPowder}</span> g/100g
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-3">
                   <input
-                    id="protein-powder-input"
-                    type="number"
-                    step="0.1"
-                    min="1"
-                    max="60"
-                    placeholder="例如: 24.0"
-                    value={proteinPowder || ''}
-                    onChange={(e) => setProteinPowder(Math.max(0, parseFloat(e.target.value) || 0))}
-                    className="w-32 border-b-2 border-orange-200 focus:border-orange-400 px-2 py-1 text-xs text-center focus:outline-hidden font-mono font-bold text-orange-600 bg-orange-50/20"
+                    id="water-vol-range"
+                    type="range"
+                    min="100"
+                    max="2000"
+                    step="50"
+                    value={waterVol}
+                    onChange={(e) => setWaterVol(parseInt(e.target.value) || 100)}
+                    className={`w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-200/80 transition-all ${theme.accentThumb}`}
                   />
-                  <div className="text-[11px] text-orange-850 leading-relaxed bg-orange-50/50 p-2.5 rounded-lg flex-1 border border-orange-100">
-                    💡 <strong>查找提示</strong>：参考右侧营养成分表图示查找此值。普通成人全脂奶粉一般为 24.0g 左右，配方粉稍低，高蛋白脱脂粉更高。
+
+                  <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <input
+                        id="water-vol-input"
+                        type="number"
+                        min="1"
+                        max="5000"
+                        value={waterVol || ''}
+                        onChange={(e) => setWaterVol(Math.max(0, parseInt(e.target.value) || 0))}
+                        className="w-24 border-b-2 border-gray-300 focus:border-slate-800 px-1 py-0.5 text-xs text-center focus:outline-hidden font-mono font-bold text-gray-800"
+                      />
+                      <span className="text-xs text-gray-400 font-bold">ml (毫升)</span>
+                    </div>
+                    
+                    {/* Water Quick options */}
+                    <div className="flex gap-1.2 items-center flex-wrap">
+                      {[250, 400, 500, 1000].map((v) => (
+                        <button
+                          key={v}
+                          type="button"
+                          onClick={() => setWaterVol(v)}
+                          className={`text-[10.5px] px-2.5 py-1 rounded-lg border transition-all duration-100 ${
+                            waterVol === v 
+                              ? theme.quickBtnActive
+                              : theme.accentButtonInactive
+                          }`}
+                        >
+                          {v}ml
+                        </button>
+                      ))}
+                      <span className="text-[9.5px] text-gray-400 hidden lg:inline">（内胆容积）</span>
+                    </div>
                   </div>
                 </div>
+
+                {/* Input Row 2: Protein on Tin */}
+                <div className={`space-y-4 p-4 md:p-5 rounded-2xl border transition-all duration-300 ${
+                  hoveredStep === 1 
+                    ? 'animate-border-flash border-amber-400 bg-amber-50/15 shadow-xs' 
+                    : 'border-gray-200/70 bg-gray-50/60 hover:bg-gray-50/80 hover:border-gray-300'
+                }`}>
+                  <div className="flex justify-between items-center text-xs">
+                    <label htmlFor="protein-powder-input" className="font-extrabold text-gray-700 flex items-center gap-1">
+                      🔍 包装标示的蛋白质含量
+                    </label>
+                    <span className="font-semibold text-gray-500">
+                      当前值: <span className={`font-mono text-base font-black ${theme.accentText}`}>{proteinPowder}</span> g/100g
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <div className="flex items-center gap-1.5 self-center sm:self-auto">
+                      <input
+                        id="protein-powder-input"
+                        type="number"
+                        step="0.1"
+                        min="1"
+                        max="60"
+                        placeholder="例如: 24.0"
+                        value={proteinPowder || ''}
+                        onChange={(e) => setProteinPowder(Math.max(0, parseFloat(e.target.value) || 0))}
+                        className="w-24 border-b-2 border-gray-300 focus:border-slate-800 px-1 py-0.5 text-xs text-center focus:outline-hidden font-mono font-bold text-gray-800"
+                      />
+                      <span className="text-xs text-gray-400 font-bold whitespace-nowrap">g / 100g</span>
+                    </div>
+                    <div className="text-[10.5px] text-gray-600 leading-relaxed bg-white/70 p-2.5 rounded-xl flex-1 border border-gray-200/70">
+                      💡 <strong>查找提示</strong>：参考奶粉包装背部营养成分表。全脂奶粉通常约 24g，高钙/脱脂粉较高 (可达 30g+)。
+                    </div>
+                  </div>
+                </div>
+
+                {/* Input Row 3: Target Yogurt Protein Strength */}
+                <div className={`space-y-4 p-4 md:p-5 rounded-2xl border transition-all duration-300 ${
+                  hoveredStep === 3 
+                    ? 'animate-border-flash border-amber-400 bg-amber-50/15 shadow-xs' 
+                    : 'border-gray-200/70 bg-gray-50/60 hover:bg-gray-50/80 hover:border-gray-300'
+                }`}>
+                  <div className="flex justify-between items-center text-xs">
+                    <label htmlFor="target-protein-range" className="font-extrabold text-gray-700 flex items-center gap-1">
+                      📐 拟调还原乳目标蛋白浓度
+                    </label>
+                    <span className={`font-black font-mono text-xs ${theme.accentText}`}>
+                      设定目标: {targetProtein}% (g/100ml)
+                    </span>
+                  </div>
+                  
+                  <input
+                    id="target-protein-range"
+                    type="range"
+                    min="3.2"
+                    max="5.0"
+                    step="0.1"
+                    value={targetProtein}
+                    onChange={(e) => setTargetProtein(Math.max(3.2, parseFloat(e.target.value) || 3.2))}
+                    className={`w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-200/80 transition-all ${theme.accentThumb}`}
+                  />
+
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                    <div className="flex items-center gap-1">
+                      <input
+                        id="target-protein-input"
+                        type="number"
+                        step="0.1"
+                        min="3.2"
+                        max="6.0"
+                        value={targetProtein || ''}
+                        onChange={(e) => setTargetProtein(Math.max(3.2, parseFloat(e.target.value) || 3.2))}
+                        className="w-20 border border-gray-200 rounded-lg px-2 py-1 text-xs text-center focus:outline-hidden font-mono font-bold text-gray-800"
+                      />
+                      <span className="text-[11px] text-gray-400">g/100ml</span>
+                    </div>
+
+                    {/* Yogurt presets button group */}
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {targetPresets.map((preset) => (
+                        <button
+                          key={preset.name}
+                          type="button"
+                          onClick={() => applyPresetFormula(preset)}
+                          className={`text-[10px] px-2.5 py-1 rounded-lg border text-left transition-all cursor-pointer ${
+                            Math.abs(targetProtein - preset.targetProtein) < 0.05
+                              ? theme.quickBtnActive
+                              : theme.accentButtonInactive
+                          }`}
+                          title={preset.desc}
+                        >
+                          {preset.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
               </div>
 
-              {/* Input Row 3: Target Yogurt Protein Strength */}
-              <div className={`space-y-2 border-t border-orange-50 pt-4 p-2 rounded-xl transition-all duration-300 ${hoveredStep === 3 ? 'animate-border-flash' : ''}`}>
-                <div className="flex justify-between items-center text-xs">
-                  <label htmlFor="target-protein-range" className="font-bold text-gray-700 flex items-center gap-1">
-                    📐 拟调还原乳目标蛋白浓度
-                  </label>
-                  <span className="text-green-600 font-bold font-mono">
-                    目标: {targetProtein}% (g/100ml)
-                  </span>
-                </div>
-                
-                <input
-                  id="target-protein-range"
-                  type="range"
-                  min="3.2"
-                  max="5.0"
-                  step="0.1"
-                  value={targetProtein}
-                  onChange={(e) => setTargetProtein(Math.max(3.2, parseFloat(e.target.value) || 3.2))}
-                  className="w-full h-2 bg-green-100 rounded-lg appearance-none cursor-pointer accent-green-400"
-                />
+            </div> {/* End Left Column */}
 
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-                  <div className="flex items-center gap-1">
-                    <input
-                      id="target-protein-input"
-                      type="number"
-                      step="0.1"
-                      min="3.2"
-                      max="6.0"
-                      value={targetProtein || ''}
-                      onChange={(e) => setTargetProtein(Math.max(3.2, parseFloat(e.target.value) || 3.2))}
-                      className="w-24 border border-gray-200 rounded-lg px-2 py-1 text-xs text-center focus:border-orange-400 focus:outline-hidden font-mono font-bold text-indigo-850 animate-fadeIn"
-                    />
-                    <span className="text-[11px] text-gray-400">g/100ml</span>
+            {/* RIGHT COLUMN: Output recommendation metrics and texture forecasting */}
+            <div className="flex flex-col h-full space-y-6">
+
+              {/* BIG RESULTS PANEL */}
+              <div id="calculator-results-card" className={`transition-all duration-300 p-6 md:p-8 rounded-3xl flex flex-col justify-center items-center text-center relative overflow-hidden flex-grow h-full space-y-4 border-2 ${theme.resultsBorder} ${theme.resultsBg}`}>
+                <span className="text-gray-400 text-xs sm:text-xs uppercase tracking-widest mb-1 font-extrabold block">换算求和 · 调配目标设定</span>
+                <p className="text-gray-500 font-semibold text-xs leading-none">本次制作配方建议加入奶粉</p>
+                
+                {isCalculationValid ? (
+                  <>
+                    <div className={`text-5xl sm:text-6xl font-black mb-1 font-mono drop-shadow-3xs select-all transition-colors duration-300 ${theme.accentText}`}>
+                      {calculatedPowder.toFixed(1)} <span className="text-xl font-bold text-gray-400 font-sans">克 (g)</span>
+                    </div>
+                    
+                    <div className="flex flex-wrap items-center justify-center gap-2 max-w-lg">
+                      <span className="px-3.5 py-1 bg-amber-500 text-white rounded-full text-xs font-black shadow-3xs animate-fadeIn">
+                        {currentTexture.rating}
+                      </span>
+                      <span className={`px-3.5 py-1 rounded-full text-xs font-bold shadow-3xs ${theme.badgeBg}`}>
+                        目标浓度: {targetProtein}g/100ml
+                      </span>
+                    </div>
+
+                    <p className="text-[11.5px] text-gray-500 leading-relaxed max-w-sm">
+                      💡 <strong>新手操作流程</strong>：量取 <strong className={theme.accentText}>{waterVol}ml 温水</strong> 注入容器，融解这个重量的奶粉并搅拌，降到常温后撒入发酵剂即可。
+                    </p>
+
+                    <div id="co2-warning-notice" className={`text-[10.5px] rounded-xl py-2.5 px-3.5 mb-1 max-w-sm leading-relaxed font-semibold flex flex-col items-center gap-1.5 justify-center transition-all duration-300 ${theme.co2Bg}`}>
+                      <span className="flex items-center gap-1 text-xs font-black">⚠️ 注意事项：发酵中会产生二氧化碳</span>
+                      <span className="text-[10px] leading-normal opacity-90 text-center">
+                        密闭发酵会导致容器内累积气压。请避免将盖子拧得过死，并在开盖时保持小心，谨防气体猛烈喷溅或顶飞瓶盖。
+                      </span>
+                    </div>
+
+                    {/* Reconstitution Ratio Indicators - Elegantly placed in results */}
+                    <div className={`p-3.5 rounded-2xl border border-dashed text-center w-full max-w-sm transition-all duration-300 ${theme.accentBg}`}>
+                      <p className={`text-[11px] font-bold ${theme.accentText}`}>
+                        ⚖️ <strong>复原比例指示 (奶粉：温水)</strong>
+                      </p>
+                      <div className="flex justify-around items-center mt-2.5 text-xs font-mono font-bold">
+                        <div>
+                          <span className="text-[9.5px] text-gray-400 block font-normal leading-none mb-1">克比 (奶粉:水)</span>
+                          约 1 : {dilutionRatio}
+                        </div>
+                        <div className="w-[1px] h-6 bg-gray-200"></div>
+                        <div>
+                          <span className="text-[9.5px] text-gray-400 block font-normal leading-none mb-1">重比 (奶粉总重量)</span>
+                          {calculatedPowder.toFixed(1)}g
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <button
+                      id="save-recipe-trigger-btn"
+                      type="button"
+                      onClick={() => {
+                        setIsSavingPanelOpen(true);
+                        setNewRecordNotes(`使用温水 ${waterVol}ml + 奶粉 ${calculatedPowder.toFixed(1)}g (蛋白质 ${proteinPowder}g/100g) 开水调试，预测口感是 ${currentTexture.rating}。`);
+                      }}
+                      className={`w-full max-w-xs py-3.5 text-white font-extrabold rounded-2xl transition-all duration-150 flex items-center justify-center gap-2 active:scale-95 hover:scale-[1.01] cursor-pointer shadow-md ${theme.saveBtnBg} ${theme.saveBtnShadow}`}
+                    >
+                      <Plus className="w-4 h-4" />
+                      <span>💾 保存本次制作配方</span>
+                    </button>
+                  </>
+                ) : (
+                  <div className="py-4 text-center">
+                    <p className="text-sm font-semibold text-red-500">{errorMsg || '等待参数输入中...'}</p>
+                    <p className="text-xs text-orange-850 mt-1">请在上方设定区间内纠正参数。</p>
+                  </div>
+                )}
+              </div>
+
+            </div> {/* End Right Column */}
+
+          </div>
+        )}
+
+        {/* LAYOUT 2: Bento Dashboard (现代立体多区块面板) */}
+        {activeLayout === 'bento' && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch animate-fadeIn">
+            {/* Left/Middle Bento Columns */}
+            <div className="lg:col-span-2 flex flex-col gap-6">
+              
+              {/* Row 1 Grid: Water Block + Powder Protein Block */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                
+                {/* Bento Card 1: Water Volume Slider & presets */}
+                <div className={`relative p-6 rounded-3xl border-2 transition-all duration-300 ${
+                  hoveredStep === 2 
+                    ? 'border-emerald-500 shadow-md ring-2 ring-emerald-400/30' 
+                    : theme.cardBorderClass
+                } ${theme.cardBgClass} flex flex-col justify-between h-full`}>
+                  {hoveredStep === 2 && (
+                    <div className="absolute inset-0 rounded-3xl pointer-events-none z-0 overflow-visible">
+                      <div className="absolute inset-0 rounded-3xl pointer-events-none animate-card-ripple-1" />
+                      <div className="absolute inset-0 rounded-3xl pointer-events-none animate-card-ripple-2" />
+                    </div>
+                  )}
+                  <div className="space-y-4 relative z-10">
+                    <div className="flex justify-between items-center border-b border-gray-100 pb-2.5">
+                      <h4 className={`font-extrabold flex items-center gap-1.5 text-xs ${theme.primaryAccent}`}>
+                        <span>💦</span> 计划水量 (温开水)
+                      </h4>
+                      <span className="text-[10px] text-gray-400 font-bold font-mono">{waterVol} ml</span>
+                    </div>
+
+                    <div className={`space-y-3.5 p-3.5 rounded-2xl border ${
+                      hoveredStep === 2 ? 'border-amber-400 bg-amber-50/15' : 'border-gray-150/60 bg-gray-50/40'
+                    }`}>
+                      <input
+                        id="bento-water-vol-range"
+                        type="range"
+                        min="100"
+                        max="5000"
+                        step="50"
+                        value={waterVol}
+                        onChange={(e) => setWaterVol(parseInt(e.target.value) || 100)}
+                        className={`w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-200/80 transition-all ${theme.accentThumb}`}
+                      />
+                      
+                      <div className="flex items-center justify-between gap-2 pt-1">
+                        <div className="flex items-center gap-1 shrink-0">
+                          <input
+                            id="bento-water-vol-input"
+                            type="number"
+                            min="1"
+                            max="5000"
+                            value={waterVol || ''}
+                            onChange={(e) => setWaterVol(Math.max(0, parseInt(e.target.value) || 0))}
+                            className="w-16 border-b border-gray-300 text-xs text-center font-mono font-bold text-gray-800 focus:outline-hidden focus:border-slate-800"
+                          />
+                          <span className="text-[10px] text-gray-400 font-bold">ml</span>
+                        </div>
+                        
+                        <div className="flex gap-1 flex-wrap shrink-0">
+                          {[250, 500, 1000, 2000, 3000, 5000].map((v) => (
+                            <button
+                              key={v}
+                              type="button"
+                              onClick={() => setWaterVol(v)}
+                              className={`text-[9.5px] px-1.5 py-0.5 rounded border transition-all ${
+                                waterVol === v ? theme.quickBtnActive : theme.accentButtonInactive
+                              }`}
+                            >
+                              {v >= 1000 ? `${v/1000}L` : `${v}ml`}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bento Card 2: Milk Powder Protein content */}
+                <div className={`relative p-6 rounded-3xl border-2 transition-all duration-300 ${
+                  hoveredStep === 1 
+                    ? 'border-emerald-500 shadow-md ring-2 ring-emerald-400/30' 
+                    : theme.cardBorderClass
+                } ${theme.cardBgClass} flex flex-col justify-between h-full`}>
+                  {hoveredStep === 1 && (
+                    <div className="absolute inset-0 rounded-3xl pointer-events-none z-0 overflow-visible">
+                      <div className="absolute inset-0 rounded-3xl pointer-events-none animate-card-ripple-1" />
+                      <div className="absolute inset-0 rounded-3xl pointer-events-none animate-card-ripple-2" />
+                    </div>
+                  )}
+                  <div className="space-y-4 relative z-10">
+                    <div className="flex justify-between items-center border-b border-gray-100 pb-2.5">
+                      <h4 className={`font-extrabold flex items-center gap-1.5 text-xs ${theme.primaryAccent}`}>
+                        <span>🔍</span> 奶粉固有蛋白质含量
+                      </h4>
+                      <span className="text-[10px] text-gray-400 font-bold font-mono">{proteinPowder} g/100g</span>
+                    </div>
+
+                    <div className={`space-y-2.5 p-3.5 rounded-2xl border ${
+                      hoveredStep === 1 ? 'border-amber-400 bg-amber-50/15' : 'border-gray-150/60 bg-gray-50/40'
+                    }`}>
+                      <div className="flex items-center justify-between">
+                        <input
+                          id="bento-protein-powder-input"
+                          type="number"
+                          step="0.1"
+                          min="1"
+                          max="60"
+                          value={proteinPowder || ''}
+                          onChange={(e) => setProteinPowder(Math.max(0, parseFloat(e.target.value) || 0))}
+                          className="w-20 border-b border-gray-300 text-xs text-center font-mono font-bold text-gray-800 focus:outline-hidden focus:border-slate-800"
+                        />
+                        <span className="text-[10px] text-gray-400 font-extrabold">g / 100g</span>
+                      </div>
+                      <p className="text-[9.5px] text-gray-500 leading-normal">
+                        请查询奶粉背部包装。全脂类大都配置在约24.0，部分脱脂在32.0。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Bento Card 3: Target Protein & Presets Block */}
+              <div className={`relative p-6 rounded-3xl border-2 transition-all duration-300 ${
+                hoveredStep === 3 
+                  ? 'border-emerald-500 shadow-md ring-2 ring-emerald-400/30' 
+                  : theme.cardBorderClass
+              } ${theme.cardBgClass}`}>
+                {hoveredStep === 3 && (
+                  <div className="absolute inset-0 rounded-3xl pointer-events-none z-0 overflow-visible">
+                    <div className="absolute inset-0 rounded-3xl pointer-events-none animate-card-ripple-1" />
+                    <div className="absolute inset-0 rounded-3xl pointer-events-none animate-card-ripple-2" />
+                  </div>
+                )}
+                <div className="space-y-4 relative z-10">
+                  <div className="flex justify-between items-center border-b border-gray-100 pb-2.5">
+                    <h4 className={`font-extrabold flex items-center gap-1.5 text-xs ${theme.primaryAccent}`}>
+                      <span>📐</span> 拟调还原乳目标蛋白浓度比例
+                    </h4>
+                    <span className="text-[10.5px] text-gray-400 font-bold">设定后将通过质量守恒精算</span>
                   </div>
 
-                  {/* Yogurt presets button group */}
-                  <div className="flex flex-wrap items-center gap-1.5">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                    <div className="md:col-span-3 space-y-2.5">
+                      <input
+                        id="bento-target-protein-range"
+                        type="range"
+                        min="3.2"
+                        max="10.0"
+                        step="0.1"
+                        value={targetProtein}
+                        onChange={(e) => setTargetProtein(Math.max(3.2, parseFloat(e.target.value) || 3.2))}
+                        className={`w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-200/80 transition-all ${theme.accentThumb}`}
+                      />
+                      <div className="flex justify-between text-[9.5px] font-bold text-gray-400 px-1">
+                        <span>3.2% (经典标准型)</span>
+                        <span>6.5% (特稠倍羹型)</span>
+                        <span>10.0% (巅峰奶酪级)</span>
+                      </div>
+                    </div>
+
+                    <div className="p-2 bg-gray-50 border border-gray-200 flex flex-col items-center justify-center rounded-2xl text-center">
+                      <span className="text-[8.5px] text-gray-400 font-extrabold block">浓度指标</span>
+                      <span className={`text-[13.5px] font-black font-mono leading-none mt-1 ${theme.accentText}`}>{targetProtein} %</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-dashed border-gray-100 mt-1">
+                    <span className="text-[10.5px] text-gray-400 font-extrabold mr-1">快捷浓度预设:</span>
                     {targetPresets.map((preset) => (
                       <button
                         key={preset.name}
                         type="button"
                         onClick={() => applyPresetFormula(preset)}
-                        className={`text-[10px] px-2.5 py-1 rounded-lg border text-left transition-all cursor-pointer ${
+                        className={`text-[9.5px] px-2.5 py-1 rounded-lg border transition-all cursor-pointer ${
                           Math.abs(targetProtein - preset.targetProtein) < 0.05
-                            ? 'bg-green-100 border-green-400 text-green-900 font-bold font-mono'
-                            : 'bg-white hover:bg-gray-50 border-gray-200 text-gray-600'
+                            ? theme.quickBtnActive
+                            : theme.accentButtonInactive
                         }`}
                         title={preset.desc}
                       >
@@ -554,84 +983,249 @@ export default function App() {
 
             </div>
 
-          </div> {/* End Left Column */}
-
-          {/* RIGHT COLUMN: Output recommendation metrics and texture forecasting */}
-          <div className="flex flex-col h-full space-y-6">
-
-            {/* BIG RESULTS PANEL */}
-            <div id="calculator-results-card" className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border-2 border-orange-100 flex flex-col justify-center items-center text-center transition-all relative overflow-hidden flex-grow h-full space-y-4">
-              <span className="text-gray-500 text-xs sm:text-sm uppercase tracking-widest mb-1 font-extrabold block">换算计算核心产出</span>
-              <p className="text-gray-500 font-medium text-xs">本次制作配方建议加入奶粉</p>
+            {/* Right Column Bento: Output Recommendation Metrics */}
+            <div className="flex flex-col h-full">
               
-              {isCalculationValid ? (
-                <>
-                  <div className="text-5xl sm:text-6xl font-black text-orange-500 mb-1 font-mono drop-shadow-xs select-all">
-                    {calculatedPowder.toFixed(1)} <span className="text-2xl font-bold text-gray-400 font-sans">克 (g)</span>
+              <div className={`transition-all duration-300 p-6 md:p-8 rounded-3xl flex flex-col justify-center items-center text-center relative overflow-hidden flex-grow h-full space-y-4 border-2 ${theme.resultsBorder} ${theme.resultsBg}`}>
+                
+                {/* Background Dynamic Wave & Concentric Ripples */}
+                {isCalculationValid && (
+                  <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden z-0">
+                    {/* Wavy liquid fluid shape */}
+                    <svg className="absolute bottom-0 left-0 w-[200%] h-32 text-emerald-100 fill-current animate-wave-flow" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                      <path d="M0,60 C150,110 300,10 450,60 C600,110 750,10 900,60 C1050,110 1200,10 1350,60 C1500,110 1650,10 1800,60 L1800,120 L0,120 Z"></path>
+                    </svg>
+                    <svg className="absolute bottom-1 left-0 w-[200%] h-28 text-emerald-200 fill-current animate-wave-flow [animation-delay:2.5s]" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                      <path d="M0,50 C180,90 350,20 500,60 C650,100 800,20 950,50 C1100,80 1250,20 1400,50 C1550,80 1700,20 1850,50 L1850,120 L0,120 Z"></path>
+                    </svg>
+                    {/* Concentric ripples radiating from center */}
+                    <div className="absolute top-1/2 left-1/2 w-56 h-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-300/60 animate-yogurt-ripple-1"></div>
+                    <div className="absolute top-1/2 left-1/2 w-56 h-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-200/50 animate-yogurt-ripple-2"></div>
+                    <div className="absolute top-1/2 left-1/2 w-56 h-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-100/40 animate-yogurt-ripple-3"></div>
                   </div>
+                )}
+
+                <div className="relative z-10 w-full flex flex-col justify-center items-center space-y-4">
+                  <span className="text-gray-400 text-xs uppercase tracking-widest font-extrabold block leading-none">Bento 智能黄金调配建议</span>
+                  <p className="text-gray-500 font-bold text-xs opacity-90 leading-none">建议调配加入干奶粉</p>
                   
-                  <div className="flex flex-wrap items-center justify-center gap-2 max-w-lg">
-                    <span className="px-3.5 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold shadow-3xs">
-                      {currentTexture.rating}
-                    </span>
-                    <span className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs font-semibold shadow-3xs">
-                      目标浓度: {targetProtein}g/100ml
-                    </span>
-                  </div>
-
-                  <p className="text-[11px] text-gray-500 leading-relaxed max-w-sm">
-                    💡 <strong>新手操作流程</strong>：量取 <strong className="text-orange-600">{waterVol}ml 温水</strong> 注入容器，完全融解这个重量的奶粉并搅拌均匀，等温凉后撒入乳菌粉发酵即可。
-                  </p>
-
-                  <div id="co2-warning-notice" className="text-[10.5px] text-amber-700 bg-amber-50/70 border border-amber-200/80 rounded-xl py-2 px-3 mb-1 max-w-sm leading-relaxed font-medium flex flex-col items-center gap-1 justify-center">
-                    <span className="flex items-center gap-1 text-amber-800 text-xs font-black">⚠️ 注意事项：发酵中会产生二氧化碳</span>
-                    <span className="text-[10px] text-amber-900 leading-normal text-center">
-                      密闭发酵会导致容器内累积气压。请避免将盖子拧得过死，并在开盖时保持小心，谨防气体猛烈喷溅、顶飞瓶盖或胀裂容器。
-                    </span>
-                  </div>
-
-                  {/* Reconstitution Ratio Indicators - Elegantly placed in results */}
-                  <div className="p-3 bg-orange-50/50 rounded-2xl border border-dashed border-orange-200 text-center w-full max-w-sm">
-                    <p className="text-[11px] text-orange-950 font-semibold">
-                      ⚖️ <strong>复原比例指示 (奶粉：温水)</strong>
-                    </p>
-                    <div className="flex justify-around items-center mt-2 text-xs font-mono font-bold text-orange-850">
-                      <div>
-                        <span className="text-[9.5px] text-gray-400 block font-normal">克比 (奶粉:水)</span>
-                        约 1 : {dilutionRatio}
+                  {isCalculationValid ? (
+                    <>
+                      <div className={`text-5xl sm:text-6xl font-black mb-1 font-mono transition-colors duration-300 ${theme.accentText}`}>
+                        {calculatedPowder.toFixed(1)} <span className="text-xl font-bold text-gray-400 font-sans">克 (g)</span>
                       </div>
-                      <div className="w-[1px] h-6 bg-orange-200"></div>
-                      <div>
-                        <span className="text-[9.5px] text-gray-400 block font-normal">调配浓度比</span>
-                        {(calculatedPowder / waterVol).toFixed(3)}g / ml
+
+                      <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-lg">
+                        <span className="px-3 bg-amber-500 text-white rounded-md text-[10px] font-black py-0.5 shadow-3xs">
+                          {currentTexture.rating}
+                        </span>
+                        <span className={`px-2 py-0.5 rounded-md text-[10px] font-black border ${theme.badgeBg}`}>
+                          蛋白比: {targetProtein}% (设定)
+                        </span>
                       </div>
+
+                      <div className="w-full border-t border-dashed border-gray-150/70 my-1"></div>
+
+                      <p className="text-[11px] text-gray-500 leading-normal max-w-xs">
+                        💦 用温水 <strong className={theme.accentText}>{waterVol}ml</strong> 充分溶解上述重量奶粉，温凉后即可加入发酵剂。
+                      </p>
+
+                      <div className={`text-[10px] rounded-xl py-2 px-3 text-center transition-all duration-300 ${theme.co2Bg}`}>
+                        ⚠️ 注意气压：密闭发酵易胀破，开盖避光请小心。
+                      </div>
+
+                      <div className={`p-3 rounded-2xl border border-dashed text-center w-full max-w-xs transition-all duration-300 ${theme.accentBg}`}>
+                        <div className="flex justify-around items-center font-mono font-bold text-xs">
+                          <div>
+                            <span className="text-[8.5px] text-gray-400 block font-normal mb-0.5">水粉克比</span>
+                            1 : {dilutionRatio}
+                          </div>
+                          <div className="w-[1px] h-5 bg-gray-200"></div>
+                          <div>
+                            <span className="text-[8.5px] text-gray-400 block font-normal mb-0.5">总配重量</span>
+                            {calculatedPowder.toFixed(1)}g
+                          </div>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsSavingPanelOpen(true);
+                          setNewRecordNotes(`温水 ${waterVol}ml + 奶粉 ${calculatedPowder.toFixed(1)}g (蛋白质 ${proteinPowder}g/100g)，预估口感是 ${currentTexture.rating}。`);
+                        }}
+                        className={`w-full py-3 text-white text-xs font-black rounded-xl transition-all duration-150 flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer shadow-sm ${theme.saveBtnBg}`}
+                      >
+                        <span>💾 保存本次手作方案</span>
+                      </button>
+                    </>
+                  ) : (
+                    <div className="py-2 text-center">
+                      <p className="text-xs font-semibold text-red-500">{errorMsg || '等待参数输入...'}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* LAYOUT 3: Compact View (一屏全流程紧凑精练聚合) */}
+        {activeLayout === 'compact' && (
+          <div className="max-w-2xl mx-auto animate-fadeIn">
+            <div className={`p-6 md:p-8 rounded-3xl border-2 transition-all duration-300 ${theme.cardBorderClass} ${theme.cardBgClass} space-y-6 shadow-md`}>
+              
+              {/* Compact title headers */}
+              <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+                <h3 className={`font-black flex items-center gap-1.5 text-xs sm:text-sm ${theme.primaryAccent}`}>
+                  <span>⚙️</span> 大师手控 · 全参数聚合冲调底座
+                </h3>
+                <span className="text-[10px] text-gray-400 font-extrabold tracking-widest block">大师模式</span>
+              </div>
+
+              {/* Tight inputs rows */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                
+                {/* Compact Box 1 (Water Vol) */}
+                <div className="bg-gray-50/50 p-3.5 rounded-2xl border border-gray-200/50 flex flex-col justify-between">
+                  <div>
+                    <div className="flex justify-between items-center text-[11px] font-extrabold text-gray-600 mb-2">
+                      <span>💦 计划温水量</span>
+                      <span className={theme.accentText}>{waterVol}ml</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="100"
+                      max="2000"
+                      step="50"
+                      value={waterVol}
+                      onChange={(e) => setWaterVol(parseInt(e.target.value) || 100)}
+                      className={`w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-gray-200/80 transition-all ${theme.accentThumb}`}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between mt-2 pt-1 border-t border-gray-100/60">
+                    <input
+                      type="number"
+                      value={waterVol || ''}
+                      onChange={(e) => setWaterVol(Math.max(0, parseInt(e.target.value) || 0))}
+                      className="w-12 border-b border-gray-300 text-[10.5px] text-center font-mono font-bold"
+                    />
+                    <div className="flex gap-0.5">
+                      {[350, 500].map((v) => (
+                        <button
+                          key={v}
+                          type="button"
+                          onClick={() => setWaterVol(v)}
+                          className="text-[9px] px-1 py-0.5 text-gray-500 border border-gray-200 hover:bg-gray-100 rounded"
+                        >
+                          {v}
+                        </button>
+                      ))}
                     </div>
                   </div>
-                  
+                </div>
+
+                {/* Compact Box 2 (Milk powder protein) */}
+                <div className="bg-gray-50/50 p-3.5 rounded-2xl border border-gray-200/50 flex flex-col justify-between">
+                  <div>
+                    <div className="flex justify-between items-center text-[11px] font-extrabold text-gray-600 mb-1">
+                      <span>🥛 奶粉蛋白质重</span>
+                    </div>
+                    <input
+                      type="number"
+                      step="0.1"
+                      min="1"
+                      max="60"
+                      value={proteinPowder || ''}
+                      onChange={(e) => setProteinPowder(Math.max(0, parseFloat(e.target.value) || 0))}
+                      className="w-full border-b border-gray-300 text-xs text-center font-mono font-bold focus:outline-hidden focus:border-slate-800 py-1"
+                    />
+                  </div>
                   <button
-                    id="save-recipe-trigger-btn"
+                    type="button"
+                    onClick={() => setIsProteinGuideModalOpen(true)}
+                    className="text-[9px] text-gray-400 hover:text-gray-600 text-left cursor-pointer truncate mt-2 leading-none block"
+                  >
+                    🔍 查找包装蛋白质比
+                  </button>
+                </div>
+
+                {/* Compact Box 3 (Target percentage) */}
+                <div className="bg-gray-50/50 p-3.5 rounded-2xl border border-gray-200/50 flex flex-col justify-between">
+                  <div>
+                    <div className="flex justify-between items-center text-[11px] font-extrabold text-gray-600 mb-2">
+                      <span>📐 目标乳蛋白质</span>
+                      <span className={theme.accentText}>{targetProtein}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="3.2"
+                      max="5.0"
+                      step="0.1"
+                      value={targetProtein}
+                      onChange={(e) => setTargetProtein(Math.max(3.2, parseFloat(e.target.value) || 3.2))}
+                      className={`w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-gray-200/80 transition-all ${theme.accentThumb}`}
+                    />
+                  </div>
+                  <div className="flex justify-between items-center mt-2.5 pt-1 border-t border-gray-100/60 font-mono text-[10px]">
+                    <span className="text-[9px] text-emerald-700 bg-emerald-100/80 px-1 py-0.5 rounded font-black font-sans leading-none">{currentTexture.rating}</span>
+                    <input
+                      type="number"
+                      step="0.1"
+                      min="3.2"
+                      max="6.0"
+                      value={targetProtein || ''}
+                      onChange={(e) => setTargetProtein(Math.max(3.2, parseFloat(e.target.value) || 3.2))}
+                      className="w-8 border-b border-gray-200 text-center"
+                    />
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Integrated Core calculation layout inside compact dashboard */}
+              {isCalculationValid ? (
+                <div className={`p-5 rounded-2xl border transition-all duration-300 flex flex-col justify-center items-center gap-3 ${theme.co2Bg}`}>
+                  <span className="text-[10px] text-gray-400 font-extrabold uppercase tracking-wide leading-none">本次大师精确配合建议</span>
+                  
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-gray-500 text-xs font-bold">加入奶粉：</span>
+                    <span className={`text-4xl font-extrabold font-mono leading-none tracking-tight ${theme.accentText}`}>
+                      {calculatedPowder.toFixed(1)} <span className="text-sm font-bold font-sans text-gray-400">克 (g)</span>
+                    </span>
+                  </div>
+
+                  <div className="w-full h-[1px] bg-gray-200/60 my-1"></div>
+
+                  <div className="flex flex-col sm:flex-row items-center justify-between w-full text-xs gap-2 px-1 text-gray-650 font-bold">
+                    <div>💦 冲水量 (温开水): <strong className={theme.accentText}>{waterVol} ml</strong></div>
+                    <div className="hidden sm:block text-gray-300">|</div>
+                    <div>⚖️ 水粉克重比: <strong className="font-mono">1 : {dilutionRatio}</strong></div>
+                  </div>
+
+                  <div className="text-[9px] opacity-80 text-center max-w-sm">
+                    💡 量杯倒入 {waterVol}ml 温水，充分搅拌乳化发酵奶粉，常温加入极少益生菌包，进行 8-10h 密闭遮光温暖恒温发酵。
+                  </div>
+
+                  <button
                     type="button"
                     onClick={() => {
                       setIsSavingPanelOpen(true);
                       setNewRecordNotes(`温水 ${waterVol}ml + 奶粉 ${calculatedPowder.toFixed(1)}g (蛋白质 ${proteinPowder}g/100g)，预估口感是 ${currentTexture.rating}。`);
                     }}
-                    className="w-full max-w-xs py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-md shadow-orange-100 hover:shadow-orange-200 transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
+                    className={`w-full py-3 text-white text-xs font-black rounded-xl transition-all duration-150 flex items-center justify-center gap-1.5 active:scale-95 shadow-sm ${theme.saveBtnBg}`}
                   >
-                    <Plus className="w-4 h-4" />
-                    <span>💾 保存本次配方记录</span>
+                    <span>💾 妥善保存进备忘录记录</span>
                   </button>
-                </>
-              ) : (
-                <div className="py-4 text-center">
-                  <p className="text-sm font-semibold text-red-500">{errorMsg || '等待参数输入中...'}</p>
-                  <p className="text-xs text-orange-800 mt-1">请在上方绿色与红色警告区间内纠正参数。</p>
                 </div>
+              ) : (
+                <p className="text-xs text-red-500 text-center font-bold">{errorMsg || '输入参数异常，请在滑块内重新设定'}</p>
               )}
+
             </div>
-
-          </div> {/* End Right Column */}
-
-        </div>
+          </div>
+        )}
 
       </div>
 
@@ -703,15 +1297,15 @@ export default function App() {
           {/* Modal Container */}
           <form 
             onSubmit={handleSaveRecipe} 
-            className="relative bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-orange-100 flex flex-col max-h-[90vh] overflow-hidden select-text animate-fadeIn"
+            className={`relative bg-white w-full max-w-lg rounded-3xl shadow-2xl border flex flex-col max-h-[90vh] overflow-hidden select-text animate-fadeIn transition-all duration-300 ${theme.cardBorderClass}`}
           >
             {/* Modal Header */}
-            <div className="p-5 bg-gradient-to-r from-orange-400 to-orange-500 text-white flex justify-between items-center shrink-0">
+            <div className={`p-5 text-white flex justify-between items-center shrink-0 transition-all duration-300 ${theme.headerBg}`}>
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center text-lg select-none">💾</div>
                 <div>
                   <h3 className="text-sm sm:text-base font-extrabold font-display tracking-tight">保存酸奶制作配方与批次</h3>
-                  <p className="text-orange-50 text-[10.5px] font-sans opacity-95">记录最佳黄金发酵比例，留存每一次的宝宝喂养心得</p>
+                  <p className="text-white/90 text-[10.5px] font-sans opacity-95">记录最佳黄金发酵比例，留存每一次的宝宝喂养心得</p>
                 </div>
               </div>
               <button
@@ -726,15 +1320,15 @@ export default function App() {
 
             {/* Modal Body */}
             <div className="p-5 md:p-6 overflow-y-auto space-y-4">
-              <div className="bg-orange-50/50 p-3 rounded-2xl border border-orange-100 text-xs text-orange-950 flex flex-col gap-1.5">
-                <div className="font-bold flex items-center gap-1.5 text-[12px] text-orange-900">
-                  <span>📝 本次建议比例:</span>
+              <div className={`p-4 rounded-2xl border text-xs flex flex-col gap-1.5 transition-all duration-300 ${theme.co2Bg}`}>
+                <div className="font-bold flex items-center gap-1.5 text-[12px] opacity-95">
+                  <span>📝 本次分配比例参考:</span>
                 </div>
-                <div className="grid grid-cols-2 gap-2 text-gray-750 text-[11.5px] font-medium leading-relaxed">
-                  <div>💦 温水量: <span className="font-bold text-orange-600 font-mono">{waterVol} ml</span></div>
-                  <div>🥛 奶粉量: <span className="font-bold text-orange-600 font-mono">{calculatedPowder.toFixed(1)} g</span></div>
-                  <div>🔍 奶粉蛋白质: <span className="font-mono">{proteinPowder} g/100g</span></div>
-                  <div>📐 目标浓度: <span className="font-mono">{targetProtein} %</span></div>
+                <div className="grid grid-cols-2 gap-2 text-[11.5px] font-medium leading-relaxed">
+                  <div>💦 温水量: <span className={`font-black font-mono ${theme.accentText}`}>{waterVol} ml</span></div>
+                  <div>🥛 奶粉量: <span className={`font-black font-mono ${theme.accentText}`}>{calculatedPowder.toFixed(1)} g</span></div>
+                  <div>🔍 奶粉蛋白质: <span className="font-bold font-mono">{proteinPowder} g/100g</span></div>
+                  <div>📐 目标浓度: <span className="font-bold font-mono">{targetProtein} %</span></div>
                 </div>
               </div>
 
@@ -746,10 +1340,10 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setNewRecordStatus('success')}
-                      className={`py-1.5 rounded-lg text-xs font-semibold select-none cursor-pointer ${
+                      className={`py-1.5 rounded-lg text-xs font-semibold select-none cursor-pointer border transition-all duration-100 ${
                         newRecordStatus === 'success' 
-                          ? 'bg-green-500 text-white' 
-                          : 'bg-white border text-green-600 hover:bg-green-50 border-gray-200'
+                          ? 'bg-green-600 border-green-600 text-white font-bold shadow-3xs' 
+                          : 'bg-white text-green-600 hover:bg-green-50 border-gray-250'
                       }`}
                     >
                       成功凝乳
@@ -757,10 +1351,10 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setNewRecordStatus('fail')}
-                      className={`py-1.5 rounded-lg text-xs font-semibold select-none cursor-pointer ${
+                      className={`py-1.5 rounded-lg text-xs font-semibold select-none cursor-pointer border transition-all duration-100 ${
                         newRecordStatus === 'fail' 
-                          ? 'bg-red-500 text-white' 
-                          : 'bg-white border text-red-600 hover:bg-red-50 border-gray-200'
+                          ? 'bg-red-600 border-red-600 text-white font-bold shadow-3xs' 
+                          : 'bg-white text-red-600 hover:bg-red-50 border-gray-250'
                       }`}
                     >
                       发酵失败
@@ -768,10 +1362,10 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setNewRecordStatus('pending')}
-                      className={`py-1.5 rounded-lg text-xs font-semibold select-none cursor-pointer ${
+                      className={`py-1.5 rounded-lg text-xs font-semibold select-none cursor-pointer border transition-all duration-100 ${
                         newRecordStatus === 'pending' 
-                          ? 'bg-amber-500 text-white' 
-                          : 'bg-white border text-amber-600 hover:bg-amber-50 border-gray-200'
+                          ? 'bg-amber-500 border-amber-500 text-white font-bold shadow-3xs' 
+                          : 'bg-white text-amber-600 hover:bg-amber-50 border-gray-250'
                       }`}
                     >
                       尚未开封
@@ -801,7 +1395,7 @@ export default function App() {
               {/* Predefined Tags preset checkboxes */}
               <div className="space-y-2">
                 <label className="text-xs font-bold text-gray-700 block">快捷风味标签 (多选):</label>
-                <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto pr-1 shrink-0 select-none border border-orange-100 bg-orange-50/10 p-2 rounded-xl">
+                <div className={`flex flex-wrap gap-1.5 max-h-32 overflow-y-auto pr-1 shrink-0 select-none border p-2.5 rounded-xl transition-all duration-300 ${theme.accentBg}`}>
                   {Array.from(new Set([
                     '完美凝固', 
                     '完美拉丝', 
@@ -834,8 +1428,8 @@ export default function App() {
                         }}
                         className={`text-[10px] px-2.5 py-1 rounded-md transition-all cursor-pointer ${
                           selected 
-                            ? 'bg-orange-500 text-white font-semibold shadow-3xs' 
-                            : 'bg-white text-gray-600 hover:text-gray-800 border-orange-100 border'
+                            ? theme.accentButtonActive + ' shadow-3xs' 
+                            : 'bg-white text-gray-600 hover:text-gray-800 border-gray-250 border'
                         }`}
                       >
                         {tag}
@@ -857,12 +1451,12 @@ export default function App() {
                         handleAddCustomSaveTag();
                       }
                     }}
-                    className="border border-orange-100 rounded-lg px-2.5 py-1.5 text-xs bg-white w-56 focus:border-orange-400 focus:outline-hidden"
+                    className="border border-gray-250 rounded-lg px-2.5 py-1.5 text-xs bg-white flex-1 focus:border-slate-800 focus:outline-hidden"
                   />
                   <button
                     type="button"
                     onClick={handleAddCustomSaveTag}
-                    className="bg-orange-100 hover:bg-orange-200 text-orange-850 px-3 py-1.5 text-xs rounded-lg font-bold transition-all cursor-pointer active:scale-95"
+                    className={`px-3 py-1.5 text-xs rounded-lg font-bold transition-all cursor-pointer active:scale-95 leading-relaxed border ${theme.accentButtonInactive}`}
                   >
                     添加分类标签
                   </button>
@@ -877,7 +1471,7 @@ export default function App() {
                   placeholder="请输入给宝宝喂养、自制发酵时长或加糖配方的反馈。例如: 宝宝第一次吃酸奶，没有加糖，配了半勺牛油果泥。大口大口全吃光了！"
                   value={newRecordNotes}
                   onChange={(e) => setNewRecordNotes(e.target.value)}
-                  className="w-full text-xs p-2.5 border rounded-xl h-20 bg-white focus:outline-hidden focus:border-orange-400 border-orange-100"
+                  className="w-full text-xs p-2.5 border rounded-xl h-20 bg-white focus:outline-hidden focus:border-slate-800 border-gray-250"
                 />
               </div>
             </div>
@@ -887,13 +1481,13 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setIsSavingPanelOpen(false)}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-1.5 rounded-lg text-xs font-medium cursor-pointer"
+                className="bg-gray-250 hover:bg-gray-300 text-gray-700 px-4 py-1.5 rounded-lg text-xs font-medium cursor-pointer"
               >
                 取消
               </button>
               <button
                 type="submit"
-                className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-1.5 rounded-lg text-xs font-bold shadow-2xs cursor-pointer"
+                className={`text-white px-5 py-1.5 rounded-lg text-xs font-extrabold shadow-2xs cursor-pointer transition-all ${theme.saveBtnBg}`}
               >
                 确认保存并收录
               </button>
@@ -909,10 +1503,10 @@ export default function App() {
           <div className="absolute inset-0 cursor-default" onClick={() => setIsHelpModalOpen(false)}></div>
           
           {/* Modal Container */}
-          <div className="relative bg-white w-full max-w-4xl rounded-3xl shadow-2xl border border-orange-100 flex flex-col max-h-[90vh] overflow-hidden select-text">
+          <div className={`relative bg-white w-full max-w-4xl rounded-3xl shadow-2xl border flex flex-col max-h-[90vh] overflow-hidden select-text transition-all duration-300 ${theme.cardBorderClass}`}>
             
             {/* Modal Header */}
-            <div className="p-6 bg-gradient-to-r from-orange-400 to-orange-500 text-white flex justify-between items-center shrink-0">
+            <div className={`p-6 text-white flex justify-between items-center shrink-0 transition-all duration-300 ${theme.headerBg}`}>
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center text-xl select-none">💡</div>
                 <div>
@@ -1047,10 +1641,10 @@ export default function App() {
       {isFormulaModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-black/60 backdrop-blur-xs animate-fadeIn">
           <div className="absolute inset-0 cursor-default" onClick={() => setIsFormulaModalOpen(false)}></div>
-          <div className="relative bg-white w-full max-w-4xl rounded-3xl shadow-2xl border border-orange-100 flex flex-col max-h-[90vh] overflow-hidden">
+          <div className={`relative bg-white w-full max-w-4xl rounded-3xl shadow-2xl border flex flex-col max-h-[90vh] overflow-hidden transition-all duration-300 ${theme.cardBorderClass}`}>
             
             {/* Header */}
-            <div className="p-5 bg-gradient-to-r from-orange-400 to-orange-500 text-white flex justify-between items-center shrink-0">
+            <div className={`p-5 text-white flex justify-between items-center shrink-0 transition-all duration-300 ${theme.headerBg}`}>
               <div className="flex items-center gap-2">
                 <span className="text-xl">📊</span>
                 <div>
@@ -1094,10 +1688,10 @@ export default function App() {
       {isProteinGuideModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-black/60 backdrop-blur-xs animate-fadeIn">
           <div className="absolute inset-0 cursor-default" onClick={() => setIsProteinGuideModalOpen(false)}></div>
-          <div className="relative bg-white w-full max-w-2xl rounded-3xl shadow-2xl border border-orange-100 flex flex-col max-h-[90vh] overflow-hidden">
+          <div className={`relative bg-white w-full max-w-2xl rounded-3xl shadow-2xl border flex flex-col max-h-[90vh] overflow-hidden transition-all duration-300 ${theme.cardBorderClass}`}>
             
             {/* Header */}
-            <div className="p-5 bg-gradient-to-r from-orange-400 to-orange-500 text-white flex justify-between items-center shrink-0">
+            <div className={`p-5 text-white flex justify-between items-center shrink-0 transition-all duration-300 ${theme.headerBg}`}>
               <div className="flex items-center gap-2">
                 <span className="text-xl">🔍</span>
                 <div>
