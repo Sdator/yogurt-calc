@@ -400,49 +400,49 @@ export default function App() {
       
       {/* 1. Top Minimalist Header Banner - Functional tool design focusing purely on calculation options */}
       <header className={`transition-all duration-300 ${theme.headerBg} p-4 shadow-xs rounded-b-2xl`}>
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-4">
+        <div className="max-w-[1500px] mx-auto flex flex-col lg:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 bg-white rounded-xl flex items-center justify-center text-lg select-none shadow-xs">🥛</div>
             <div>
-              <h1 className="text-white text-base sm:text-lg font-bold font-display tracking-tight">
+              <h1 className="text-white text-2xl sm:text-3xl font-bold font-display tracking-tight">
                 复原乳发酵酸奶比例计算器
               </h1>
-              <p className="text-orange-50 text-[11px] font-sans opacity-95">
+              <p className="text-orange-50 text-xs sm:text-sm font-sans opacity-95">
                 精准调配水和奶粉配比，使还原乳快速达到蛋白质胶层发酵浓度。
               </p>
             </div>
           </div>
           
-          <div className="flex items-center gap-1.5 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap">
             <button
               onClick={() => setIsGalleryOpen(true)}
-              className="px-3 py-1.5 bg-white/15 hover:bg-white/25 border border-white/20 text-white rounded-lg text-xs font-extrabold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
+              className="px-4 py-2 bg-white/15 hover:bg-white/25 border border-white/20 text-white rounded-xl text-lg sm:text-[18px] font-extrabold shadow-3xs flex items-center gap-1.5 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
             >
-              🖼️ 日常发酵分享
+              <span>🖼️</span> 日常发酵分享
             </button>
             <button
               onClick={() => setIsHistorySidebarOpen(true)}
-              className="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white border border-white/25 rounded-lg text-xs font-extrabold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
+              className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white border border-white/25 rounded-xl text-lg sm:text-[18px] font-extrabold shadow-3xs flex items-center gap-1.5 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
             >
-              📋 历史配方记录 ({records.length})
+              <span>📋</span> 历史配方记录 ({records.length})
             </button>
             <button
               onClick={() => setIsFormulaModalOpen(true)}
-              className="px-3 py-1.5 bg-white/10 hover:bg-white/25 text-white border border-white/20 rounded-lg text-xs font-bold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
+              className="px-4 py-2 bg-white/10 hover:bg-white/25 text-white border border-white/20 rounded-xl text-lg sm:text-[18px] font-bold shadow-3xs flex items-center gap-1.5 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
             >
-              📊 科学公式解读
+              <span>📊</span> 科学公式解读
             </button>
             <button
               onClick={() => setIsProteinGuideModalOpen(true)}
-              className="px-3 py-1.5 bg-white/10 hover:bg-white/25 text-white border border-white/20 rounded-lg text-xs font-bold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
+              className="px-4 py-2 bg-white/10 hover:bg-white/25 text-white border border-white/20 rounded-xl text-lg sm:text-[18px] font-bold shadow-3xs flex items-center gap-1.5 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
             >
-              🔍 查找蛋白质含量
+              <span>🔍</span> 查找蛋白质含量
             </button>
             <button
               onClick={() => setIsHelpModalOpen(true)}
-              className="px-3.5 py-1.5 bg-white/15 hover:bg-white/25 text-white border border-white/25 rounded-lg text-xs font-extrabold shadow-3xs flex items-center gap-1 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
+              className="px-4 py-2 bg-white/15 hover:bg-white/25 text-white border border-white/25 rounded-xl text-lg sm:text-[18px] font-extrabold shadow-3xs flex items-center gap-1.5 transition-all duration-100 hover:scale-[1.01] active:scale-[0.98] cursor-pointer"
             >
-              <HelpCircle className="w-3.5 h-3.5" />
+              <HelpCircle className="w-5 h-5" />
               <span>自制教程 & FAQ</span>
             </button>
           </div>
@@ -452,88 +452,109 @@ export default function App() {
       {/* Modern Collapsible Yogurt Photo Gallery Showcase (Now a Phone-Album Popup Modal) */}
       <YogurtGallery isOpen={isGalleryOpen} onClose={() => setIsGalleryOpen(false)} />
 
-      {/* 2. Step Guide Block - Serene and Distinctive Calm Mint Layout */}
-      <div id="quick-step-guide-bar" className="max-w-7xl mx-auto px-4 md:px-8 mt-4 animate-fadeIn">
-        <div className="bg-emerald-50/90 border border-emerald-200/80 rounded-2xl p-4 md:p-5 shadow-3xs flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all hover:shadow-xs">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl select-none animate-bounce">🧭</span>
+      {/* 2. Step Guide Block - Highly Striking and Eye-catching Yogurt Steps Tutorial Banner */}
+      <div id="quick-step-guide-bar" className="max-w-[1500px] mx-auto px-4 md:px-8 mt-4 animate-fadeIn">
+        <div className="bg-gradient-to-r from-emerald-800 via-teal-700 to-emerald-700 text-white rounded-3xl p-5 md:p-6 shadow-xl border-2 border-emerald-400/70 relative overflow-hidden flex flex-col lg:flex-row lg:items-center justify-between gap-6 transition-all duration-300 hover:shadow-2xl hover:scale-[1.005] ring-4 ring-emerald-500/20">
+          
+          {/* Decorative Background Glows */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none -mr-16 -mt-16"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-teal-400/10 rounded-full blur-2xl pointer-events-none -ml-16 -mb-16"></div>
+
+          <div className="flex items-start gap-4 relative z-10 max-w-md">
+            <div className="w-12 h-12 rounded-2xl bg-white/15 border border-white/25 flex items-center justify-center text-2xl select-none shadow-inner shrink-0 animate-bounce">
+              🧭
+            </div>
             <div>
-              <h3 className="font-display font-extrabold text-emerald-950 text-[14.5px] sm:text-[15.5px]">发酵调配核心指南</h3>
+              <div className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-amber-400 text-emerald-950 font-black text-[10px] sm:text-xs uppercase tracking-wider rounded-full mb-1.5 animate-pulse shadow-xs">
+                ⭐ 新手必读指南
+              </div>
+              <h3 className="font-display font-black text-white text-xl sm:text-2xl tracking-tight leading-tight">
+                酸奶制作教程步骤
+              </h3>
+              <p className="text-emerald-100/80 text-xs sm:text-sm mt-1 font-medium">
+                科学克重精算三步走 · 彻底告别发酵失败
+              </p>
             </div>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:flex md:items-center md:gap-4 shrink-0">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-3 items-stretch relative z-10 shrink-0 lg:max-w-4xl w-full lg:w-auto">
             {/* Step 1 */}
             <div 
               onMouseEnter={() => setHoveredStep(1)}
               onMouseLeave={() => setHoveredStep(null)}
-              className={`p-3 rounded-xl border transition-all duration-200 cursor-help ${
+              className={`p-3.5 rounded-2xl border transition-all duration-250 cursor-help flex flex-col justify-between ${
                 hoveredStep === 1 
-                  ? 'bg-emerald-600 border-emerald-700 text-white shadow-xs' 
-                  : 'bg-white border-emerald-100 text-emerald-950 hover:border-emerald-300 hover:bg-emerald-50/40'
+                  ? 'bg-white text-emerald-950 border-emerald-300 shadow-lg scale-[1.02]' 
+                  : 'bg-white/10 backdrop-blur-xs border-white/20 text-white hover:bg-white/15 hover:border-white/30'
               }`}
             >
-              <div className="flex items-center gap-1.5 leading-none">
-                <span className={`w-4.5 h-4.5 rounded-full flex items-center justify-center text-[10.5px] font-bold ${
-                  hoveredStep === 1 ? 'bg-white text-emerald-600' : 'bg-emerald-100 text-emerald-850 border border-emerald-200'
-                }`}>1</span>
-                <span className="text-xs select-none">🔍</span>
-                <span className="text-xs font-bold">查奶粉蛋白质含量</span>
+              <div>
+                <div className="flex items-center gap-1.5 leading-none">
+                  <span className={`w-5.5 h-5.5 rounded-full flex items-center justify-center text-xs font-black ${
+                    hoveredStep === 1 ? 'bg-emerald-600 text-white' : 'bg-white/20 text-white border border-white/35'
+                  }`}>1</span>
+                  <span className="text-sm select-none">🔍</span>
+                  <span className="text-sm font-black">查标示蛋白质</span>
+                </div>
+                <p className={`text-xs mt-2.5 leading-normal font-medium ${hoveredStep === 1 ? 'text-gray-600' : 'text-emerald-100/90'}`}>
+                  查询干奶粉外包装背面蛋白质克重比 (克/100克)
+                </p>
               </div>
-              <p className={`text-[10.5px] mt-1.5 leading-normal ${hoveredStep === 1 ? 'text-emerald-100/95' : 'text-gray-500'}`}>
-                包装上标示的蛋白质克重
-              </p>
             </div>
 
             {/* Step 2 */}
             <div 
               onMouseEnter={() => setHoveredStep(2)}
               onMouseLeave={() => setHoveredStep(null)}
-              className={`p-3 rounded-xl border transition-all duration-200 cursor-help ${
+              className={`p-3.5 rounded-2xl border transition-all duration-250 cursor-help flex flex-col justify-between ${
                 hoveredStep === 2 
-                  ? 'bg-emerald-600 border-emerald-700 text-white shadow-xs' 
-                  : 'bg-white border-emerald-100 text-emerald-950 hover:border-emerald-300 hover:bg-emerald-50/40'
+                  ? 'bg-white text-emerald-950 border-emerald-300 shadow-lg scale-[1.02]' 
+                  : 'bg-white/10 backdrop-blur-xs border-white/20 text-white hover:bg-white/15 hover:border-white/30'
               }`}
             >
-              <div className="flex items-center gap-1.5 leading-none">
-                <span className={`w-4.5 h-4.5 rounded-full flex items-center justify-center text-[10.5px] font-bold ${
-                  hoveredStep === 2 ? 'bg-white text-emerald-600' : 'bg-emerald-100 text-emerald-850 border border-emerald-200'
-                }`}>2</span>
-                <span className="text-xs select-none">💦</span>
-                <span className="text-xs font-bold">水容量 (温水数量)</span>
+              <div>
+                <div className="flex items-center gap-1.5 leading-none">
+                  <span className={`w-5.5 h-5.5 rounded-full flex items-center justify-center text-xs font-black ${
+                    hoveredStep === 2 ? 'bg-emerald-600 text-white' : 'bg-white/20 text-white border border-white/35'
+                  }`}>2</span>
+                  <span className="text-sm select-none">💦</span>
+                  <span className="text-sm font-black">填计划用水量</span>
+                </div>
+                <p className={`text-xs mt-2.5 leading-normal font-medium ${hoveredStep === 2 ? 'text-gray-600' : 'text-emerald-100/90'}`}>
+                  设定容器内胆中所需加入的温开水/纯净水毫升数
+                </p>
               </div>
-              <p className={`text-[10.5px] mt-1.5 leading-normal ${hoveredStep === 2 ? 'text-emerald-100/95' : 'text-gray-500'}`}>
-                拟冲调制作的总水量大小
-              </p>
             </div>
 
             {/* Step 3 */}
             <div 
               onMouseEnter={() => setHoveredStep(3)}
               onMouseLeave={() => setHoveredStep(null)}
-              className={`p-3 rounded-xl border transition-all duration-200 cursor-help ${
+              className={`p-3.5 rounded-2xl border transition-all duration-250 cursor-help flex flex-col justify-between ${
                 hoveredStep === 3 
-                  ? 'bg-emerald-600 border-emerald-700 text-white shadow-xs' 
-                  : 'bg-white border-emerald-100 text-emerald-950 hover:border-emerald-300 hover:bg-emerald-50/40'
+                  ? 'bg-white text-emerald-950 border-emerald-300 shadow-lg scale-[1.02]' 
+                  : 'bg-white/10 backdrop-blur-xs border-white/20 text-white hover:bg-white/15 hover:border-white/30'
               }`}
             >
-              <div className="flex items-center gap-1.5 leading-none">
-                <span className={`w-4.5 h-4.5 rounded-full flex items-center justify-center text-[10.5px] font-bold ${
-                  hoveredStep === 3 ? 'bg-white text-emerald-600' : 'bg-emerald-100 text-emerald-850 border border-emerald-200'
-                }`}>3</span>
-                <span className="text-xs select-none">📐</span>
-                <span className="text-xs font-bold">精准浓稠度设定</span>
+              <div>
+                <div className="flex items-center gap-1.5 leading-none">
+                  <span className={`w-5.5 h-5.5 rounded-full flex items-center justify-center text-xs font-black ${
+                    hoveredStep === 3 ? 'bg-emerald-600 text-white' : 'bg-white/20 text-white border border-white/35'
+                  }`}>3</span>
+                  <span className="text-sm select-none">📐</span>
+                  <span className="text-sm font-black">设拟调目标浓度</span>
+                </div>
+                <p className={`text-xs mt-2.5 leading-normal font-medium ${hoveredStep === 3 ? 'text-gray-600' : 'text-emerald-100/90'}`}>
+                  设定目标还原乳的最终蛋白质浓度比 (满足 ≥3.2%)
+                </p>
               </div>
-              <p className={`text-[10.5px] mt-1.5 leading-normal ${hoveredStep === 3 ? 'text-emerald-100/95' : 'text-gray-500'}`}>
-                必须满足最低标准限制 (≥ 3.2%)
-              </p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Body Container: Responsive multi-layout support */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 mt-6">
+      <div className="max-w-[1500px] mx-auto px-4 md:px-8 mt-6">
         
         {/* LAYOUT 1: Classic Split Screen (左右等宽精算版) */}
         {activeLayout === 'split' && (
@@ -550,7 +571,7 @@ export default function App() {
                     <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono font-bold ${theme.badgeBg}`}>1</span>
                     手作核心参数与比例微调
                   </h3>
-                  <span className="text-[11px] text-gray-400 font-medium">滑动或输入即可实时精算</span>
+                  <span className="text-xs sm:text-sm text-gray-500 font-semibold">滑动或输入即可实时精算</span>
                 </div>
 
                 {/* Input Row 1: Water Volume */}
@@ -559,11 +580,11 @@ export default function App() {
                     ? 'animate-border-flash border-amber-400 bg-amber-50/15 shadow-xs' 
                     : 'border-gray-200/70 bg-gray-50/60 hover:bg-gray-50/80 hover:border-gray-300'
                 }`}>
-                  <div className="flex justify-between items-center text-xs">
-                    <label htmlFor="water-vol-input" className="font-extrabold text-gray-700 flex items-center gap-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100/60 pb-2">
+                    <label htmlFor="water-vol-input" className="font-extrabold text-gray-700 flex items-center gap-1 text-lg sm:text-[18px]">
                       💦 计划用水量 (温水数量)
                     </label>
-                    <span className="font-semibold text-gray-500">
+                    <span className="font-semibold text-gray-500 text-sm">
                       目前设定: <span className={`font-mono text-base font-black ${theme.accentText}`}>{waterVol}</span> ml
                     </span>
                   </div>
@@ -594,13 +615,13 @@ export default function App() {
                     </div>
                     
                     {/* Water Quick options */}
-                    <div className="flex gap-1.2 items-center flex-wrap">
+                    <div className="flex gap-1.5 items-center flex-wrap">
                       {[250, 400, 500, 1000].map((v) => (
                         <button
                           key={v}
                           type="button"
                           onClick={() => setWaterVol(v)}
-                          className={`text-[10.5px] px-2.5 py-1 rounded-lg border transition-all duration-100 ${
+                          className={`text-xs sm:text-sm px-3 py-1.5 rounded-lg border transition-all duration-100 font-bold ${
                             waterVol === v 
                               ? theme.quickBtnActive
                               : theme.accentButtonInactive
@@ -609,7 +630,7 @@ export default function App() {
                           {v}ml
                         </button>
                       ))}
-                      <span className="text-[9.5px] text-gray-400 hidden lg:inline">（内胆容积）</span>
+                      <span className="text-xs text-gray-500 hidden lg:inline font-bold">（内胆容积）</span>
                     </div>
                   </div>
                 </div>
@@ -620,11 +641,11 @@ export default function App() {
                     ? 'animate-border-flash border-amber-400 bg-amber-50/15 shadow-xs' 
                     : 'border-gray-200/70 bg-gray-50/60 hover:bg-gray-50/80 hover:border-gray-300'
                 }`}>
-                  <div className="flex justify-between items-center text-xs">
-                    <label htmlFor="protein-powder-input" className="font-extrabold text-gray-700 flex items-center gap-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100/60 pb-2">
+                    <label htmlFor="protein-powder-input" className="font-extrabold text-gray-700 flex items-center gap-1 text-lg sm:text-[18px]">
                       🔍 包装标示的蛋白质含量
                     </label>
-                    <span className="font-semibold text-gray-500">
+                    <span className="font-semibold text-gray-500 text-sm">
                       当前值: <span className={`font-mono text-base font-black ${theme.accentText}`}>{proteinPowder}</span> g/100g
                     </span>
                   </div>
@@ -640,11 +661,11 @@ export default function App() {
                         placeholder="例如: 24.0"
                         value={proteinPowder || ''}
                         onChange={(e) => setProteinPowder(Math.max(0, parseFloat(e.target.value) || 0))}
-                        className="w-24 border-b-2 border-gray-300 focus:border-slate-800 px-1 py-0.5 text-xs text-center focus:outline-hidden font-mono font-bold text-gray-800"
+                        className="w-24 border-b-2 border-gray-300 focus:border-slate-800 px-1 py-0.5 text-sm text-center focus:outline-hidden font-mono font-bold text-gray-800"
                       />
-                      <span className="text-xs text-gray-400 font-bold whitespace-nowrap">g / 100g</span>
+                      <span className="text-xs sm:text-sm text-gray-500 font-bold whitespace-nowrap">g / 100g</span>
                     </div>
-                    <div className="text-[10.5px] text-gray-600 leading-relaxed bg-white/70 p-2.5 rounded-xl flex-1 border border-gray-200/70">
+                    <div className="text-xs sm:text-sm text-gray-650 leading-relaxed bg-white/70 p-3 rounded-xl flex-1 border border-gray-200/70">
                       💡 <strong>查找提示</strong>：参考奶粉包装背部营养成分表。全脂奶粉通常约 24g，高钙/脱脂粉较高 (可达 30g+)。
                     </div>
                   </div>
@@ -656,11 +677,11 @@ export default function App() {
                     ? 'animate-border-flash border-amber-400 bg-amber-50/15 shadow-xs' 
                     : 'border-gray-200/70 bg-gray-50/60 hover:bg-gray-50/80 hover:border-gray-300'
                 }`}>
-                  <div className="flex justify-between items-center text-xs">
-                    <label htmlFor="target-protein-range" className="font-extrabold text-gray-700 flex items-center gap-1">
-                      📐 拟调还原乳目标蛋白浓度
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100/60 pb-2">
+                    <label htmlFor="target-protein-range" className="font-extrabold text-gray-700 flex items-center gap-1 text-lg sm:text-[18px]">
+                      📐 拟调还原乳目标蛋白浓度比例
                     </label>
-                    <span className={`font-black font-mono text-xs ${theme.accentText}`}>
+                    <span className={`font-black font-mono text-sm ${theme.accentText}`}>
                       设定目标: {targetProtein}% (g/100ml)
                     </span>
                   </div>
@@ -676,7 +697,7 @@ export default function App() {
                     className={`w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-200/80 transition-all ${theme.accentThumb}`}
                   />
 
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-sm">
                     <div className="flex items-center gap-1">
                       <input
                         id="target-protein-input"
@@ -688,7 +709,7 @@ export default function App() {
                         onChange={(e) => setTargetProtein(Math.max(3.2, parseFloat(e.target.value) || 3.2))}
                         className="w-20 border border-gray-200 rounded-lg px-2 py-1 text-xs text-center focus:outline-hidden font-mono font-bold text-gray-800"
                       />
-                      <span className="text-[11px] text-gray-400">g/100ml</span>
+                      <span className="text-xs sm:text-sm text-gray-500 font-bold">g/100ml</span>
                     </div>
 
                     {/* Yogurt presets button group */}
@@ -698,7 +719,7 @@ export default function App() {
                           key={preset.name}
                           type="button"
                           onClick={() => applyPresetFormula(preset)}
-                          className={`text-[10px] px-2.5 py-1 rounded-lg border text-left transition-all cursor-pointer ${
+                          className={`text-xs sm:text-sm px-3 py-1.5 rounded-lg border text-left transition-all cursor-pointer font-bold ${
                             Math.abs(targetProtein - preset.targetProtein) < 0.05
                               ? theme.quickBtnActive
                               : theme.accentButtonInactive
@@ -721,8 +742,8 @@ export default function App() {
 
               {/* BIG RESULTS PANEL */}
               <div id="calculator-results-card" className={`transition-all duration-300 p-6 md:p-8 rounded-3xl flex flex-col justify-center items-center text-center relative overflow-hidden flex-grow h-full space-y-4 border-2 ${theme.resultsBorder} ${theme.resultsBg}`}>
-                <span className="text-gray-400 text-xs sm:text-xs uppercase tracking-widest mb-1 font-extrabold block">换算求和 · 调配目标设定</span>
-                <p className="text-gray-500 font-semibold text-xs leading-none">本次制作配方建议加入奶粉</p>
+                <span className="text-gray-500 text-xs sm:text-sm uppercase tracking-widest mb-1 font-extrabold block">换算求和 · 调配目标设定</span>
+                <p className="text-gray-600 font-bold text-xs sm:text-sm leading-none">本次制作配方建议加入奶粉</p>
                 
                 {isCalculationValid ? (
                   <>
@@ -731,38 +752,38 @@ export default function App() {
                     </div>
                     
                     <div className="flex flex-wrap items-center justify-center gap-2 max-w-lg">
-                      <span className="px-3.5 py-1 bg-amber-500 text-white rounded-full text-xs font-black shadow-3xs animate-fadeIn">
+                      <span className="px-3.5 py-1 bg-amber-500 text-white rounded-full text-xs sm:text-sm font-black shadow-3xs animate-fadeIn">
                         {currentTexture.rating}
                       </span>
-                      <span className={`px-3.5 py-1 rounded-full text-xs font-bold shadow-3xs ${theme.badgeBg}`}>
+                      <span className={`px-3.5 py-1 rounded-full text-xs sm:text-sm font-bold shadow-3xs ${theme.badgeBg}`}>
                         目标浓度: {targetProtein}g/100ml
                       </span>
                     </div>
 
-                    <p className="text-[11.5px] text-gray-500 leading-relaxed max-w-sm">
+                    <p className="text-xs sm:text-sm text-gray-500 leading-relaxed max-w-sm">
                       💡 <strong>新手操作流程</strong>：量取 <strong className={theme.accentText}>{waterVol}ml 温水</strong> 注入容器，融解这个重量的奶粉并搅拌，降到常温后撒入发酵剂即可。
                     </p>
 
-                    <div id="co2-warning-notice" className={`text-[10.5px] rounded-xl py-2.5 px-3.5 mb-1 max-w-sm leading-relaxed font-semibold flex flex-col items-center gap-1.5 justify-center transition-all duration-300 ${theme.co2Bg}`}>
-                      <span className="flex items-center gap-1 text-xs font-black">⚠️ 注意事项：发酵中会产生二氧化碳</span>
-                      <span className="text-[10px] leading-normal opacity-90 text-center">
+                    <div id="co2-warning-notice" className={`text-xs sm:text-sm rounded-xl py-2.5 px-3.5 mb-1 max-w-sm leading-relaxed font-semibold flex flex-col items-center gap-1.5 justify-center transition-all duration-300 ${theme.co2Bg}`}>
+                      <span className="flex items-center gap-1 text-xs sm:text-sm font-black">⚠️ 注意事项：发酵中会产生二氧化碳</span>
+                      <span className="text-xs sm:text-sm leading-normal opacity-90 text-center">
                         密闭发酵会导致容器内累积气压。请避免将盖子拧得过死，并在开盖时保持小心，谨防气体猛烈喷溅或顶飞瓶盖。
                       </span>
                     </div>
 
                     {/* Reconstitution Ratio Indicators - Elegantly placed in results */}
                     <div className={`p-3.5 rounded-2xl border border-dashed text-center w-full max-w-sm transition-all duration-300 ${theme.accentBg}`}>
-                      <p className={`text-[11px] font-bold ${theme.accentText}`}>
+                      <p className={`text-xs sm:text-sm font-bold ${theme.accentText}`}>
                         ⚖️ <strong>复原比例指示 (奶粉：温水)</strong>
                       </p>
-                      <div className="flex justify-around items-center mt-2.5 text-xs font-mono font-bold">
+                      <div className="flex justify-around items-center mt-2.5 text-xs sm:text-sm font-mono font-bold">
                         <div>
-                          <span className="text-[9.5px] text-gray-400 block font-normal leading-none mb-1">克比 (奶粉:水)</span>
+                          <span className="text-xs text-gray-500 block font-normal leading-none mb-1">克比 (奶粉:水)</span>
                           约 1 : {dilutionRatio}
                         </div>
                         <div className="w-[1px] h-6 bg-gray-200"></div>
                         <div>
-                          <span className="text-[9.5px] text-gray-400 block font-normal leading-none mb-1">重比 (奶粉总重量)</span>
+                          <span className="text-xs text-gray-500 block font-normal leading-none mb-1">重比 (奶粉总重量)</span>
                           {calculatedPowder.toFixed(1)}g
                         </div>
                       </div>
@@ -816,11 +837,11 @@ export default function App() {
                     </div>
                   )}
                   <div className="space-y-4 relative z-10">
-                    <div className="flex justify-between items-center border-b border-gray-100 pb-2.5">
-                      <h4 className={`font-extrabold flex items-center gap-1.5 text-xs ${theme.primaryAccent}`}>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-100 pb-2.5 gap-2">
+                      <h4 className={`font-extrabold flex items-center gap-1.5 text-lg sm:text-[18px] ${theme.primaryAccent}`}>
                         <span>💦</span> 计划水量 (温开水)
                       </h4>
-                      <span className="text-[10px] text-gray-400 font-bold font-mono">{waterVol} ml</span>
+                      <span className="text-sm sm:text-base text-gray-650 font-black font-mono self-start sm:self-auto shrink-0">{waterVol} ml</span>
                     </div>
 
                     <div className={`space-y-3.5 p-3.5 rounded-2xl border ${
@@ -837,8 +858,8 @@ export default function App() {
                         className={`w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-200/80 transition-all ${theme.accentThumb}`}
                       />
                       
-                      <div className="flex items-center justify-between gap-2 pt-1">
-                        <div className="flex items-center gap-1 shrink-0">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+                        <div className="flex items-center gap-1.5">
                           <input
                             id="bento-water-vol-input"
                             type="number"
@@ -848,22 +869,40 @@ export default function App() {
                             onChange={(e) => setWaterVol(Math.max(0, parseInt(e.target.value) || 0))}
                             className="w-16 border-b border-gray-300 text-xs text-center font-mono font-bold text-gray-800 focus:outline-hidden focus:border-slate-800"
                           />
-                          <span className="text-[10px] text-gray-400 font-bold">ml</span>
+                          <span className="text-xs sm:text-sm text-gray-500 font-bold">ml</span>
                         </div>
                         
-                        <div className="flex gap-1 flex-wrap shrink-0">
-                          {[250, 500, 1000, 2000, 3000, 5000].map((v) => (
-                            <button
-                              key={v}
-                              type="button"
-                              onClick={() => setWaterVol(v)}
-                              className={`text-[9.5px] px-1.5 py-0.5 rounded border transition-all ${
-                                waterVol === v ? theme.quickBtnActive : theme.accentButtonInactive
-                              }`}
-                            >
-                              {v >= 1000 ? `${v/1000}L` : `${v}ml`}
-                            </button>
-                          ))}
+                        <div className="flex flex-col items-center justify-center gap-1.5">
+                          {/* ml Row */}
+                          <div className="flex gap-1.5 items-center justify-center">
+                            {[250, 500].map((v) => (
+                              <button
+                                key={v}
+                                type="button"
+                                onClick={() => setWaterVol(v)}
+                                className={`text-xs sm:text-sm px-2.5 py-1 rounded border transition-all font-bold ${
+                                  waterVol === v ? theme.quickBtnActive : theme.accentButtonInactive
+                                }`}
+                              >
+                                {v}ml
+                              </button>
+                            ))}
+                          </div>
+                          {/* L Row */}
+                          <div className="flex gap-1.5 items-center justify-center">
+                            {[1000, 2000, 3000, 5000].map((v) => (
+                              <button
+                                key={v}
+                                type="button"
+                                onClick={() => setWaterVol(v)}
+                                className={`text-xs sm:text-sm px-2.5 py-1 rounded border transition-all font-bold ${
+                                  waterVol === v ? theme.quickBtnActive : theme.accentButtonInactive
+                                }`}
+                              >
+                                {v / 1000}L
+                              </button>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -883,11 +922,11 @@ export default function App() {
                     </div>
                   )}
                   <div className="space-y-4 relative z-10">
-                    <div className="flex justify-between items-center border-b border-gray-100 pb-2.5">
-                      <h4 className={`font-extrabold flex items-center gap-1.5 text-xs ${theme.primaryAccent}`}>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-100 pb-2.5 gap-2">
+                      <h4 className={`font-extrabold flex items-center gap-1.5 text-lg sm:text-[18px] ${theme.primaryAccent}`}>
                         <span>🔍</span> 奶粉固有蛋白质含量
                       </h4>
-                      <span className="text-[10px] text-gray-400 font-bold font-mono">{proteinPowder} g/100g</span>
+                      <span className="text-sm sm:text-base text-gray-650 font-black font-mono self-start sm:self-auto shrink-0">{proteinPowder} g/100g</span>
                     </div>
 
                     <div className={`space-y-2.5 p-3.5 rounded-2xl border ${
@@ -904,9 +943,9 @@ export default function App() {
                           onChange={(e) => setProteinPowder(Math.max(0, parseFloat(e.target.value) || 0))}
                           className="w-20 border-b border-gray-300 text-xs text-center font-mono font-bold text-gray-800 focus:outline-hidden focus:border-slate-800"
                         />
-                        <span className="text-[10px] text-gray-400 font-extrabold">g / 100g</span>
+                        <span className="text-xs sm:text-sm text-gray-500 font-extrabold">g / 100g</span>
                       </div>
-                      <p className="text-[9.5px] text-gray-500 leading-normal">
+                      <p className="text-xs sm:text-sm text-gray-500 leading-normal font-medium">
                         请查询奶粉背部包装。全脂类大都配置在约24.0，部分脱脂在32.0。
                       </p>
                     </div>
@@ -928,11 +967,11 @@ export default function App() {
                   </div>
                 )}
                 <div className="space-y-4 relative z-10">
-                  <div className="flex justify-between items-center border-b border-gray-100 pb-2.5">
-                    <h4 className={`font-extrabold flex items-center gap-1.5 text-xs ${theme.primaryAccent}`}>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-100 pb-2.5 gap-2">
+                    <h4 className={`font-extrabold flex items-center gap-1.5 text-lg sm:text-[18px] ${theme.primaryAccent}`}>
                       <span>📐</span> 拟调还原乳目标蛋白浓度比例
                     </h4>
-                    <span className="text-[10.5px] text-gray-400 font-bold">设定后将通过质量守恒精算</span>
+                    <span className="text-xs sm:text-sm text-gray-500 font-bold self-start sm:self-auto shrink-0">设定后将通过质量守恒精算</span>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
@@ -947,7 +986,7 @@ export default function App() {
                         onChange={(e) => setTargetProtein(Math.max(3.2, parseFloat(e.target.value) || 3.2))}
                         className={`w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-200/80 transition-all ${theme.accentThumb}`}
                       />
-                      <div className="flex justify-between text-[9.5px] font-bold text-gray-400 px-1">
+                      <div className="flex justify-between text-xs sm:text-sm font-bold text-gray-550 px-1">
                         <span>3.2% (经典标准型)</span>
                         <span>6.5% (特稠倍羹型)</span>
                         <span>10.0% (巅峰奶酪级)</span>
@@ -955,19 +994,19 @@ export default function App() {
                     </div>
 
                     <div className="p-2 bg-gray-50 border border-gray-200 flex flex-col items-center justify-center rounded-2xl text-center">
-                      <span className="text-[8.5px] text-gray-400 font-extrabold block">浓度指标</span>
-                      <span className={`text-[13.5px] font-black font-mono leading-none mt-1 ${theme.accentText}`}>{targetProtein} %</span>
+                      <span className="text-xs sm:text-sm text-gray-500 font-extrabold block">浓度指标</span>
+                      <span className={`text-sm sm:text-base font-black font-mono leading-none mt-1 ${theme.accentText}`}>{targetProtein} %</span>
                     </div>
                   </div>
 
                   <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-dashed border-gray-100 mt-1">
-                    <span className="text-[10.5px] text-gray-400 font-extrabold mr-1">快捷浓度预设:</span>
+                    <span className="text-xs sm:text-sm text-gray-500 font-extrabold mr-1">快捷浓度预设:</span>
                     {targetPresets.map((preset) => (
                       <button
                         key={preset.name}
                         type="button"
                         onClick={() => applyPresetFormula(preset)}
-                        className={`text-[9.5px] px-2.5 py-1 rounded-lg border transition-all cursor-pointer ${
+                        className={`text-xs sm:text-sm px-2.5 py-1 rounded-lg border transition-all cursor-pointer font-bold ${
                           Math.abs(targetProtein - preset.targetProtein) < 0.05
                             ? theme.quickBtnActive
                             : theme.accentButtonInactive
@@ -999,15 +1038,15 @@ export default function App() {
                       <path d="M0,50 C180,90 350,20 500,60 C650,100 800,20 950,50 C1100,80 1250,20 1400,50 C1550,80 1700,20 1850,50 L1850,120 L0,120 Z"></path>
                     </svg>
                     {/* Concentric ripples radiating from center */}
-                    <div className="absolute top-1/2 left-1/2 w-56 h-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-300/60 animate-yogurt-ripple-1"></div>
-                    <div className="absolute top-1/2 left-1/2 w-56 h-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-200/50 animate-yogurt-ripple-2"></div>
-                    <div className="absolute top-1/2 left-1/2 w-56 h-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-100/40 animate-yogurt-ripple-3"></div>
+                    <div className="absolute top-1/2 left-1/2 w-56 h-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-amber-400/60 animate-yogurt-ripple-1"></div>
+                    <div className="absolute top-1/2 left-1/2 w-56 h-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-orange-400/50 animate-yogurt-ripple-2"></div>
+                    <div className="absolute top-1/2 left-1/2 w-56 h-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-amber-300/40 animate-yogurt-ripple-3"></div>
                   </div>
                 )}
 
                 <div className="relative z-10 w-full flex flex-col justify-center items-center space-y-4">
-                  <span className="text-gray-400 text-xs uppercase tracking-widest font-extrabold block leading-none">Bento 智能黄金调配建议</span>
-                  <p className="text-gray-500 font-bold text-xs opacity-90 leading-none">建议调配加入干奶粉</p>
+                  <span className="text-gray-500 text-xs sm:text-sm uppercase tracking-widest font-extrabold block leading-none">Bento 智能黄金调配建议</span>
+                  <p className="text-gray-600 font-bold text-xs sm:text-sm opacity-90 leading-none">建议调配加入干奶粉</p>
                   
                   {isCalculationValid ? (
                     <>
@@ -1016,33 +1055,33 @@ export default function App() {
                       </div>
 
                       <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-lg">
-                        <span className="px-3 bg-amber-500 text-white rounded-md text-[10px] font-black py-0.5 shadow-3xs">
+                        <span className="px-3 bg-amber-500 text-white rounded-md text-xs sm:text-sm font-black py-0.5 shadow-3xs">
                           {currentTexture.rating}
                         </span>
-                        <span className={`px-2 py-0.5 rounded-md text-[10px] font-black border ${theme.badgeBg}`}>
+                        <span className={`px-2 py-0.5 rounded-md text-xs sm:text-sm font-black border ${theme.badgeBg}`}>
                           蛋白比: {targetProtein}% (设定)
                         </span>
                       </div>
 
                       <div className="w-full border-t border-dashed border-gray-150/70 my-1"></div>
 
-                      <p className="text-[11px] text-gray-500 leading-normal max-w-xs">
+                      <p className="text-xs sm:text-sm text-gray-500 leading-normal max-w-xs font-semibold">
                         💦 用温水 <strong className={theme.accentText}>{waterVol}ml</strong> 充分溶解上述重量奶粉，温凉后即可加入发酵剂。
                       </p>
 
-                      <div className={`text-[10px] rounded-xl py-2 px-3 text-center transition-all duration-300 ${theme.co2Bg}`}>
+                      <div className={`text-xs sm:text-sm rounded-xl py-2 px-3 text-center transition-all duration-300 ${theme.co2Bg} font-bold`}>
                         ⚠️ 注意气压：密闭发酵易胀破，开盖避光请小心。
                       </div>
 
                       <div className={`p-3 rounded-2xl border border-dashed text-center w-full max-w-xs transition-all duration-300 ${theme.accentBg}`}>
-                        <div className="flex justify-around items-center font-mono font-bold text-xs">
+                        <div className="flex justify-around items-center font-mono font-bold text-xs sm:text-sm">
                           <div>
-                            <span className="text-[8.5px] text-gray-400 block font-normal mb-0.5">水粉克比</span>
+                            <span className="text-xs text-gray-500 block font-normal mb-0.5">水粉克比</span>
                             1 : {dilutionRatio}
                           </div>
                           <div className="w-[1px] h-5 bg-gray-200"></div>
                           <div>
-                            <span className="text-[8.5px] text-gray-400 block font-normal mb-0.5">总配重量</span>
+                            <span className="text-xs text-gray-500 block font-normal mb-0.5">总配重量</span>
                             {calculatedPowder.toFixed(1)}g
                           </div>
                         </div>
@@ -1081,7 +1120,7 @@ export default function App() {
                 <h3 className={`font-black flex items-center gap-1.5 text-xs sm:text-sm ${theme.primaryAccent}`}>
                   <span>⚙️</span> 大师手控 · 全参数聚合冲调底座
                 </h3>
-                <span className="text-[10px] text-gray-400 font-extrabold tracking-widest block">大师模式</span>
+                <span className="text-xs sm:text-sm text-gray-500 font-bold tracking-widest block">大师模式</span>
               </div>
 
               {/* Tight inputs rows */}
@@ -1090,7 +1129,7 @@ export default function App() {
                 {/* Compact Box 1 (Water Vol) */}
                 <div className="bg-gray-50/50 p-3.5 rounded-2xl border border-gray-200/50 flex flex-col justify-between">
                   <div>
-                    <div className="flex justify-between items-center text-[11px] font-extrabold text-gray-600 mb-2">
+                    <div className="flex justify-between items-center text-xs sm:text-sm font-extrabold text-gray-650 mb-2">
                       <span>💦 计划温水量</span>
                       <span className={theme.accentText}>{waterVol}ml</span>
                     </div>
@@ -1109,15 +1148,15 @@ export default function App() {
                       type="number"
                       value={waterVol || ''}
                       onChange={(e) => setWaterVol(Math.max(0, parseInt(e.target.value) || 0))}
-                      className="w-12 border-b border-gray-300 text-[10.5px] text-center font-mono font-bold"
+                      className="w-12 border-b border-gray-300 text-xs text-center font-mono font-bold text-gray-800"
                     />
-                    <div className="flex gap-0.5">
+                    <div className="flex gap-1">
                       {[350, 500].map((v) => (
                         <button
                           key={v}
                           type="button"
                           onClick={() => setWaterVol(v)}
-                          className="text-[9px] px-1 py-0.5 text-gray-500 border border-gray-200 hover:bg-gray-100 rounded"
+                          className="text-xs px-2 py-1 text-gray-650 border border-gray-200 hover:bg-gray-100 rounded font-bold"
                         >
                           {v}
                         </button>
@@ -1129,7 +1168,7 @@ export default function App() {
                 {/* Compact Box 2 (Milk powder protein) */}
                 <div className="bg-gray-50/50 p-3.5 rounded-2xl border border-gray-200/50 flex flex-col justify-between">
                   <div>
-                    <div className="flex justify-between items-center text-[11px] font-extrabold text-gray-600 mb-1">
+                    <div className="flex justify-between items-center text-xs sm:text-sm font-extrabold text-gray-650 mb-1">
                       <span>🥛 奶粉蛋白质重</span>
                     </div>
                     <input
@@ -1139,13 +1178,13 @@ export default function App() {
                       max="60"
                       value={proteinPowder || ''}
                       onChange={(e) => setProteinPowder(Math.max(0, parseFloat(e.target.value) || 0))}
-                      className="w-full border-b border-gray-300 text-xs text-center font-mono font-bold focus:outline-hidden focus:border-slate-800 py-1"
+                      className="w-full border-b border-gray-300 text-xs sm:text-sm text-center font-mono font-bold focus:outline-hidden focus:border-slate-800 py-1 text-gray-800"
                     />
                   </div>
                   <button
                     type="button"
                     onClick={() => setIsProteinGuideModalOpen(true)}
-                    className="text-[9px] text-gray-400 hover:text-gray-600 text-left cursor-pointer truncate mt-2 leading-none block"
+                    className="text-xs sm:text-sm text-gray-500 hover:text-gray-700 text-left cursor-pointer truncate mt-2 leading-none block font-bold"
                   >
                     🔍 查找包装蛋白质比
                   </button>
@@ -1154,7 +1193,7 @@ export default function App() {
                 {/* Compact Box 3 (Target percentage) */}
                 <div className="bg-gray-50/50 p-3.5 rounded-2xl border border-gray-200/50 flex flex-col justify-between">
                   <div>
-                    <div className="flex justify-between items-center text-[11px] font-extrabold text-gray-600 mb-2">
+                    <div className="flex justify-between items-center text-xs sm:text-sm font-extrabold text-gray-650 mb-2">
                       <span>📐 目标乳蛋白质</span>
                       <span className={theme.accentText}>{targetProtein}%</span>
                     </div>
@@ -1168,8 +1207,8 @@ export default function App() {
                       className={`w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-gray-200/80 transition-all ${theme.accentThumb}`}
                     />
                   </div>
-                  <div className="flex justify-between items-center mt-2.5 pt-1 border-t border-gray-100/60 font-mono text-[10px]">
-                    <span className="text-[9px] text-emerald-700 bg-emerald-100/80 px-1 py-0.5 rounded font-black font-sans leading-none">{currentTexture.rating}</span>
+                  <div className="flex justify-between items-center mt-2.5 pt-1 border-t border-gray-100/60 font-mono text-xs sm:text-sm">
+                    <span className="text-xs text-emerald-700 bg-emerald-100/80 px-1 py-0.5 rounded font-black font-sans leading-none">{currentTexture.rating}</span>
                     <input
                       type="number"
                       step="0.1"
@@ -1177,7 +1216,7 @@ export default function App() {
                       max="6.0"
                       value={targetProtein || ''}
                       onChange={(e) => setTargetProtein(Math.max(3.2, parseFloat(e.target.value) || 3.2))}
-                      className="w-8 border-b border-gray-200 text-center"
+                      className="w-8 border-b border-gray-200 text-center text-gray-800 font-bold"
                     />
                   </div>
                 </div>
@@ -1187,10 +1226,10 @@ export default function App() {
               {/* Integrated Core calculation layout inside compact dashboard */}
               {isCalculationValid ? (
                 <div className={`p-5 rounded-2xl border transition-all duration-300 flex flex-col justify-center items-center gap-3 ${theme.co2Bg}`}>
-                  <span className="text-[10px] text-gray-400 font-extrabold uppercase tracking-wide leading-none">本次大师精确配合建议</span>
+                  <span className="text-xs sm:text-sm text-gray-500 font-extrabold uppercase tracking-wide leading-none">本次大师精确配合建议</span>
                   
                   <div className="flex items-baseline gap-2">
-                    <span className="text-gray-500 text-xs font-bold">加入奶粉：</span>
+                    <span className="text-gray-650 text-xs sm:text-sm font-bold">加入奶粉：</span>
                     <span className={`text-4xl font-extrabold font-mono leading-none tracking-tight ${theme.accentText}`}>
                       {calculatedPowder.toFixed(1)} <span className="text-sm font-bold font-sans text-gray-400">克 (g)</span>
                     </span>
@@ -1198,13 +1237,13 @@ export default function App() {
 
                   <div className="w-full h-[1px] bg-gray-200/60 my-1"></div>
 
-                  <div className="flex flex-col sm:flex-row items-center justify-between w-full text-xs gap-2 px-1 text-gray-650 font-bold">
+                  <div className="flex flex-col sm:flex-row items-center justify-between w-full text-xs sm:text-sm gap-2 px-1 text-gray-650 font-bold font-semibold">
                     <div>💦 冲水量 (温开水): <strong className={theme.accentText}>{waterVol} ml</strong></div>
                     <div className="hidden sm:block text-gray-300">|</div>
                     <div>⚖️ 水粉克重比: <strong className="font-mono">1 : {dilutionRatio}</strong></div>
                   </div>
 
-                  <div className="text-[9px] opacity-80 text-center max-w-sm">
+                  <div className="text-xs sm:text-sm opacity-85 text-center max-w-sm font-medium">
                     💡 量杯倒入 {waterVol}ml 温水，充分搅拌乳化发酵奶粉，常温加入极少益生菌包，进行 8-10h 密闭遮光温暖恒温发酵。
                   </div>
 
@@ -1503,23 +1542,23 @@ export default function App() {
           <div className="absolute inset-0 cursor-default" onClick={() => setIsHelpModalOpen(false)}></div>
           
           {/* Modal Container */}
-          <div className={`relative bg-white w-full max-w-4xl rounded-3xl shadow-2xl border flex flex-col max-h-[90vh] overflow-hidden select-text transition-all duration-300 ${theme.cardBorderClass}`}>
+          <div className={`relative bg-white w-full max-w-5xl rounded-3xl shadow-2xl border flex flex-col max-h-[90vh] overflow-hidden select-text transition-all duration-300 ${theme.cardBorderClass}`}>
             
             {/* Modal Header */}
             <div className={`p-6 text-white flex justify-between items-center shrink-0 transition-all duration-300 ${theme.headerBg}`}>
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center text-xl select-none">💡</div>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center text-2xl select-none">💡</div>
                 <div>
-                  <h3 className="text-lg font-black font-display tracking-tight">自制酸奶：科学指南 & 新手经典答疑</h3>
-                  <p className="text-orange-100 text-[11px] font-sans">让自制复原酸奶更简单 · 让新手父母育儿更省心</p>
+                  <h3 className="text-xl sm:text-2xl font-black font-display tracking-tight">自制酸奶：科学指南 & 新手经典答疑</h3>
+                  <p className="text-orange-100 text-xs sm:text-sm font-semibold">让自制复原酸奶更简单 · 让新手父母育儿更省心</p>
                 </div>
               </div>
               <button
                 onClick={() => setIsHelpModalOpen(false)}
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center text-white focus:outline-hidden cursor-pointer"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center text-white focus:outline-hidden cursor-pointer"
                 title="关闭"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
@@ -1527,94 +1566,94 @@ export default function App() {
             <div className="p-6 md:p-8 overflow-y-auto space-y-8">
               
               {/* Part 1: Starter Guide */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 border-b border-orange-100 pb-2.5">
-                  <BookOpen className="w-5 h-5 text-orange-500 shrink-0" />
-                  <h4 className="text-sm font-bold font-display text-gray-950">自制奶粉酸奶：标准操作方法流程</h4>
+              <div className="space-y-5">
+                <div className="flex items-center gap-2 border-b border-orange-100 pb-3">
+                  <BookOpen className="w-6 h-6 text-orange-500 shrink-0" />
+                  <h4 className="text-base sm:text-lg font-black font-display text-gray-950">自制奶粉酸奶：标准操作方法流程</h4>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   
                   {/* Step 1 */}
-                  <div className="p-4 bg-orange-50/20 border border-orange-100/60 rounded-2xl flex gap-3">
-                    <div className="w-6 h-6 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-xs shrink-0 font-mono mt-0.5">
+                  <div className="p-5 bg-orange-50/20 border border-orange-100/60 rounded-2xl flex gap-3.5">
+                    <div className="w-7 h-7 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center font-black text-sm shrink-0 font-mono mt-0.5 shadow-3xs">
                       1
                     </div>
                     <div>
-                      <h5 className="text-xs font-bold text-gray-900">温水融解、无颗粒粉液</h5>
-                      <p className="text-[11px] text-gray-500 leading-relaxed mt-1">
-                        推荐先用配方中 <span className="font-semibold text-gray-700">50% 的温水</span> (尽量恒温在 38°C - 41°C) 加入盆中，撒入全部奶粉。使用消毒蛋抽或汤匙，呈“Z”字型彻底划开，避免画圈起泡或产生未融解干粉球。
+                      <h5 className="text-sm sm:text-base font-black text-gray-900">温水融解、无颗粒粉液</h5>
+                      <p className="text-xs sm:text-sm text-gray-500 leading-relaxed mt-1.5 font-medium">
+                        推荐先用配方中 <span className="font-bold text-gray-700">50% 的温水</span> (尽量恒温在 38°C - 41°C) 加入盆中，撒入全部奶粉。使用消毒蛋抽或汤匙，呈“Z”字型彻底划开，避免画圈起泡或产生未融解干粉球。
                       </p>
                     </div>
                   </div>
 
                   {/* Step 2 */}
-                  <div className="p-4 bg-orange-50/20 border border-orange-100/60 rounded-2xl flex gap-3">
-                    <div className="w-6 h-6 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-xs shrink-0 font-mono mt-0.5">
+                  <div className="p-5 bg-orange-50/20 border border-orange-100/60 rounded-2xl flex gap-3.5">
+                    <div className="w-7 h-7 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center font-black text-sm shrink-0 font-mono mt-0.5 shadow-3xs">
                       2
                     </div>
                     <div>
-                      <h5 className="text-xs font-bold text-gray-900">接种乳酸菌粉</h5>
-                      <p className="text-[11px] text-gray-500 leading-relaxed mt-1">
-                        确认冲好的奶液温度已经低于 <span className="font-semibold text-orange-600">42°C</span> (手腕内侧感到不温烫)。剪开 1 包酸奶菌粉，均匀倒在乳液表面，静置 30 秒吸收，然后用轻缓动作上下翻拌混合。
+                      <h5 className="text-sm sm:text-base font-black text-gray-900">接种乳酸菌粉</h5>
+                      <p className="text-xs sm:text-sm text-gray-500 leading-relaxed mt-1.5 font-medium">
+                        确认冲好的奶液温度已经低于 <span className="font-black text-orange-600">42°C</span> (手腕内侧感到不温烫)。剪开 1 包酸奶菌粉，均匀倒在乳液表面，静置 30 秒吸收，然后用轻缓动作上下翻拌混合。
                       </p>
                     </div>
                   </div>
 
                   {/* Step 3 */}
-                  <div className="p-4 bg-orange-50/20 border border-orange-100/60 rounded-2xl flex gap-3">
-                    <div className="w-6 h-6 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-xs shrink-0 font-mono mt-0.5">
+                  <div className="p-5 bg-orange-50/20 border border-orange-100/60 rounded-2xl flex gap-3.5">
+                    <div className="w-7 h-7 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center font-black text-sm shrink-0 font-mono mt-0.5 shadow-3xs">
                       3
                     </div>
                     <div>
-                      <h5 className="text-xs font-bold text-gray-900">绝热避光发酵</h5>
-                      <p className="text-[11px] text-gray-500 leading-relaxed mt-1">
-                        倒入经过沸烫消毒好的酸奶罐。置入发酵器。通常选择 <span className="font-bold text-gray-800">38°C~41°C 恒温放任 8 - 10 小时</span> 培养，中途切勿移动或频繁掀盖观察。
+                      <h5 className="text-sm sm:text-base font-black text-gray-900">绝热避光发酵</h5>
+                      <p className="text-xs sm:text-sm text-gray-500 leading-relaxed mt-1.5 font-medium">
+                        倒入经过沸烫消毒好的酸奶罐。置入发酵器。通常选择 <span className="font-black text-gray-800">38°C~41°C 恒温放任 8 - 10 小时</span> 培养，中途切勿移动或频繁掀盖观察。
                       </p>
                     </div>
                   </div>
 
                   {/* Step 4 */}
-                  <div className="p-4 bg-orange-50/20 border border-orange-100/60 rounded-2xl flex gap-3">
-                    <div className="w-6 h-6 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-xs shrink-0 font-mono mt-0.5">
+                  <div className="p-5 bg-orange-50/20 border border-orange-100/60 rounded-2xl flex gap-3.5">
+                    <div className="w-7 h-7 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center font-black text-sm shrink-0 font-mono mt-0.5 shadow-3xs">
                       4
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-gray-900">立刻冷藏，促成“钝化”质变</h4>
-                      <p className="text-[11px] text-gray-500 leading-relaxed mt-1">
-                        时间结束立即开封，呈紧实平滑的固相即表成功！<span className="font-semibold text-orange-600 underline underline-offset-2">此时将其直接放入冰箱冷藏室冷藏至少 8 小时</span>，温度骤降会锁闭水分，酸度稳定，质地也会变得惊艳丝滑！
+                      <h5 className="text-sm sm:text-base font-black text-gray-900">立刻冷藏，促成“钝化”质变</h5>
+                      <p className="text-xs sm:text-sm text-gray-500 leading-relaxed mt-1.5 font-medium">
+                        时间结束立即开封，呈紧实平滑的固相即表成功！<span className="font-bold text-orange-600 underline underline-offset-2">此时将其直接放入冰箱冷藏室冷藏至少 8 小时</span>，温度骤降会锁闭水分，酸度稳定，质地也会变得惊艳丝滑！
                       </p>
                     </div>
                   </div>
 
                 </div>
 
-                <div className="p-3.5 bg-orange-50 rounded-2xl border border-orange-100 text-xs text-orange-950 flex items-start gap-2">
-                  <span className="text-base leading-none">⚠️</span>
-                  <p className="text-[11px] leading-normal font-sans">
+                <div className="p-4 bg-orange-50 rounded-2xl border border-orange-100 text-sm text-orange-950 flex items-start gap-2.5 shadow-3xs">
+                  <span className="text-lg leading-none">⚠️</span>
+                  <p className="text-xs sm:text-sm leading-relaxed font-semibold">
                     <strong>无菌提示</strong>：宝宝肠胃娇弱，整个制作使用的玻璃勺罐器，冲调前均必须使用刚烧开的沸水彻底淋烫消毒，最大程度排除腐杂菌干扰。
                   </p>
                 </div>
               </div>
 
               {/* Part 2: FAQs */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 border-b border-orange-100 pb-2.5">
-                  <Smile className="w-5 h-5 text-orange-500 shrink-0" />
-                  <h4 className="text-sm font-bold font-display text-gray-950">新手父母自制奶粉发酵酸奶经典答疑 (FAQ)</h4>
+              <div className="space-y-5">
+                <div className="flex items-center gap-2 border-b border-orange-100 pb-3">
+                  <Smile className="w-6 h-6 text-orange-500 shrink-0" />
+                  <h4 className="text-base sm:text-lg font-black font-display text-gray-950">新手父母自制奶粉发酵酸奶经典答疑 (FAQ)</h4>
                 </div>
 
-                <div className="space-y-4 text-xs">
-                  <div className="bg-orange-50/10 border-l-4 border-orange-400 p-4 rounded-r-2xl space-y-1 bg-white">
-                    <h5 className="font-bold text-gray-850">Q: 为什么按平时喝奶的比例发酸奶，容易彻底不酸或者稀成水？</h5>
-                    <p className="leading-relaxed text-gray-500 text-[11px]">
+                <div className="space-y-5 text-sm">
+                  <div className="bg-orange-50/10 border-l-4 border-orange-400 p-5 rounded-r-2xl space-y-1.5 bg-white shadow-3xs">
+                    <h5 className="font-black text-gray-900 text-sm sm:text-base">Q: 为什么按平时喝奶的比例发酸奶，容易彻底不酸或者稀成水？</h5>
+                    <p className="leading-relaxed text-gray-500 text-xs sm:text-sm font-medium">
                       答：最主要的原因在于原初蛋白质浓度。婴配粉为适应婴儿娇嫩消化，在包装说明冲调比例下，蛋白质率仅为 1.5% 左右。缺少胶乳固定，乳酸菌类拉不开充足网格结构。本仪器精准地将水量与对冲蛋白换算到 3.2% 或更高，创造出高能固相发酵原奶，一扫无法凝乳问题。
                     </p>
                   </div>
 
-                  <div className="bg-orange-50/10 border-l-4 border-orange-400 p-4 rounded-r-2xl space-y-1 bg-white">
-                    <h5 className="font-bold text-gray-850">Q: 宝宝怎么食用最安心？如何合理储藏？</h5>
-                    <p className="leading-relaxed text-gray-500 text-[11px]">
+                  <div className="bg-orange-50/10 border-l-4 border-orange-400 p-5 rounded-r-2xl space-y-1.5 bg-white shadow-3xs">
+                    <h5 className="font-black text-gray-900 text-sm sm:text-base">Q: 宝宝怎么食用最安心？如何合理储藏？</h5>
+                    <p className="leading-relaxed text-gray-500 text-xs sm:text-sm font-medium">
                       答：1 岁以内宝宝不耐白糖。在冰箱中低温纯化完全后，取适量混入蒸熟磨细的苹果泥、蓝莓泥、牛油果或熟透香蕉，香甜细腻，补充更多维生素。建议用密封盖冷藏，于 3 - 5 天内食用完毕。
                     </p>
                   </div>
@@ -1627,7 +1666,7 @@ export default function App() {
             <div className="p-4 bg-gray-50 border-t border-gray-150 flex justify-end shrink-0">
               <button
                 onClick={() => setIsHelpModalOpen(false)}
-                className="px-6 py-2 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-bold rounded-xl text-xs shadow-xs hover:shadow-sm active:scale-95 transition-all duration-100 cursor-pointer"
+                className="px-6 py-2.5 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-black rounded-xl text-sm sm:text-base shadow-xs hover:shadow-sm active:scale-95 transition-all duration-100 cursor-pointer"
               >
                 我知道了，开始计算
               </button>
@@ -1641,27 +1680,27 @@ export default function App() {
       {isFormulaModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-black/60 backdrop-blur-xs animate-fadeIn">
           <div className="absolute inset-0 cursor-default" onClick={() => setIsFormulaModalOpen(false)}></div>
-          <div className={`relative bg-white w-full max-w-4xl rounded-3xl shadow-2xl border flex flex-col max-h-[90vh] overflow-hidden transition-all duration-300 ${theme.cardBorderClass}`}>
+          <div className={`relative bg-white w-full max-w-5xl rounded-3xl shadow-2xl border flex flex-col max-h-[90vh] overflow-hidden transition-all duration-300 ${theme.cardBorderClass}`}>
             
             {/* Header */}
-            <div className={`p-5 text-white flex justify-between items-center shrink-0 transition-all duration-300 ${theme.headerBg}`}>
-              <div className="flex items-center gap-2">
-                <span className="text-xl">📊</span>
+            <div className={`p-6 text-white flex justify-between items-center shrink-0 transition-all duration-300 ${theme.headerBg}`}>
+              <div className="flex items-center gap-3">
+                <span className="text-2xl select-none">📊</span>
                 <div>
-                  <h3 className="text-sm sm:text-base font-extrabold font-display tracking-tight">奶粉还原发酵：科学公式与原理</h3>
-                  <p className="text-orange-50 text-[10.5px]">科学解答水量配比与蛋白质黏连锁水机制</p>
+                  <h3 className="text-lg sm:text-[18px] font-black font-display tracking-tight">奶粉还原发酵：科学公式与原理</h3>
+                  <p className="text-orange-100 text-xs sm:text-sm font-semibold">科学解答水量配比与蛋白质黏连锁水机制</p>
                 </div>
               </div>
               <button
                 onClick={() => setIsFormulaModalOpen(false)}
-                className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center text-white cursor-pointer"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center text-white cursor-pointer"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Body */}
-            <div className="p-5 overflow-y-auto bg-orange-50/10">
+            <div className="p-6 overflow-y-auto bg-orange-50/10">
               <AnnotatedFormula 
                 waterVol={waterVol}
                 powderWeight={calculatedPowder}
@@ -1671,10 +1710,10 @@ export default function App() {
             </div>
 
             {/* Footer */}
-            <div className="p-3 bg-gray-50 border-t border-gray-150 flex justify-end shrink-0">
+            <div className="p-4 bg-gray-50 border-t border-gray-150 flex justify-end shrink-0">
               <button
                 onClick={() => setIsFormulaModalOpen(false)}
-                className="px-5 py-1.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl text-xs cursor-pointer active:scale-95 transition-all"
+                className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-xl text-sm sm:text-base cursor-pointer active:scale-95 transition-all shadow-xs"
               >
                 关闭
               </button>
@@ -1688,27 +1727,27 @@ export default function App() {
       {isProteinGuideModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-black/60 backdrop-blur-xs animate-fadeIn">
           <div className="absolute inset-0 cursor-default" onClick={() => setIsProteinGuideModalOpen(false)}></div>
-          <div className={`relative bg-white w-full max-w-2xl rounded-3xl shadow-2xl border flex flex-col max-h-[90vh] overflow-hidden transition-all duration-300 ${theme.cardBorderClass}`}>
+          <div className={`relative bg-white w-full max-w-5xl rounded-3xl shadow-2xl border flex flex-col max-h-[90vh] overflow-hidden transition-all duration-300 ${theme.cardBorderClass}`}>
             
             {/* Header */}
-            <div className={`p-5 text-white flex justify-between items-center shrink-0 transition-all duration-300 ${theme.headerBg}`}>
-              <div className="flex items-center gap-2">
-                <span className="text-xl">🔍</span>
+            <div className={`p-6 text-white flex justify-between items-center shrink-0 transition-all duration-300 ${theme.headerBg}`}>
+              <div className="flex items-center gap-3">
+                <span className="text-2xl select-none">🔍</span>
                 <div>
-                  <h3 className="text-sm sm:text-base font-extrabold font-display tracking-tight">如何查找包装上的蛋白质含量</h3>
-                  <p className="text-orange-50 text-[10.5px]">参考背面成分表进行自选或快捷配置参数</p>
+                  <h3 className="text-lg sm:text-[18px] font-black font-display tracking-tight">如何查找包装上的蛋白质含量</h3>
+                  <p className="text-orange-100 text-xs sm:text-sm font-semibold">参考背面成分表进行自选或快捷配置参数</p>
                 </div>
               </div>
               <button
                 onClick={() => setIsProteinGuideModalOpen(false)}
-                className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center text-white cursor-pointer"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center text-white cursor-pointer"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Body */}
-            <div className="p-5 overflow-y-auto bg-orange-50/10">
+            <div className="p-6 overflow-y-auto bg-orange-50/10">
               <ProteinGuide 
                 proteinValue={proteinPowder} 
                 onSelectPreset={(val) => {
@@ -1719,10 +1758,10 @@ export default function App() {
             </div>
 
             {/* Footer */}
-            <div className="p-3 bg-gray-50 border-t border-gray-150 flex justify-end shrink-0">
+            <div className="p-4 bg-gray-50 border-t border-gray-150 flex justify-end shrink-0">
               <button
                 onClick={() => setIsProteinGuideModalOpen(false)}
-                className="px-5 py-1.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl text-xs cursor-pointer active:scale-95 transition-all"
+                className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-xl text-sm sm:text-base cursor-pointer active:scale-95 transition-all shadow-xs"
               >
                 关闭
               </button>
@@ -1735,28 +1774,28 @@ export default function App() {
       {/* Footer conforming strictly to visual boundaries, styled precisely as requested but more compact to blend in */}
       <footer 
         id="app-footer" 
-        className="max-w-7xl mx-auto mt-3 py-2.5 border-t font-sans select-none text-center flex flex-col sm:flex-row items-center justify-between gap-2 px-4 md:px-8 text-[10.5px] font-bold opacity-50 hover:opacity-100 transition-opacity duration-300"
+        className="max-w-[1500px] mx-auto mt-3 py-2.5 border-t font-sans select-none text-center flex flex-col sm:flex-row items-center justify-between gap-2 px-4 md:px-8 text-xs font-bold opacity-50 hover:opacity-100 transition-opacity duration-300"
         style={{ borderTopColor: 'rgb(169, 98, 22)', color: 'rgb(169, 98, 22)' }}
       >
-        <div className="flex items-center gap-1.5 font-medium">
+        <div className="flex items-center gap-1.5 font-medium text-xs">
           <span>🥛 复原乳发酵酸奶比例计算工具</span>
         </div>
-        <div className="flex items-center gap-2.5 flex-wrap justify-center">
+        <div className="flex items-center gap-2.5 flex-wrap justify-center text-xs">
           {/* Hover tooltip logic for 创意大脑: 絕 */}
           <div className="relative group inline-block">
-            <span className="px-1.5 py-0.5 bg-orange-100/5 border border-amber-600/25 rounded text-[10px] cursor-help font-mono font-medium transition-all hover:bg-orange-100/15">
-              创意大脑：絕 ▾
+            <span className="px-1.5 py-0.5 bg-orange-100/5 border border-amber-600/25 rounded text-xs cursor-help font-mono font-medium transition-all hover:bg-orange-100/15">
+              创意大脑：Air
             </span>
             {/* Tooltip bubble */}
-            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-stone-900 text-stone-100 text-[11px] rounded-xl py-2 px-3.5 w-64 text-center shadow-xl z-50 leading-relaxed font-sans font-normal border border-amber-700/80 animate-fadeIn">
+            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-stone-900 text-stone-100 text-xs rounded-xl py-2 px-3.5 w-64 text-center shadow-xl z-50 leading-relaxed font-sans font-normal border border-amber-700/80 animate-fadeIn">
               不管身在何处 我都会提醒自己 不要忘记自己活在现实中 QQ:250740270
               {/* Micro-arrow */}
               <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1 border-4 border-transparent border-t-stone-900"></div>
             </div>
           </div>
 
-          <span className="px-1.5 py-0.5 bg-orange-100/5 border border-amber-600/15 rounded text-[10px] font-mono font-medium">
-            执行四肢：Gemini 智能编程助手
+          <span className="px-1.5 py-0.5 bg-orange-100/5 border border-amber-600/15 rounded text-xs font-mono font-medium">
+            执行四肢：Gemini
           </span>
         </div>
       </footer>

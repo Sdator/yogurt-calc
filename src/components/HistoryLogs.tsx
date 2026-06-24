@@ -375,7 +375,7 @@ export default function HistoryLogs({
 
                 {isEditingThis ? (
                   <div className="space-y-4 bg-orange-50/20 border border-orange-200 p-4 rounded-xl mt-3 animate-fadeIn">
-                    <h5 className="font-bold text-[13px] sm:text-sm text-gray-900 border-b border-orange-100 pb-1.5 flex items-center gap-1.5">
+                    <h5 className="font-bold text-sm text-gray-900 border-b border-orange-100 pb-1.5 flex items-center gap-1.5">
                       📝 重新评估调配与口感反馈
                     </h5>
 

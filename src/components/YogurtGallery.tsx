@@ -9,7 +9,7 @@ interface GalleryCase {
 }
 
 // Default initial cases that we know exist, for immediate rendering
-const INITIAL_CASES: GalleryCase[] = Array.from({ length: 8 }, (_, i) => {
+const ALL_CASES: GalleryCase[] = Array.from({ length: 17 }, (_, i) => {
   const num = i + 1;
   return {
     id: `case-${num}`,
@@ -35,60 +35,6 @@ interface YogurtGalleryProps {
 
 export default function YogurtGallery({ isOpen, onClose }: YogurtGalleryProps) {
   const [activeImageSrc, setActiveImageSrc] = useState<string | null>(null);
-  const [validCases, setValidCases] = useState<GalleryCase[]>(INITIAL_CASES);
-
-  // Dynamic Discovery Effect: scan from case-1.webp up to case-100.webp to find any newly dropped images automatically!
-  useEffect(() => {
-    if (!isOpen) return;
-
-    let isMounted = true;
-    const maxChecked = 100;
-    const foundCases: GalleryCase[] = [];
-    let checkedCount = 0;
-
-    for (let num = 1; num <= maxChecked; num++) {
-      const img = new Image();
-      const path = getAssetUrl(`/img/case-${num}.webp`);
-      img.src = path;
-      
-      img.onload = () => {
-        if (!isMounted) return;
-        foundCases.push({
-          id: `case-${num}`,
-          title: `日常记录 ${num}`,
-          imgUrl: `/img/case-${num}.webp`,
-          localPath: `/img/case-${num}.webp`
-        });
-        
-        checkedCount++;
-        if (checkedCount === maxChecked) {
-          const sorted = [...foundCases].sort((a, b) => {
-            const numA = parseInt(a.id.replace('case-', ''));
-            const numB = parseInt(b.id.replace('case-', ''));
-            return numA - numB;
-          });
-          setValidCases(sorted);
-        }
-      };
-
-      img.onerror = () => {
-        if (!isMounted) return;
-        checkedCount++;
-        if (checkedCount === maxChecked) {
-          const sorted = [...foundCases].sort((a, b) => {
-            const numA = parseInt(a.id.replace('case-', ''));
-            const numB = parseInt(b.id.replace('case-', ''));
-            return numA - numB;
-          });
-          setValidCases(sorted);
-        }
-      };
-    }
-
-    return () => {
-      isMounted = false;
-    };
-  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -101,7 +47,7 @@ export default function YogurtGallery({ isOpen, onClose }: YogurtGalleryProps) {
       >
         <div 
           onClick={(e) => e.stopPropagation()}
-          className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col max-h-[85vh] animate-scaleUp border border-orange-100"
+          className="bg-white rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl flex flex-col max-h-[85vh] animate-scaleUp border border-orange-100"
         >
           {/* Header resembling thin iOS styling */}
           <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between bg-stone-50/60 shrink-0">
@@ -117,7 +63,7 @@ export default function YogurtGallery({ isOpen, onClose }: YogurtGalleryProps) {
                   </span>
                 </span>
                 <p className="text-[9.5px] text-gray-400 font-sans">
-                  记录了 {validCases.length} 个发酵玩耍瞬间
+                  记录了 {ALL_CASES.length} 个发酵玩耍瞬间
                 </p>
               </div>
             </div>
@@ -131,8 +77,8 @@ export default function YogurtGallery({ isOpen, onClose }: YogurtGalleryProps) {
 
           {/* Picture Grid (Phone Album Layout - square elements) */}
           <div className="p-4 overflow-y-auto bg-stone-50/30">
-            <div className="grid grid-cols-2 gap-3">
-              {validCases.map((item) => {
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {ALL_CASES.map((item) => {
                 const displaySrc = getAssetUrl(item.localPath);
 
                 return (
