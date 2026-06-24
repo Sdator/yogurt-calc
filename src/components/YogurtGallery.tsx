@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Sparkles, Image as ImageIcon } from 'lucide-react';
 
 interface GalleryCase {
@@ -8,56 +8,16 @@ interface GalleryCase {
   localPath: string; // prospective/ideal /img/ local path
 }
 
-const CASES: GalleryCase[] = [
-  {
-    id: 'case-1',
-    title: '日常记录 1',
-    imgUrl: '/img/case-1.webp',
-    localPath: '/img/case-1.webp'
-  },
-  {
-    id: 'case-2',
-    title: '日常记录 2',
-    imgUrl: '/img/case-2.webp',
-    localPath: '/img/case-2.webp'
-  },
-  {
-    id: 'case-3',
-    title: '日常记录 3',
-    imgUrl: '/img/case-3.webp',
-    localPath: '/img/case-3.webp'
-  },
-  {
-    id: 'case-4',
-    title: '日常记录 4',
-    imgUrl: '/img/case-4.webp',
-    localPath: '/img/case-4.webp'
-  },
-  {
-    id: 'case-5',
-    title: '日常记录 5',
-    imgUrl: '/img/case-5.webp',
-    localPath: '/img/case-5.webp'
-  },
-  {
-    id: 'case-6',
-    title: '日常记录 6',
-    imgUrl: '/img/case-6.webp',
-    localPath: '/img/case-6.webp'
-  },
-  {
-    id: 'case-7',
-    title: '日常记录 7',
-    imgUrl: '/img/case-7.webp',
-    localPath: '/img/case-7.webp'
-  },
-  {
-    id: 'case-8',
-    title: '日常记录 8',
-    imgUrl: '/img/case-8.webp',
-    localPath: '/img/case-8.webp'
-  }
-];
+// Default initial cases that we know exist, for immediate rendering
+const INITIAL_CASES: GalleryCase[] = Array.from({ length: 8 }, (_, i) => {
+  const num = i + 1;
+  return {
+    id: `case-${num}`,
+    title: `日常记录 ${num}`,
+    imgUrl: `/img/case-${num}.webp`,
+    localPath: `/img/case-${num}.webp`
+  };
+});
 
 const getAssetUrl = (url: string) => {
   if (url.startsWith('/')) {
@@ -75,13 +35,62 @@ interface YogurtGalleryProps {
 
 export default function YogurtGallery({ isOpen, onClose }: YogurtGalleryProps) {
   const [activeImageSrc, setActiveImageSrc] = useState<string | null>(null);
-  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
+  const [validCases, setValidCases] = useState<GalleryCase[]>(INITIAL_CASES);
+
+  // Dynamic Discovery Effect: scan from case-1.webp up to case-100.webp to find any newly dropped images automatically!
+  useEffect(() => {
+    if (!isOpen) return;
+
+    let isMounted = true;
+    const maxChecked = 100;
+    const foundCases: GalleryCase[] = [];
+    let checkedCount = 0;
+
+    for (let num = 1; num <= maxChecked; num++) {
+      const img = new Image();
+      const path = getAssetUrl(`/img/case-${num}.webp`);
+      img.src = path;
+      
+      img.onload = () => {
+        if (!isMounted) return;
+        foundCases.push({
+          id: `case-${num}`,
+          title: `日常记录 ${num}`,
+          imgUrl: `/img/case-${num}.webp`,
+          localPath: `/img/case-${num}.webp`
+        });
+        
+        checkedCount++;
+        if (checkedCount === maxChecked) {
+          const sorted = [...foundCases].sort((a, b) => {
+            const numA = parseInt(a.id.replace('case-', ''));
+            const numB = parseInt(b.id.replace('case-', ''));
+            return numA - numB;
+          });
+          setValidCases(sorted);
+        }
+      };
+
+      img.onerror = () => {
+        if (!isMounted) return;
+        checkedCount++;
+        if (checkedCount === maxChecked) {
+          const sorted = [...foundCases].sort((a, b) => {
+            const numA = parseInt(a.id.replace('case-', ''));
+            const numB = parseInt(b.id.replace('case-', ''));
+            return numA - numB;
+          });
+          setValidCases(sorted);
+        }
+      };
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
-
-  const handleImageError = (id: string) => {
-    setImageErrors(prev => ({ ...prev, [id]: true }));
-  };
 
   return (
     <>
@@ -108,7 +117,7 @@ export default function YogurtGallery({ isOpen, onClose }: YogurtGalleryProps) {
                   </span>
                 </span>
                 <p className="text-[9.5px] text-gray-400 font-sans">
-                  记录了 {CASES.length} 个发酵玩耍瞬间
+                  记录了 {validCases.length} 个发酵玩耍瞬间
                 </p>
               </div>
             </div>
@@ -123,10 +132,8 @@ export default function YogurtGallery({ isOpen, onClose }: YogurtGalleryProps) {
           {/* Picture Grid (Phone Album Layout - square elements) */}
           <div className="p-4 overflow-y-auto bg-stone-50/30">
             <div className="grid grid-cols-2 gap-3">
-              {CASES.map((item) => {
-                const hasLocalError = imageErrors[item.id];
-                const rawPath = hasLocalError ? item.imgUrl : item.localPath;
-                const displaySrc = getAssetUrl(rawPath);
+              {validCases.map((item) => {
+                const displaySrc = getAssetUrl(item.localPath);
 
                 return (
                   <div
@@ -138,11 +145,6 @@ export default function YogurtGallery({ isOpen, onClose }: YogurtGalleryProps) {
                       src={displaySrc}
                       alt={item.title}
                       referrerPolicy="no-referrer"
-                      onError={() => {
-                        if (!hasLocalError) {
-                          handleImageError(item.id);
-                        }
-                      }}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     
