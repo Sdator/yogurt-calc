@@ -1,6 +1,7 @@
 export interface YogurtRecord {
   id: string;
   date: string;
+  totalVol?: number; // total batch volume in ml
   waterVol: number; // in ml
   powderWeight: number; // in g
   proteinPowder: number; // g / 100g

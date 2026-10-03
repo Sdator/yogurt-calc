@@ -356,11 +356,13 @@ export default function HistoryLogs({
                 {/* Grid describing formula elements */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-white rounded-xl p-3 border border-orange-100/40 text-[13px] mb-3">
                   <div>
-                    <span className="text-gray-500 block text-[11px]">💦 冲调制水量</span>
-                    <span className="font-bold text-gray-800 font-mono text-sm">{record.waterVol} ml</span>
+                    <span className="text-gray-500 block text-[11px]">🥣 制作总量 (配水量)</span>
+                    <span className="font-bold text-gray-800 font-mono text-sm">
+                      {record.totalVol ? `${record.totalVol}ml (${record.waterVol}ml水)` : `${record.waterVol} ml`}
+                    </span>
                   </div>
                   <div>
-                    <span className="text-gray-500 block text-[11px]">🎨 奶粉投放重</span>
+                    <span className="text-gray-500 block text-[11px]">🥛 奶粉投放重</span>
                     <span className="font-bold text-orange-600 font-mono text-sm">{record.powderWeight} g</span>
                   </div>
                   <div>

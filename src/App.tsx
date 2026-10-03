@@ -162,9 +162,11 @@ export default function App() {
   const theme = THEMES[activeTheme];
 
   // --- 1. CORE PARAMETER STATES ---
-  const [waterVol, setWaterVol] = useState<number>(500); // ml
+  const [totalVol, setTotalVol] = useState<number>(1000); // ml (制作总量 / 目标调配量)
+  const waterVol = totalVol; // Alias for backward compatibility
+  const setWaterVol = setTotalVol;
   const [proteinPowder, setProteinPowder] = useState<number>(24.0); // g/100g (protein rating of milk powder)
-  const [targetProtein, setTargetProtein] = useState<number>(3.2); // g/100ml (typical target for yogurt)
+  const [targetProtein, setTargetProtein] = useState<number>(4.0); // g/100g or % (target protein concentration, default 4.0% as recommended)
   const [isHelpModalOpen, setIsHelpModalOpen] = useState<boolean>(false);
   const [isHistorySidebarOpen, setIsHistorySidebarOpen] = useState<boolean>(false);
   const [isFormulaModalOpen, setIsFormulaModalOpen] = useState<boolean>(false);
@@ -176,15 +178,16 @@ export default function App() {
   // Auto-clear loaded record if user modifies relevant inputs
   useEffect(() => {
     if (loadedRecord) {
+      const recordVol = loadedRecord.totalVol || loadedRecord.waterVol;
       if (
-        waterVol !== loadedRecord.waterVol ||
+        totalVol !== recordVol ||
         proteinPowder !== loadedRecord.proteinPowder ||
         Math.abs(targetProtein - loadedRecord.targetProtein) > 0.01
       ) {
         setLoadedRecord(null);
       }
     }
-  }, [waterVol, proteinPowder, targetProtein, loadedRecord]);
+  }, [totalVol, proteinPowder, targetProtein, loadedRecord]);
 
   // --- 2. RECORD-KEEPING STATES ---
   const [records, setRecords] = useState<YogurtRecord[]>([]);
@@ -207,25 +210,27 @@ export default function App() {
           {
             id: 'sample-1',
             date: '2026-05-28',
-            waterVol: 500,
-            powderWeight: 77.4,
+            totalVol: 1000,
+            waterVol: 833.3,
+            powderWeight: 166.7,
             proteinPowder: 24.0,
-            targetProtein: 3.2,
+            targetProtein: 4.0,
             isSuccess: 'success',
-            predictedTexture: '🍮 嫩豆腐状 (3.2g 蛋白/100ml)',
+            predictedTexture: '🍨 浓厚饱满 (4.0% 蛋白)',
             rating: 5,
-            notes: '第一次给宝宝做，用的成人全脂奶粉，温度定在 40°C 恒温 9 小时，冷藏一晚上后超级稠！像嫩豆腐，宝宝非常爱吃，没有加糖。',
+            notes: '制作总量 1000ml，奶粉 166.7g + 温水 833.3ml，温度 40°C 恒温 9 小时，冷藏一晚上后超级稠！像嫩豆腐，宝宝非常爱吃，没有加糖。',
             tags: ['完美凝固', '奶香浓郁', '酸度适中']
           },
           {
             id: 'sample-2',
             date: '2026-05-29',
-            waterVol: 600,
-            powderWeight: 73.7,
+            totalVol: 1000,
+            waterVol: 890.6,
+            powderWeight: 109.4,
             proteinPowder: 32.0,
             targetProtein: 3.5,
             isSuccess: 'pending',
-            predictedTexture: '🍮 原味嫩豆腐状 (3.5g 蛋白/100ml)',
+            predictedTexture: '🍮 原味嫩豆腐状 (3.5% 蛋白)',
             rating: 4,
             notes: '用了高钙脱脂奶粉冲调出高蛋白发酵酸奶，目前发酵准备中！',
             tags: ['温和不酸']
@@ -249,28 +254,39 @@ export default function App() {
     }
   };
 
-  // --- 3. DISSOLUTION CALCULATIONS ---
-  // Formula: M = (W * TargetProtein) / (ProteinPowder - TargetProtein)
+  // --- 3. DISSOLUTION CALCULATIONS (OPTIMIZED FOR TOTAL YIELD) ---
+  // Formula based on total batch and milk powder displacement:
+  // 制作总量: totalVol (例如 1000ml)
+  // 目标蛋白质比: targetProtein (例如 4.0%)
+  // 奶粉固有蛋白质: proteinPowder (例如 24.0%)
+  // 奶粉数量: calculatedPowder = (totalVol * targetProtein) / proteinPowder (1000 * 4% / 24% = 166.7g)
+  // 水的部分: calculatedWater = totalVol - calculatedPowder (1000 - 166.7 = 833.3ml)
   let calculatedPowder = 0;
+  let calculatedWater = 0;
   let isCalculationValid = false;
   let errorMsg = '';
 
   if (proteinPowder <= targetProtein) {
     errorMsg = '⚠️ 奶粉的蛋白质含量必须大于目标酸奶的蛋白质强度。';
-  } else if (waterVol <= 0 || isNaN(waterVol)) {
-    errorMsg = '⚠️ 请输入有效的水容量（毫升）。';
+  } else if (totalVol <= 0 || isNaN(totalVol)) {
+    errorMsg = '⚠️ 请输入有效的制作总量（毫升）。';
   } else if (proteinPowder <= 0 || isNaN(proteinPowder)) {
     errorMsg = '⚠️ 请输入有效的奶粉蛋白质含量。';
   } else if (targetProtein < 3.2 || targetProtein > 10.0) {
     errorMsg = '⚠️ 为了保证酸奶发酵凝固效果，目标蛋白浓度设定必须在 3.2% 与 10.0% 之间。';
   } else {
-    calculatedPowder = (waterVol * targetProtein) / (proteinPowder - targetProtein);
+    calculatedPowder = (totalVol * targetProtein) / proteinPowder;
+    calculatedWater = Math.max(0, totalVol - calculatedPowder);
     isCalculationValid = true;
   }
 
-  // Proportion index (grams of powder per 100ml water)
-  const powderRatioPercentage = isCalculationValid ? (calculatedPowder / waterVol) * 100 : 0;
-  const dilutionRatio = isCalculationValid ? (waterVol / calculatedPowder).toFixed(1) : '0';
+  // Dilution ratio: water volume to powder weight ratio (水粉克重比)
+  const dilutionRatio = isCalculationValid && calculatedPowder > 0 
+    ? (calculatedWater / calculatedPowder).toFixed(1) 
+    : '0';
+  const powderRatioPercentage = isCalculationValid && totalVol > 0 
+    ? (calculatedPowder / totalVol) * 100 
+    : 0;
 
   // --- 4. TEXTURE PREDICTIONS ---
   const getTexturePrediction = (proteinValue: number) => {
@@ -299,7 +315,7 @@ export default function App() {
       };
     }
     return {
-      rating: '🍧 希腊式浓稠/老酸奶 (Greek density)',
+      rating: '🍧 浓稠特浓/老酸奶 (Thick & Rich)',
       desc: '高蛋白和高固形物比率！质地超级浓密扎实，接近奶酪。勺子可在上面站立，极少析出多余水分，口感丰满饱满。推荐新手父母采用此规格，凝结度最佳。',
       color: 'text-orange-700 bg-orange-100/50 border-orange-200/50',
       emoji: '🌟'
@@ -315,9 +331,10 @@ export default function App() {
 
   // Preset definitions sorted from low to high by protein weight (克数从低到高排列)
   const targetPresets = [
-    { name: '🥇 黄金比例 (3.2g)', targetProtein: 3.2, desc: '最类似鲜牛奶发酵的滑嫩状态' },
-    { name: '🥛 高效固化 (3.5g)', targetProtein: 3.5, desc: '极佳凝固力，蛋白质网络支撑力强' },
-    { name: '🍨 浓厚饱满 (3.8g)', targetProtein: 3.8, desc: '老酸奶级质地，不插勺不翻车' }
+    { name: '🥇 黄金比例 (3.2%)', targetProtein: 3.2, desc: '类似市售鲜奶酸奶的滑嫩状态' },
+    { name: '🥛 高效固化 (3.5%)', targetProtein: 3.5, desc: '极佳凝固力，蛋白质网络支撑力强' },
+    { name: '🍨 黄金浓醇 (4.0%)', targetProtein: 4.0, desc: '特稠型推荐，高蛋白质网兜，口感浓郁不析水' },
+    { name: '🍧 希腊倍羹 (5.0%)', targetProtein: 5.0, desc: '近奶酪级超高蛋白扎实质地' }
   ];
 
   // --- 6. HISTORY OPERATIONS ---
@@ -328,14 +345,15 @@ export default function App() {
     const newRec: YogurtRecord = {
       id: `recipe-${Date.now()}`,
       date: new Date().toISOString().split('T')[0],
-      waterVol: waterVol,
+      totalVol: totalVol,
+      waterVol: parseFloat(calculatedWater.toFixed(1)),
       powderWeight: parseFloat(calculatedPowder.toFixed(1)),
       proteinPowder: proteinPowder,
       targetProtein: targetProtein,
       isSuccess: newRecordStatus,
       predictedTexture: currentTexture.rating,
       rating: newRecordRating,
-      notes: newRecordNotes.trim() || `使用温水 ${waterVol}ml + 奶粉 ${calculatedPowder.toFixed(1)}g 对冲冲调，口感顺滑。`,
+      notes: newRecordNotes.trim() || `制作总量 ${totalVol}ml（温水 ${calculatedWater.toFixed(1)}ml + 奶粉 ${calculatedPowder.toFixed(1)}g），蛋白质 ${proteinPowder}g/100g，目标浓度 ${targetProtein}%，预测口感是 ${currentTexture.rating}。`,
       tags: newRecordTags
     };
 
@@ -383,7 +401,8 @@ export default function App() {
   };
 
   const handleLoadRecordToCalculator = (record: YogurtRecord) => {
-    setWaterVol(record.waterVol);
+    const vol = record.totalVol || (record.waterVol && record.powderWeight ? Math.round(record.waterVol + record.powderWeight) : record.waterVol);
+    setTotalVol(vol || 1000);
     setProteinPowder(record.proteinPowder);
     setTargetProtein(Math.max(3.2, record.targetProtein));
     setLoadedRecord(record);
@@ -574,7 +593,7 @@ export default function App() {
                   <span className="text-xs sm:text-sm text-gray-500 font-semibold">滑动或输入即可实时精算</span>
                 </div>
 
-                {/* Input Row 1: Water Volume */}
+                {/* Input Row 1: Total Batch Volume */}
                 <div className={`space-y-4 p-4 md:p-5 rounded-2xl border transition-all duration-300 ${
                   hoveredStep === 2 
                     ? 'animate-border-flash border-amber-400 bg-amber-50/15 shadow-xs' 
@@ -582,10 +601,10 @@ export default function App() {
                 }`}>
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100/60 pb-2">
                     <label htmlFor="water-vol-input" className="font-extrabold text-gray-700 flex items-center gap-1 text-lg sm:text-[18px]">
-                      💦 计划用水量 (温水数量)
+                      🥣 目标制作总量 (成品容积)
                     </label>
                     <span className="font-semibold text-gray-500 text-sm">
-                      目前设定: <span className={`font-mono text-base font-black ${theme.accentText}`}>{waterVol}</span> ml
+                      目前设定: <span className={`font-mono text-base font-black ${theme.accentText}`}>{totalVol}</span> ml
                     </span>
                   </div>
                   
@@ -593,10 +612,10 @@ export default function App() {
                     id="water-vol-range"
                     type="range"
                     min="100"
-                    max="2000"
+                    max="5000"
                     step="50"
-                    value={waterVol}
-                    onChange={(e) => setWaterVol(parseInt(e.target.value) || 100)}
+                    value={totalVol}
+                    onChange={(e) => setTotalVol(parseInt(e.target.value) || 100)}
                     className={`w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-200/80 transition-all ${theme.accentThumb}`}
                   />
 
@@ -607,8 +626,8 @@ export default function App() {
                         type="number"
                         min="1"
                         max="5000"
-                        value={waterVol || ''}
-                        onChange={(e) => setWaterVol(Math.max(0, parseInt(e.target.value) || 0))}
+                        value={totalVol || ''}
+                        onChange={(e) => setTotalVol(Math.max(0, parseInt(e.target.value) || 0))}
                         className="w-24 border-b-2 border-gray-300 focus:border-slate-800 px-1 py-0.5 text-xs text-center focus:outline-hidden font-mono font-bold text-gray-800"
                       />
                       <span className="text-xs text-gray-400 font-bold">ml (毫升)</span>
@@ -616,18 +635,18 @@ export default function App() {
                     
                     {/* Water Quick options */}
                     <div className="flex gap-1.5 items-center flex-wrap">
-                      {[250, 400, 500, 1000].map((v) => (
+                      {[250, 500, 1000, 2000].map((v) => (
                         <button
                           key={v}
                           type="button"
-                          onClick={() => setWaterVol(v)}
+                          onClick={() => setTotalVol(v)}
                           className={`text-xs sm:text-sm px-3 py-1.5 rounded-lg border transition-all duration-100 font-bold ${
-                            waterVol === v 
+                            totalVol === v 
                               ? theme.quickBtnActive
                               : theme.accentButtonInactive
                           }`}
                         >
-                          {v}ml
+                          {v >= 1000 ? `${v / 1000}L` : `${v}ml`}
                         </button>
                       ))}
                       <span className="text-xs text-gray-500 hidden lg:inline font-bold">（内胆容积）</span>
@@ -742,13 +761,31 @@ export default function App() {
 
               {/* BIG RESULTS PANEL */}
               <div id="calculator-results-card" className={`transition-all duration-300 p-6 md:p-8 rounded-3xl flex flex-col justify-center items-center text-center relative overflow-hidden flex-grow h-full space-y-4 border-2 ${theme.resultsBorder} ${theme.resultsBg}`}>
-                <span className="text-gray-500 text-xs sm:text-sm uppercase tracking-widest mb-1 font-extrabold block">换算求和 · 调配目标设定</span>
-                <p className="text-gray-600 font-bold text-xs sm:text-sm leading-none">本次制作配方建议加入奶粉</p>
+                <span className="text-gray-500 text-xs sm:text-sm uppercase tracking-widest mb-1 font-extrabold block">换算求和 · 制作调配精算</span>
+                <p className="text-gray-600 font-bold text-xs sm:text-sm leading-none">本次制作配方建议加入配比</p>
                 
                 {isCalculationValid ? (
                   <>
-                    <div className={`text-5xl sm:text-6xl font-black mb-1 font-mono drop-shadow-3xs select-all transition-colors duration-300 ${theme.accentText}`}>
-                      {calculatedPowder.toFixed(1)} <span className="text-xl font-bold text-gray-400 font-sans">克 (g)</span>
+                    <div className="grid grid-cols-2 gap-3 w-full max-w-sm">
+                      <div className="bg-white/90 p-3 rounded-2xl border border-orange-200/80 shadow-2xs flex flex-col items-center">
+                        <span className="text-xs text-orange-900 font-extrabold flex items-center gap-1">
+                          <span>🥛</span> 需加干奶粉
+                        </span>
+                        <div className={`text-3xl sm:text-4xl font-black my-1 font-mono transition-colors duration-300 ${theme.accentText}`}>
+                          {calculatedPowder.toFixed(1)} <span className="text-sm font-bold text-gray-500 font-sans">克</span>
+                        </div>
+                        <span className="text-[10px] text-gray-500 font-medium">含蛋白 {proteinPowder}%</span>
+                      </div>
+
+                      <div className="bg-white/90 p-3 rounded-2xl border border-blue-200/80 shadow-2xs flex flex-col items-center">
+                        <span className="text-xs text-blue-900 font-extrabold flex items-center gap-1">
+                          <span>💦</span> 需配温开水
+                        </span>
+                        <div className="text-3xl sm:text-4xl font-black my-1 font-mono text-blue-600">
+                          {calculatedWater.toFixed(1)} <span className="text-sm font-bold text-gray-500 font-sans">毫升</span>
+                        </div>
+                        <span className="text-[10px] text-gray-500 font-medium">38°C~41°C温水</span>
+                      </div>
                     </div>
                     
                     <div className="flex flex-wrap items-center justify-center gap-2 max-w-lg">
@@ -756,18 +793,43 @@ export default function App() {
                         {currentTexture.rating}
                       </span>
                       <span className={`px-3.5 py-1 rounded-full text-xs sm:text-sm font-bold shadow-3xs ${theme.badgeBg}`}>
-                        目标浓度: {targetProtein}g/100ml
+                        目标浓度: {targetProtein}%
+                      </span>
+                      <span className="px-3.5 py-1 rounded-full text-xs sm:text-sm font-bold shadow-3xs bg-emerald-50 text-emerald-800 border border-emerald-200">
+                        制作总量: {totalVol}ml
                       </span>
                     </div>
 
-                    <p className="text-xs sm:text-sm text-gray-500 leading-relaxed max-w-sm">
-                      💡 <strong>新手操作流程</strong>：量取 <strong className={theme.accentText}>{waterVol}ml 温水</strong> 注入容器，融解这个重量的奶粉并搅拌，降到常温后撒入发酵剂即可。
-                    </p>
+                    <div className="w-full max-w-sm bg-gray-50/80 rounded-2xl p-3 border border-gray-150 text-left text-xs space-y-2">
+                      <div className="flex items-center gap-1.5 font-bold text-gray-800 border-b border-gray-200/60 pb-1 text-xs sm:text-[13px]">
+                        <span>💡</span> <span>制作操作流程 (标准三步走)</span>
+                      </div>
+                      <div className="space-y-1.5 text-[11.5px] sm:text-xs text-gray-650 leading-relaxed font-medium">
+                        <div className="flex items-start gap-1.5">
+                          <span className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 font-bold font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">1</span>
+                          <div>
+                            <strong className="text-gray-800">溶粉调配</strong>：量取温水 <strong className="text-blue-600 font-mono font-bold">{calculatedWater.toFixed(1)}ml</strong>（约40°C），加入 <strong className={`font-mono font-bold ${theme.accentText}`}>{calculatedPowder.toFixed(1)}g</strong> 干奶粉彻底搅拌融化，调配出 <strong>{totalVol}ml</strong> 优质乳液。
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-1.5">
+                          <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 font-bold font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">2</span>
+                          <div>
+                            <strong className="text-gray-800">降温接种</strong>：待奶液温度降至 <strong className="text-emerald-700">42°C 以下</strong>（避免烫死菌种），撒入 1 包酸奶菌粉并轻柔翻拌混匀。
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-1.5">
+                          <span className="w-4 h-4 rounded-full bg-amber-100 text-amber-800 font-bold font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">3</span>
+                          <div>
+                            <strong className="text-gray-800">恒温避光</strong>：放入发酵器在 <strong className="text-amber-700 font-mono">40°C~42°C 恒温</strong>、<strong>避光黑暗环境</strong>静置发酵 <strong className="font-mono">8~10 小时</strong>（发酵中途勿晃动，瓶盖虚掩勿拧死）。
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-                    <div id="co2-warning-notice" className={`text-xs sm:text-sm rounded-xl py-2.5 px-3.5 mb-1 max-w-sm leading-relaxed font-semibold flex flex-col items-center gap-1.5 justify-center transition-all duration-300 ${theme.co2Bg}`}>
-                      <span className="flex items-center gap-1 text-xs sm:text-sm font-black">⚠️ 注意事项：发酵中会产生二氧化碳</span>
-                      <span className="text-xs sm:text-sm leading-normal opacity-90 text-center">
-                        密闭发酵会导致容器内累积气压。请避免将盖子拧得过死，并在开盖时保持小心，谨防气体猛烈喷溅或顶飞瓶盖。
+                    <div id="co2-warning-notice" className={`text-xs sm:text-sm rounded-2xl py-2.5 px-3.5 mb-1 max-w-sm leading-relaxed font-semibold flex flex-col items-center gap-1 justify-center transition-all duration-300 ${theme.co2Bg} shadow-2xs`}>
+                      <span className="flex items-center gap-1 text-xs sm:text-sm font-black text-red-600">⚠️ 小心爆炸与染菌警告</span>
+                      <span className="text-[11.5px] sm:text-xs leading-normal opacity-95 text-center text-gray-700 font-semibold">
+                        纯正酸奶菌发酵<strong>绝不产气</strong>！若器皿混入<strong>野生酵母菌、大肠杆菌、产气梭菌</strong>等杂菌会大量产气导致炸瓶，<strong>发酵切勿拧死密封盖</strong>；若成品出现气泡浮沫即属严重染菌，严禁食用！
                       </span>
                     </div>
 
@@ -783,8 +845,8 @@ export default function App() {
                         </div>
                         <div className="w-[1px] h-6 bg-gray-200"></div>
                         <div>
-                          <span className="text-xs text-gray-500 block font-normal leading-none mb-1">重比 (奶粉总重量)</span>
-                          {calculatedPowder.toFixed(1)}g
+                          <span className="text-xs text-gray-500 block font-normal leading-none mb-1">调配总重</span>
+                          {totalVol} ml/g
                         </div>
                       </div>
                     </div>
@@ -794,7 +856,7 @@ export default function App() {
                       type="button"
                       onClick={() => {
                         setIsSavingPanelOpen(true);
-                        setNewRecordNotes(`使用温水 ${waterVol}ml + 奶粉 ${calculatedPowder.toFixed(1)}g (蛋白质 ${proteinPowder}g/100g) 开水调试，预测口感是 ${currentTexture.rating}。`);
+                        setNewRecordNotes(`制作总量 ${totalVol}ml（温水 ${calculatedWater.toFixed(1)}ml + 奶粉 ${calculatedPowder.toFixed(1)}g），蛋白质 ${proteinPowder}g/100g，目标浓度 ${targetProtein}%，预测口感是 ${currentTexture.rating}。`);
                       }}
                       className={`w-full max-w-xs py-3.5 text-white font-extrabold rounded-2xl transition-all duration-150 flex items-center justify-center gap-2 active:scale-95 hover:scale-[1.01] cursor-pointer shadow-md ${theme.saveBtnBg} ${theme.saveBtnShadow}`}
                     >
@@ -824,7 +886,7 @@ export default function App() {
               {/* Row 1 Grid: Water Block + Powder Protein Block */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 
-                {/* Bento Card 1: Water Volume Slider & presets */}
+                {/* Bento Card 1: Total Volume Slider & presets */}
                 <div className={`relative p-6 rounded-3xl border-2 transition-all duration-300 ${
                   hoveredStep === 2 
                     ? 'border-emerald-500 shadow-md ring-2 ring-emerald-400/30' 
@@ -839,9 +901,9 @@ export default function App() {
                   <div className="space-y-4 relative z-10">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-100 pb-2.5 gap-2">
                       <h4 className={`font-extrabold flex items-center gap-1.5 text-lg sm:text-[18px] ${theme.primaryAccent}`}>
-                        <span>💦</span> 计划水量 (温开水)
+                        <span>🥣</span> 目标制作总量 (成品容积)
                       </h4>
-                      <span className="text-sm sm:text-base text-gray-650 font-black font-mono self-start sm:self-auto shrink-0">{waterVol} ml</span>
+                      <span className="text-sm sm:text-base text-gray-650 font-black font-mono self-start sm:self-auto shrink-0">{totalVol} ml</span>
                     </div>
 
                     <div className={`space-y-3.5 p-3.5 rounded-2xl border ${
@@ -853,8 +915,8 @@ export default function App() {
                         min="100"
                         max="5000"
                         step="50"
-                        value={waterVol}
-                        onChange={(e) => setWaterVol(parseInt(e.target.value) || 100)}
+                        value={totalVol}
+                        onChange={(e) => setTotalVol(parseInt(e.target.value) || 100)}
                         className={`w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-200/80 transition-all ${theme.accentThumb}`}
                       />
                       
@@ -865,8 +927,8 @@ export default function App() {
                             type="number"
                             min="1"
                             max="5000"
-                            value={waterVol || ''}
-                            onChange={(e) => setWaterVol(Math.max(0, parseInt(e.target.value) || 0))}
+                            value={totalVol || ''}
+                            onChange={(e) => setTotalVol(Math.max(0, parseInt(e.target.value) || 0))}
                             className="w-16 border-b border-gray-300 text-xs text-center font-mono font-bold text-gray-800 focus:outline-hidden focus:border-slate-800"
                           />
                           <span className="text-xs sm:text-sm text-gray-500 font-bold">ml</span>
@@ -879,9 +941,9 @@ export default function App() {
                               <button
                                 key={v}
                                 type="button"
-                                onClick={() => setWaterVol(v)}
+                                onClick={() => setTotalVol(v)}
                                 className={`text-xs sm:text-sm px-2.5 py-1 rounded border transition-all font-bold ${
-                                  waterVol === v ? theme.quickBtnActive : theme.accentButtonInactive
+                                  totalVol === v ? theme.quickBtnActive : theme.accentButtonInactive
                                 }`}
                               >
                                 {v}ml
@@ -894,9 +956,9 @@ export default function App() {
                               <button
                                 key={v}
                                 type="button"
-                                onClick={() => setWaterVol(v)}
+                                onClick={() => setTotalVol(v)}
                                 className={`text-xs sm:text-sm px-2.5 py-1 rounded border transition-all font-bold ${
-                                  waterVol === v ? theme.quickBtnActive : theme.accentButtonInactive
+                                  totalVol === v ? theme.quickBtnActive : theme.accentButtonInactive
                                 }`}
                               >
                                 {v / 1000}L
@@ -905,6 +967,9 @@ export default function App() {
                           </div>
                         </div>
                       </div>
+                      <p className="text-[11px] sm:text-xs text-gray-500 leading-normal font-medium">
+                        💡 根据酸奶机内胆或分装容器的容积设定，自动精算水与奶粉配比。
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1045,13 +1110,32 @@ export default function App() {
                 )}
 
                 <div className="relative z-10 w-full flex flex-col justify-center items-center space-y-4">
-                  <span className="text-gray-500 text-xs sm:text-sm uppercase tracking-widest font-extrabold block leading-none">Bento 智能黄金调配建议</span>
-                  <p className="text-gray-600 font-bold text-xs sm:text-sm opacity-90 leading-none">建议调配加入干奶粉</p>
+                  <h3 className={`text-lg sm:text-[18px] font-extrabold flex items-center justify-center gap-1.5 leading-none ${theme.primaryAccent}`}>
+                    <span>📋</span> 配方参考
+                  </h3>
                   
                   {isCalculationValid ? (
                     <>
-                      <div className={`text-5xl sm:text-6xl font-black mb-1 font-mono transition-colors duration-300 ${theme.accentText}`}>
-                        {calculatedPowder.toFixed(1)} <span className="text-xl font-bold text-gray-400 font-sans">克 (g)</span>
+                      <div className="grid grid-cols-2 gap-3 w-full max-w-sm">
+                        <div className="bg-white/90 p-3 rounded-2xl border border-orange-200/80 shadow-2xs flex flex-col items-center">
+                          <span className="text-xs text-orange-900 font-extrabold flex items-center gap-1">
+                            <span>🥛</span> 需加干奶粉
+                          </span>
+                          <div className={`text-3xl sm:text-4xl font-black my-1 font-mono transition-colors duration-300 ${theme.accentText}`}>
+                            {calculatedPowder.toFixed(1)} <span className="text-sm font-bold text-gray-500 font-sans">克</span>
+                          </div>
+                          <span className="text-[10px] text-gray-500 font-medium">含蛋白 {proteinPowder}%</span>
+                        </div>
+
+                        <div className="bg-white/90 p-3 rounded-2xl border border-blue-200/80 shadow-2xs flex flex-col items-center">
+                          <span className="text-xs text-blue-900 font-extrabold flex items-center gap-1">
+                            <span>💦</span> 需配温开水
+                          </span>
+                          <div className="text-3xl sm:text-4xl font-black my-1 font-mono text-blue-600">
+                            {calculatedWater.toFixed(1)} <span className="text-sm font-bold text-gray-500 font-sans">毫升</span>
+                          </div>
+                          <span className="text-[10px] text-gray-500 font-medium">38°C~41°C温水</span>
+                        </div>
                       </div>
 
                       <div className="flex flex-wrap items-center justify-center gap-1.5 max-w-lg">
@@ -1059,18 +1143,48 @@ export default function App() {
                           {currentTexture.rating}
                         </span>
                         <span className={`px-2 py-0.5 rounded-md text-xs sm:text-sm font-black border ${theme.badgeBg}`}>
-                          蛋白比: {targetProtein}% (设定)
+                          目标蛋白: {targetProtein}%
+                        </span>
+                        <span className="px-2 py-0.5 rounded-md text-xs sm:text-sm font-black border bg-emerald-50 text-emerald-800 border-emerald-200">
+                          制作总量: {totalVol}ml
                         </span>
                       </div>
 
                       <div className="w-full border-t border-dashed border-gray-150/70 my-1"></div>
 
-                      <p className="text-xs sm:text-sm text-gray-500 leading-normal max-w-xs font-semibold">
-                        💦 用温水 <strong className={theme.accentText}>{waterVol}ml</strong> 充分溶解上述重量奶粉，温凉后即可加入发酵剂。
-                      </p>
+                      <div className="w-full max-w-sm bg-gray-50/80 rounded-2xl p-3 border border-gray-150 text-left text-xs space-y-2">
+                        <div className="flex items-center gap-1.5 font-bold text-gray-800 border-b border-gray-200/60 pb-1 text-xs sm:text-[13px]">
+                          <span>💡</span> <span>制作操作流程 (标准三步走)</span>
+                        </div>
+                        <div className="space-y-1.5 text-[11.5px] sm:text-xs text-gray-650 leading-relaxed font-medium">
+                          <div className="flex items-start gap-1.5">
+                            <span className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 font-bold font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">1</span>
+                            <div>
+                              <strong className="text-gray-800">溶粉调配</strong>：量取温水 <strong className="text-blue-600 font-mono font-bold">{calculatedWater.toFixed(1)}ml</strong>（约40°C），加入 <strong className={`font-mono font-bold ${theme.accentText}`}>{calculatedPowder.toFixed(1)}g</strong> 干奶粉彻底搅拌融化，调配出 <strong>{totalVol}ml</strong> 优质乳液。
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-1.5">
+                            <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 font-bold font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">2</span>
+                            <div>
+                              <strong className="text-gray-800">降温接种</strong>：待奶液温度降至 <strong className="text-emerald-700">42°C 以下</strong>（避免烫死菌种），撒入 1 包酸奶菌粉并轻柔翻拌混匀。
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-1.5">
+                            <span className="w-4 h-4 rounded-full bg-amber-100 text-amber-800 font-bold font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">3</span>
+                            <div>
+                              <strong className="text-gray-800">恒温避光</strong>：放入发酵器在 <strong className="text-amber-700 font-mono">40°C~42°C 恒温</strong>、<strong>避光黑暗环境</strong>静置发酵 <strong className="font-mono">8~10 小时</strong>（发酵中途勿晃动，瓶盖虚掩勿拧死）。
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-                      <div className={`text-xs sm:text-sm rounded-xl py-2 px-3 text-center transition-all duration-300 ${theme.co2Bg} font-bold`}>
-                        ⚠️ 注意气压：密闭发酵易胀破，开盖避光请小心。
+                      <div className={`text-xs sm:text-sm rounded-2xl py-2.5 px-3.5 text-center transition-all duration-300 ${theme.co2Bg} font-medium leading-relaxed max-w-sm shadow-2xs`}>
+                        <div className="font-extrabold text-red-600 flex items-center justify-center gap-1 text-xs sm:text-sm mb-0.5">
+                          <span>⚠️ 小心爆炸与染菌警告</span>
+                        </div>
+                        <p className="text-[11.5px] sm:text-xs text-gray-700 leading-normal font-semibold">
+                          纯正酸奶菌发酵<strong>绝不产气</strong>！若器皿混入<strong>野生酵母菌、大肠杆菌、产气梭菌</strong>等杂菌会大量产气导致炸瓶，<strong>发酵切勿拧死密封盖</strong>；若成品出现气泡浮沫即属严重染菌，严禁食用！
+                        </p>
                       </div>
 
                       <div className={`p-3 rounded-2xl border border-dashed text-center w-full max-w-xs transition-all duration-300 ${theme.accentBg}`}>
@@ -1081,8 +1195,8 @@ export default function App() {
                           </div>
                           <div className="w-[1px] h-5 bg-gray-200"></div>
                           <div>
-                            <span className="text-xs text-gray-500 block font-normal mb-0.5">总配重量</span>
-                            {calculatedPowder.toFixed(1)}g
+                            <span className="text-xs text-gray-500 block font-normal mb-0.5">调配总重</span>
+                            {totalVol} ml/g
                           </div>
                         </div>
                       </div>
@@ -1091,7 +1205,7 @@ export default function App() {
                         type="button"
                         onClick={() => {
                           setIsSavingPanelOpen(true);
-                          setNewRecordNotes(`温水 ${waterVol}ml + 奶粉 ${calculatedPowder.toFixed(1)}g (蛋白质 ${proteinPowder}g/100g)，预估口感是 ${currentTexture.rating}。`);
+                          setNewRecordNotes(`制作总量 ${totalVol}ml（温水 ${calculatedWater.toFixed(1)}ml + 奶粉 ${calculatedPowder.toFixed(1)}g），蛋白质 ${proteinPowder}g/100g，目标浓度 ${targetProtein}%，预估口感是 ${currentTexture.rating}。`);
                         }}
                         className={`w-full py-3 text-white text-xs font-black rounded-xl transition-all duration-150 flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer shadow-sm ${theme.saveBtnBg}`}
                       >
@@ -1126,39 +1240,39 @@ export default function App() {
               {/* Tight inputs rows */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 
-                {/* Compact Box 1 (Water Vol) */}
+                {/* Compact Box 1 (Total Batch Vol) */}
                 <div className="bg-gray-50/50 p-3.5 rounded-2xl border border-gray-200/50 flex flex-col justify-between">
                   <div>
                     <div className="flex justify-between items-center text-xs sm:text-sm font-extrabold text-gray-650 mb-2">
-                      <span>💦 计划温水量</span>
-                      <span className={theme.accentText}>{waterVol}ml</span>
+                      <span>🥣 目标制作总量</span>
+                      <span className={theme.accentText}>{totalVol}ml</span>
                     </div>
                     <input
                       type="range"
                       min="100"
-                      max="2000"
+                      max="5000"
                       step="50"
-                      value={waterVol}
-                      onChange={(e) => setWaterVol(parseInt(e.target.value) || 100)}
+                      value={totalVol}
+                      onChange={(e) => setTotalVol(parseInt(e.target.value) || 100)}
                       className={`w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-gray-200/80 transition-all ${theme.accentThumb}`}
                     />
                   </div>
                   <div className="flex items-center justify-between mt-2 pt-1 border-t border-gray-100/60">
                     <input
                       type="number"
-                      value={waterVol || ''}
-                      onChange={(e) => setWaterVol(Math.max(0, parseInt(e.target.value) || 0))}
-                      className="w-12 border-b border-gray-300 text-xs text-center font-mono font-bold text-gray-800"
+                      value={totalVol || ''}
+                      onChange={(e) => setTotalVol(Math.max(0, parseInt(e.target.value) || 0))}
+                      className="w-16 border-b border-gray-300 text-xs text-center font-mono font-bold text-gray-800"
                     />
                     <div className="flex gap-1">
-                      {[350, 500].map((v) => (
+                      {[500, 1000].map((v) => (
                         <button
                           key={v}
                           type="button"
-                          onClick={() => setWaterVol(v)}
+                          onClick={() => setTotalVol(v)}
                           className="text-xs px-2 py-1 text-gray-650 border border-gray-200 hover:bg-gray-100 rounded font-bold"
                         >
-                          {v}
+                          {v >= 1000 ? `${v / 1000}L` : `${v}ml`}
                         </button>
                       ))}
                     </div>
@@ -1238,20 +1352,22 @@ export default function App() {
                   <div className="w-full h-[1px] bg-gray-200/60 my-1"></div>
 
                   <div className="flex flex-col sm:flex-row items-center justify-between w-full text-xs sm:text-sm gap-2 px-1 text-gray-650 font-bold font-semibold">
-                    <div>💦 冲水量 (温开水): <strong className={theme.accentText}>{waterVol} ml</strong></div>
+                    <div>💦 需配温水: <strong className="text-blue-600 font-mono">{calculatedWater.toFixed(1)} ml</strong></div>
                     <div className="hidden sm:block text-gray-300">|</div>
-                    <div>⚖️ 水粉克重比: <strong className="font-mono">1 : {dilutionRatio}</strong></div>
+                    <div>🥣 制作总量: <strong className={theme.accentText}>{totalVol} ml</strong></div>
+                    <div className="hidden sm:block text-gray-300">|</div>
+                    <div>⚖️ 水粉克比: <strong className="font-mono">1 : {dilutionRatio}</strong></div>
                   </div>
 
                   <div className="text-xs sm:text-sm opacity-85 text-center max-w-sm font-medium">
-                    💡 量杯倒入 {waterVol}ml 温水，充分搅拌乳化发酵奶粉，常温加入极少益生菌包，进行 8-10h 密闭遮光温暖恒温发酵。
+                    💡 量杯倒入 {calculatedWater.toFixed(1)}ml 温水，加入 {calculatedPowder.toFixed(1)}g 奶粉充分搅拌融化，调配出 {totalVol}ml 目标乳液，常温加入极少益生菌包，进行 8-10h 密闭遮光恒温发酵。
                   </div>
 
                   <button
                     type="button"
                     onClick={() => {
                       setIsSavingPanelOpen(true);
-                      setNewRecordNotes(`温水 ${waterVol}ml + 奶粉 ${calculatedPowder.toFixed(1)}g (蛋白质 ${proteinPowder}g/100g)，预估口感是 ${currentTexture.rating}。`);
+                      setNewRecordNotes(`制作总量 ${totalVol}ml（温水 ${calculatedWater.toFixed(1)}ml + 奶粉 ${calculatedPowder.toFixed(1)}g），蛋白质 ${proteinPowder}g/100g，目标浓度 ${targetProtein}%，预估口感是 ${currentTexture.rating}。`);
                     }}
                     className={`w-full py-3 text-white text-xs font-black rounded-xl transition-all duration-150 flex items-center justify-center gap-1.5 active:scale-95 shadow-sm ${theme.saveBtnBg}`}
                   >
@@ -1364,10 +1480,12 @@ export default function App() {
                   <span>📝 本次分配比例参考:</span>
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-[11.5px] font-medium leading-relaxed">
-                  <div>💦 温水量: <span className={`font-black font-mono ${theme.accentText}`}>{waterVol} ml</span></div>
-                  <div>🥛 奶粉量: <span className={`font-black font-mono ${theme.accentText}`}>{calculatedPowder.toFixed(1)} g</span></div>
+                  <div>🥣 制作总量: <span className={`font-black font-mono ${theme.accentText}`}>{totalVol} ml</span></div>
+                  <div>💦 需配温水: <span className="font-black font-mono text-blue-600">{calculatedWater.toFixed(1)} ml</span></div>
+                  <div>🥛 需加奶粉: <span className={`font-black font-mono ${theme.accentText}`}>{calculatedPowder.toFixed(1)} g</span></div>
                   <div>🔍 奶粉蛋白质: <span className="font-bold font-mono">{proteinPowder} g/100g</span></div>
                   <div>📐 目标浓度: <span className="font-bold font-mono">{targetProtein} %</span></div>
+                  <div>⚖️ 水粉克比: <span className="font-bold font-mono">1 : {dilutionRatio}</span></div>
                 </div>
               </div>
 
@@ -1702,7 +1820,8 @@ export default function App() {
             {/* Body */}
             <div className="p-6 overflow-y-auto bg-orange-50/10">
               <AnnotatedFormula 
-                waterVol={waterVol}
+                totalVol={totalVol}
+                waterVol={calculatedWater}
                 powderWeight={calculatedPowder}
                 targetProtein={targetProtein}
                 proteinPowder={proteinPowder}

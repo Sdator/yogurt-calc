@@ -2,6 +2,7 @@ import React from 'react';
 import { Milk, Droplets, FlaskConical, HelpCircle, AlertCircle } from 'lucide-react';
 
 interface AnnotatedFormulaProps {
+  totalVol?: number;
   waterVol: number;
   powderWeight: number;
   targetProtein: number;
@@ -9,6 +10,7 @@ interface AnnotatedFormulaProps {
 }
 
 export default function AnnotatedFormula({
+  totalVol,
   waterVol,
   powderWeight,
   targetProtein,
@@ -16,7 +18,9 @@ export default function AnnotatedFormula({
 }: AnnotatedFormulaProps) {
   // Safe math preview
   const formattedPowder = isNaN(powderWeight) || powderWeight <= 0 ? '?' : powderWeight.toFixed(1);
-  const formattedWater = isNaN(waterVol) || waterVol <= 0 ? '?' : waterVol;
+  const formattedWater = isNaN(waterVol) || waterVol <= 0 ? '?' : (typeof waterVol === 'number' ? waterVol.toFixed(1) : waterVol);
+  const currentTotal = totalVol || (typeof waterVol === 'number' && typeof powderWeight === 'number' ? Math.round(waterVol + powderWeight) : 1000);
+  const formattedTotal = isNaN(currentTotal) || currentTotal <= 0 ? '1000' : currentTotal;
   
   return (
     <div id="annotated-formula-panel" className="bg-white border-2 border-orange-100 rounded-3xl p-6 md:p-8 shadow-sm overflow-hidden relative">
@@ -36,7 +40,7 @@ export default function AnnotatedFormula({
               酸奶凝固锁水的乳胶公式科学解读
             </h3>
           </div>
-          <p className="text-xs sm:text-sm text-orange-600 font-black font-sans">🔬 掌握胶束密度 · 宝宝自制不翻车</p>
+          <p className="text-xs sm:text-sm text-orange-600 font-black font-sans">🔬 考虑奶粉体积 · 制作总量不溢出</p>
         </div>
 
         {/* 1. Main Visual Formula Flow (Full Width, guaranteed single line horizontally) */}
@@ -46,9 +50,9 @@ export default function AnnotatedFormula({
             {/* Ingredient 1: Water */}
             <div id="diag-water" className="flex flex-col items-center bg-blue-50/50 p-4 rounded-2xl border border-blue-100 w-32 shrink-0">
               <Droplets className="w-10 h-10 text-blue-500 mb-2 animate-pulse" />
-              <span className="text-xs sm:text-sm font-black text-blue-900">温开水 (W)</span>
+              <span className="text-xs sm:text-sm font-black text-blue-900">需配温水 (W)</span>
               <span className="text-sm text-blue-600 font-mono mt-1 font-black">{formattedWater} ml</span>
-              <span className="text-xs text-gray-400 mt-1 font-bold">溶解发酵液</span>
+              <span className="text-xs text-gray-400 mt-1 font-bold">总量减去奶粉量</span>
             </div>
 
             <div className="text-2xl font-black text-orange-400 font-mono shrink-0">+</div>
@@ -82,9 +86,9 @@ export default function AnnotatedFormula({
               <div className="relative">
                 <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center font-black text-orange-600 text-base mb-2 shadow-3xs">🥛</div>
               </div>
-              <span className="text-xs sm:text-sm font-black text-orange-950">发酵还原乳</span>
-              <span className="text-sm text-orange-700 font-mono mt-1 font-black">蛋白 {targetProtein} %</span>
-              <span className="text-xs text-orange-660 font-black bg-white/80 px-2 py-0.5 rounded mt-1 shadow-3xs">凝乳网锁定凝固</span>
+              <span className="text-xs sm:text-sm font-black text-orange-950">制作总量 (T)</span>
+              <span className="text-sm text-orange-700 font-mono mt-1 font-black">{formattedTotal} ml / {targetProtein}%</span>
+              <span className="text-xs text-orange-660 font-black bg-white/80 px-2 py-0.5 rounded mt-1 shadow-3xs">完美匹配内胆</span>
             </div>
 
           </div>
@@ -97,18 +101,49 @@ export default function AnnotatedFormula({
           <div className="lg:col-span-7 bg-orange-50/20 rounded-2xl p-6 border border-orange-100 shadow-3xs flex flex-col justify-between">
             <div className="space-y-4">
               <div>
-                <p className="font-black text-orange-950 text-base mb-2">📋 锁水比例换算公式 (中文解读):</p>
-                <div className="font-mono text-sm sm:text-base bg-orange-50 p-4 rounded-2xl text-orange-850 flex items-center justify-between border border-orange-100/80">
-                  <span className="font-black text-orange-950">M = (W × Pₜ) ÷ (Pₚ - Pₜ)</span>
-                  <span className="text-xs bg-orange-150 text-orange-800 px-3 py-1 rounded-xl border border-orange-200 font-bold">科学配比算式</span>
+                <p className="font-black text-orange-950 text-base mb-2">📋 制作总量与质量守恒换算公式:</p>
+                <div className="bg-orange-50 p-4 rounded-2xl border border-orange-100/80 space-y-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-orange-200/50 pb-2">
+                    <span className="font-black font-mono text-sm sm:text-base text-orange-950">
+                      奶粉数量 (M) = T × Pₜ ÷ Pₚ
+                    </span>
+                    <span className="text-xs bg-orange-100 text-orange-850 px-2.5 py-0.5 rounded-lg border border-orange-200 font-bold self-start sm:self-auto font-sans">
+                      称取奶粉
+                    </span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-1">
+                    <span className="font-black font-mono text-sm sm:text-base text-blue-950">
+                      所需水量 (W) = T - M = T - (T × Pₜ ÷ Pₚ)
+                    </span>
+                    <span className="text-xs bg-blue-100 text-blue-850 px-2.5 py-0.5 rounded-lg border border-blue-200 font-bold self-start sm:self-auto font-sans">
+                      量取温水
+                    </span>
+                  </div>
                 </div>
               </div>
+
+              {/* Practical Calculation Example */}
+              <div className="bg-white/90 p-4 rounded-2xl border border-orange-200/60 text-xs sm:text-sm space-y-1.5 leading-relaxed">
+                <p className="font-black text-orange-950 flex items-center gap-1.5 text-xs sm:text-sm">
+                  <span>💡</span> <strong>实操计算举例（以制作 1000ml / 4% 蛋白质为例）：</strong>
+                </p>
+                <div className="text-gray-650 space-y-1 pl-1 font-medium text-xs">
+                  <p>• <strong>制作总量 (T)</strong>：1000ml（酸奶机 1L 内胆的标称容积）</p>
+                  <p>• <strong>目标蛋白质比 (Pₜ)</strong>：4%，<strong>奶粉自身蛋白质 (Pₚ)</strong>：24%</p>
+                  <p>• <strong>奶粉数量</strong>：<code className="text-orange-700 font-mono font-bold bg-orange-50 px-1 py-0.5 rounded">1000 × 4% ÷ 24% = 166.7g</code></p>
+                  <p>• <strong>水的部分</strong>：<code className="text-blue-700 font-mono font-bold bg-blue-50 px-1 py-0.5 rounded">1000 - 166.7 = 833.3ml</code></p>
+                  <p className="text-emerald-700 font-bold mt-1">
+                    ✨ 水 (833.3ml) + 奶粉 (166.7g) 调配后正好是 1000ml/g 制作总量，既不溢出内胆，成品蛋白质又精准达到 4.0%！
+                  </p>
+                </div>
+              </div>
+
               <div className="text-xs sm:text-sm leading-relaxed">
                 <div className="text-gray-500">
                   <span className="font-black text-gray-800 flex items-center gap-1.5 text-sm sm:text-base mb-1.5">
-                    <HelpCircle className="w-4.5 h-4.5 text-orange-500 inline" /> 为什么蛋白质比是凝乳的关键？
+                    <HelpCircle className="w-4.5 h-4.5 text-orange-500 inline" /> 为什么必须扣除奶粉占用的体积与重量？
                   </span>
-                  乳酸使溶液 pH 下降到 4.6 时，<span className="text-orange-600 font-bold underline decoration-orange-200 decoration-2">原奶蛋白质彼此脱水聚集、拉曼交织连成网兜</span>，把游离的水分子死死阻滞包裹在内，这就是结冻凝固的奥秘。若初始蛋白不够，便容易产出豆腐渣或奶水分层的情况。
+                  过去如果直接用 1000ml 水再额外加 166.7g 奶粉，调制出来的液体将高达 1167ml，不仅容易溢出酸奶机内胆，还会使蛋白质实际浓度被冲淡。按制作总量反向扣除奶粉量，才能实现容积与蛋白质双重精准。
                 </div>
               </div>
             </div>
@@ -131,7 +166,7 @@ export default function AnnotatedFormula({
               </ul>
               <div className="mt-4 pt-3 border-t border-orange-100/50 text-xs text-gray-400 flex items-center gap-1.5 font-bold">
                 <span>⚡</span>
-                <span>目标蛋白设定在 3.2% - 3.8% 间最宜。</span>
+                <span>目标蛋白设定在 3.2% - 4.5% 间凝乳效果极佳。</span>
               </div>
             </div>
           </div>
